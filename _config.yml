@@ -1,0 +1,16 @@
+# Book settings
+title: Event Based Modeling
+author: Hongtao Hao
+logo: logo.png
+copyright: "2024"
+
+html:
+  home_page_in_navbar: false
+  use_edit_page_button: true
+  use_repository_button: true
+  use_issues_button: false
+  baseurl: https://ebm.hongtaoh.com/
+
+repository:
+  url: https://github.com/hongtaoh/ebm_book
+  branch: master

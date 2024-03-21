@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Likelihood of observed biomarker data &#8212; Event Based Modeling</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'distributions';</script>
+    <link rel="canonical" href="https://ebm.hongtaoh.com/distributions.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Generative process" href="generative_process.html" />
+    <link rel="prev" title="Event-Based Model (EBM)" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Event Based Modeling - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Event Based Modeling - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Likelihood of observed biomarker data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generative_process.html">Generative process</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/hongtaoh/ebm_book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/hongtaoh/ebm_book/edit/master/distributions.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/distributions.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Likelihood of observed biomarker data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definitions">Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#known-k-j">Known <span class="math notranslate nohighlight">\(k_j\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unknown-k-j">Unknown <span class="math notranslate nohighlight">\(k_j\)</span></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="likelihood-of-observed-biomarker-data">
+<h1>Likelihood of observed biomarker data<a class="headerlink" href="#likelihood-of-observed-biomarker-data" title="Link to this heading">#</a></h1>
+<section id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>The model assumes that a disease progresses according to a set of events <span class="math notranslate nohighlight">\(E_1, \ldots, E_N\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> is the number of biomarkers. Our goal is to estimate an ordering <span class="math notranslate nohighlight">\(S \in \sigma(N)\)</span> over the events, which is a permutation of size <span class="math notranslate nohighlight">\(N\)</span>. The value of biomarker marker <span class="math notranslate nohighlight">\(n\)</span> for patient <span class="math notranslate nohighlight">\(j\)</span> is <span class="math notranslate nohighlight">\(X_{nj} \in \mathbb{R}\)</span>, which is a real-valued number. Each person <span class="math notranslate nohighlight">\(j\)</span> has a corresponding Bernoulli random variable <span class="math notranslate nohighlight">\(d_j \in \{0,1\}\)</span>, which denotes whether they have the disease or not (Note this is generally observed for these models, but I am including it for completeness). For person <span class="math notranslate nohighlight">\(j\)</span> (assumed to have the disease to simplify notation), <span class="math notranslate nohighlight">\(k_n \in \{0, 1, \ldots, N\}\)</span> denotes their current disease stage. Let <span class="math notranslate nohighlight">\(\theta_n\)</span> denote the parameters for the distribution of biomarker <span class="math notranslate nohighlight">\(n\)</span> when it is diseased and <span class="math notranslate nohighlight">\(\phi_n\)</span> be the corresponding parameters for when it is healthy.</p>
+</div></blockquote>
+</section>
+<section id="known-k-j">
+<h2>Known <span class="math notranslate nohighlight">\(k_j\)</span><a class="headerlink" href="#known-k-j" title="Link to this heading">#</a></h2>
+<p>Let’s first deal with this equation:</p>
+<p><span class="math notranslate nohighlight">\(p(X_{j} | S , z_j = 1, k_j) = \prod_{i=1}^{k_j}{p(X_{S(i)j} \mid \theta_n )} \prod_{i=k_j+1}^N{p(X_{S(i)j} \mid \phi_n)}\)</span></p>
+<p>This equation compuates the likelihood of the observed biomarker data given that we know the disease stage this patient is at (<span class="math notranslate nohighlight">\(k_j\)</span>).</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(S\)</span> is an <strong>orded array</strong> of biomarkers that are affected by the disease, for example, <span class="math notranslate nohighlight">\([b, a, d, c]\)</span>. This means that at biomarker <span class="math notranslate nohighlight">\(b\)</span> is affected in stage 1. At stage 2, biomarker <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(a\)</span> will be affected.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> indicates one biomarker.</p></li>
+<li><p><span class="math notranslate nohighlight">\(k_j\)</span> indicates the stage the patient is at, for example, <span class="math notranslate nohighlight">\(k_j = 2\)</span>. This means that the disease has effected biomarker <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. Biomarker <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(d\)</span> have not been affected yet.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_n\)</span> is the parameters for the probability density function (PDF) of observed value of biomarker <span class="math notranslate nohighlight">\(n\)</span> when this biomarker has been affected by the disease. Let’s assume this distribution is a Gaussian distribution with means of <span class="math notranslate nohighlight">\([45, 50, 55, 60]\)</span> and a standard deviation of <span class="math notranslate nohighlight">\(5\)</span> for biomarker <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(d\)</span>, and <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi_n\)</span> is the parameters for the probability density function (PDF) of observed value of biomarker <span class="math notranslate nohighlight">\(n\)</span> when this biomarker has <strong>NOT</strong> been affected by the disease. Let’s assume this distribution is a Gaussian distribution with means of <span class="math notranslate nohighlight">\([25, 30, 35, 40]\)</span> and a standard deviation of <span class="math notranslate nohighlight">\(3\)</span> for biomarker <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(d\)</span>, and <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_j\)</span> is an array representing the patient’s observed data for all biomarker. Assume the data is <span class="math notranslate nohighlight">\([77, 45, 53, 90]\)</span> for biomarker <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(d\)</span>, and <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+</ul>
+<p>We assume that the patient is at stage <span class="math notranslate nohighlight">\(2\)</span> of this disease; hence <span class="math notranslate nohighlight">\(k_j = 2\)</span>.</p>
+<p>Next, we are going to calculate <span class="math notranslate nohighlight">\(p(X_j|S, z_j = 1, k_j)\)</span>:</p>
+<p>When <span class="math notranslate nohighlight">\(i = 1\)</span>, we have <span class="math notranslate nohighlight">\(S_{(i)} = n = b\)</span> and <span class="math notranslate nohighlight">\(X_{S_{(i)}} = X_b = 45\)</span>. So</p>
+<div class="math notranslate nohighlight">
+\[p(X_{S_{(i)}} | \theta_n) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\left(\frac{X_b - \mu}{\sigma} \right)^2}\]</div>
+<p>Because <span class="math notranslate nohighlight">\(k_j = 2\)</span>, so biomarker <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(a\)</span> are affected. We should use the distribution of <span class="math notranslate nohighlight">\(\theta_b\)</span>; therefore, we should plug in <span class="math notranslate nohighlight">\(\mu = 45, \sigma = 5\)</span> in the above equation.</p>
+<p>We can do the same for <span class="math notranslate nohighlight">\(i\)</span> = 2, 3, and 4.</p>
+<p>So</p>
+<div class="math notranslate nohighlight">
+\[p(X_j | S, k_j = 2) = p (X_b | \theta_b) \times p (X_a | \theta_a) \times p (X_d | \phi_d) \times p (X_c | \phi_c)\]</div>
+<p>The above is <strong>the likelihood of the given biomarker data when <span class="math notranslate nohighlight">\(k_j = 2\)</span></strong>.</p>
+<p>Note that <span class="math notranslate nohighlight">\(p (X_b | \theta_b)\)</span> is probability density, a value of a probability density function at a specific point; so it is not a probability itself.</p>
+<p>Multiplying multiple probability densities will give us a likelihood.</p>
+</section>
+<section id="unknown-k-j">
+<h2>Unknown <span class="math notranslate nohighlight">\(k_j\)</span><a class="headerlink" href="#unknown-k-j" title="Link to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(P(X_{j} | z_j=1, S) = \sum_{k_j=0}^N{P(k_j) p(X_{j} \mid S, k_j)}\)</span></p>
+<p>Suppose we have the same information above, except that we do not know at which disease stage the patient is, i.e., we do not know <span class="math notranslate nohighlight">\(k_j\)</span>. We have the observed biomarker data: <span class="math notranslate nohighlight">\(X_j = [77, 45, 53, 90]\)</span>. And I wonder: what is the likelihood of seeing this specific ovserved data?</p>
+<p>We assume that all five stages (including <span class="math notranslate nohighlight">\(k_j = 0\)</span>) are equally likely.</p>
+<p>We do not know <span class="math notranslate nohighlight">\(k_j\)</span>, so the best option is to calculate the “average” likelihood of all the biomarker data.</p>
+<p>Based on the equation in the first section, we can calculate the following:</p>
+<p><span class="math notranslate nohighlight">\(L_1 = p(X_j | S, k_j = 1)\)</span></p>
+<p><span class="math notranslate nohighlight">\(L_2 = p(X_j | S, k_j = 2)\)</span></p>
+<p><span class="math notranslate nohighlight">\(L_3 = p(X_j | S, k_j = 3)\)</span></p>
+<p><span class="math notranslate nohighlight">\(L_4 = p(X_j | S, k_j = 4)\)</span></p>
+<p>Also note that we need to consider <span class="math notranslate nohighlight">\(L_0\)</span> because in the equation above, <span class="math notranslate nohighlight">\(k_j\)</span> starts from <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[L_0 = p(X_j | S, k_j = 0) = p (X_b | \phi_b) \times p (X_a | \phi_a) \times p (X_d | \phi_d) \times p (X_c | \phi_c)\]</div>
+<p>So</p>
+<p><span class="math notranslate nohighlight">\(P(X_{j} | z_j=1, S) = \frac{1}{5} \left(L_0 + L_1 + L_2 + L_3 + L_4 \right)\)</span></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Event-Based Model (EBM)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="generative_process.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Generative process</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definitions">Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#known-k-j">Known <span class="math notranslate nohighlight">\(k_j\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unknown-k-j">Unknown <span class="math notranslate nohighlight">\(k_j\)</span></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hongtao Hao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

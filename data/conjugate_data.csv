@@ -1,0 +1,21 @@
+Biomarker,participant,measurement,k_j,k_n,drawn_from
+Biomarker 1,0,1.7122234211388156,8,8,diseased
+Biomarker 1,2,1.928019180207826,8,8,diseased
+Biomarker 1,11,2.4618196012234335,8,8,diseased
+Biomarker 1,19,1.7215374155711471,9,8,diseased
+Biomarker 1,20,1.7038298876495763,10,8,diseased
+Biomarker 1,29,2.2097889242450215,10,8,diseased
+Biomarker 1,31,2.4804491248647196,8,8,diseased
+Biomarker 1,37,1.6671797341490184,8,8,diseased
+Biomarker 1,40,2.4669355544758798,8,8,diseased
+Biomarker 1,43,1.4047303890219727,9,8,diseased
+Biomarker 1,44,1.7672712321639998,9,8,diseased
+Biomarker 1,53,2.2227743290014197,10,8,diseased
+Biomarker 1,57,1.727843899536772,8,8,diseased
+Biomarker 1,58,1.780904554115982,10,8,diseased
+Biomarker 1,73,1.5529716186140268,9,8,diseased
+Biomarker 1,79,1.9587645835366971,9,8,diseased
+Biomarker 1,80,1.7846755714307405,9,8,diseased
+Biomarker 1,90,2.7693516398832023,9,8,diseased
+Biomarker 1,93,1.9390812265924664,8,8,diseased
+Biomarker 1,99,1.2721329324910298,9,8,diseased
