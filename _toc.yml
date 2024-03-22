@@ -3,3 +3,4 @@ root: intro
 chapters:
   - file: distributions
   - file: generative_process
+  - file: estimate
