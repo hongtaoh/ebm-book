@@ -435,8 +435,8 @@ document.write(`
       <th>0</th>
       <td>0</td>
       <td>0</td>
-      <td>0.457546</td>
-      <td>8</td>
+      <td>0.950888</td>
+      <td>9</td>
       <td>7</td>
       <td>affected</td>
     </tr>
@@ -444,7 +444,7 @@ document.write(`
       <th>1</th>
       <td>0</td>
       <td>1</td>
-      <td>1.103317</td>
+      <td>0.857805</td>
       <td>7</td>
       <td>7</td>
       <td>affected</td>
@@ -453,8 +453,8 @@ document.write(`
       <th>2</th>
       <td>0</td>
       <td>2</td>
-      <td>1.380441</td>
-      <td>9</td>
+      <td>1.140192</td>
+      <td>8</td>
       <td>7</td>
       <td>affected</td>
     </tr>
@@ -462,19 +462,19 @@ document.write(`
       <th>3</th>
       <td>0</td>
       <td>3</td>
-      <td>14.069878</td>
-      <td>3</td>
+      <td>1.039605</td>
+      <td>9</td>
       <td>7</td>
-      <td>not_affected</td>
+      <td>affected</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0</td>
       <td>4</td>
-      <td>11.457832</td>
-      <td>0</td>
+      <td>1.233375</td>
+      <td>9</td>
       <td>7</td>
-      <td>not_affected</td>
+      <td>affected</td>
     </tr>
   </tbody>
 </table>
@@ -585,22 +585,10 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">p_data</span><span class="o">.</span><span class="n">k_j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="c1"># biomarker_data = p_data[p_data.Biomarker == str(0)].reset_index(drop=True)</span>
-<span class="c1"># biomarker_data</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarkers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Disable scientific notation</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">biomarkers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">participants</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 <span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">num_stages</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">S_n</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
@@ -617,7 +605,7 @@ document.write(`
     <span class="c1"># this sequence of observed biomarker measuremen</span>
     <span class="c1"># [0, 9]</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stages</span><span class="p">):</span>
-        <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span> 
+        <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span><span class="o">**</span><span class="mi">5</span>
         <span class="k">for</span> <span class="n">biomarker</span> <span class="ow">in</span> <span class="n">biomarkers</span><span class="p">:</span>
             <span class="n">biomaker_data</span> <span class="o">=</span> <span class="n">p_data</span><span class="p">[</span><span class="n">p_data</span><span class="o">.</span><span class="n">Biomarker</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">biomarker</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">measurement</span> <span class="o">=</span> <span class="n">biomaker_data</span><span class="o">.</span><span class="n">measurement</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -634,8 +622,45 @@ document.write(`
             <span class="c1"># if the participant is in this stage, what is the likelihood of seeing this </span>
             <span class="c1"># sequence of values</span>
             <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span>
+    <span class="n">has_duplicates</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">))</span>
+    <span class="c1"># print(has_duplicates)</span>
     <span class="n">max_likelihood_stage</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
     <span class="n">estimated_stage_dic</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_likelihood_stage</span>           
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.00001065]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.         0.         0.         0.         0.         0.
+ 0.         0.         0.00000003 0.        ]
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+[0.         0.00000278 0.         0.         0.         0.
+ 0.         0.         0.         0.        ]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.        0.        0.        0.        0.        0.        0.
+ 0.        0.0000003 0.       ]
+[0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.00000004]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.         0.         0.         0.00000001 0.00000001 0.
+ 0.         0.         0.         0.        ]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.         0.         0.         0.00000002 0.00000002 0.
+ 0.         0.         0.         0.        ]
 </pre></div>
 </div>
 </div>
@@ -661,8 +686,8 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">differences</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Scatter Plot of Differences at Each Index&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Index&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Scatter Plot of Stage Differences for Each Participant&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Participant&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Difference (Estimated - Original)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -670,7 +695,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/685f9ec4baf08286d914c54bc4c3b863bce0db3fe9fadeb26076ae6310c286dd.png" src="_images/685f9ec4baf08286d914c54bc4c3b863bce0db3fe9fadeb26076ae6310c286dd.png" />
+<img alt="_images/23b3748ce34606a0d58e37db41fd08fa61c35435af7d8c8cd2c049b6e45dc066.png" src="_images/23b3748ce34606a0d58e37db41fd08fa61c35435af7d8c8cd2c049b6e45dc066.png" />
 </div>
 </div>
 </section>
