@@ -388,7 +388,8 @@ document.write(`
 <section id="known-k-j">
 <h2>Known <span class="math notranslate nohighlight">\(k_j\)</span><a class="headerlink" href="#known-k-j" title="Permalink to this heading">#</a></h2>
 <p>Let’s first deal with this equation:</p>
-<p><span class="math notranslate nohighlight">\(p(X_{j} | S , z_j = 1, k_j) = \prod_{i=1}^{k_j}{p(X_{S(i)j} \mid \theta_n )} \prod_{i=k_j+1}^N{p(X_{S(i)j} \mid \phi_n)}\)</span></p>
+<div class="math notranslate nohighlight">
+\[p(X_{j} | S , z_j = 1, k_j) = \prod_{i=1}^{k_j}{p(X_{S(i)j} \mid \theta_n )} \prod_{i=k_j+1}^N{p(X_{S(i)j} \mid \phi_n)}\]</div>
 <p>This equation compuates the likelihood of the observed biomarker data given that we know the disease stage this patient is at (<span class="math notranslate nohighlight">\(k_j\)</span>).</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(S\)</span> is an <strong>orded array</strong> of biomarkers that are affected by the disease, for example, <span class="math notranslate nohighlight">\([b, a, d, c]\)</span>. This means that at biomarker <span class="math notranslate nohighlight">\(b\)</span> is affected in stage 1. At stage 2, biomarker <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(a\)</span> will be affected.</p></li>
@@ -414,7 +415,8 @@ document.write(`
 </section>
 <section id="unknown-k-j">
 <h2>Unknown <span class="math notranslate nohighlight">\(k_j\)</span><a class="headerlink" href="#unknown-k-j" title="Permalink to this heading">#</a></h2>
-<p><span class="math notranslate nohighlight">\(P(X_{j} | z_j=1, S) = \sum_{k_j=0}^N{P(k_j) p(X_{j} \mid S, k_j)}\)</span></p>
+<div class="math notranslate nohighlight">
+\[P(X_{j} | z_j=1, S) = \sum_{k_j=0}^N{P(k_j) p(X_{j} \mid S, k_j)}\]</div>
 <p>Suppose we have the same information above, except that we do not know at which disease stage the patient is, i.e., we do not know <span class="math notranslate nohighlight">\(k_j\)</span>. We have the observed biomarker data: <span class="math notranslate nohighlight">\(X_j = [77, 45, 53, 90]\)</span>. And I wonder: what is the likelihood of seeing this specific ovserved data?</p>
 <p>We assume that all five stages (including <span class="math notranslate nohighlight">\(k_j = 0\)</span>) are equally likely.</p>
 <p>We do not know <span class="math notranslate nohighlight">\(k_j\)</span>, so the best option is to calculate the “average” likelihood of all the biomarker data.</p>
