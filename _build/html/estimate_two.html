@@ -914,12 +914,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0,  4,  4,  1,  3,  1,  6,  8,  8,  5,  8,  5,  7,  4,  5,  9,  6,
-        5, 10,  8,  9,  7, 10,  1,  8,  6,  0,  8, 10,  6,  7, 10,  4,  7,
-        8,  4,  5, 10,  8,  6,  1, 10,  0,  8,  7,  7,  2,  0,  9,  8,  4,
-        8,  6,  0,  9, 10,  6,  2,  0,  5,  0,  4, 10,  9, 10, 10,  8,  6,
-        9,  4,  2,  6,  3,  3,  2, 10, 10,  1,  3,  3,  8, 10,  9,  4,  3,
-        3,  8,  7,  0,  0,  0,  5,  7,  8,  3,  0,  0,  0,  8,  0])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 6, 10, 10,  0,  3,  4,  7,  7,  6,  9,  7,  4,  0,  0,  2, 10,  9,
+        3,  9, 10,  9, 10,  2,  1,  9,  0,  4,  8,  2,  6,  3,  7,  3, 10,
+        6,  3,  0,  0, 10,  3,  5,  7,  2,  2,  8,  9,  1,  9,  1,  2,  7,
+        5,  4,  7,  9,  7,  7,  5,  3,  2,  7,  8,  5, 10, 10,  3,  0,  1,
+        8,  6,  3,  8,  1,  7,  2,  7,  0,  2,  7,  4,  6,  8,  9,  1,  7,
+        2,  5,  2,  3,  9,  1,  6,  4,  7,  5,  1,  2,  7,  0,  7])
 </pre></div>
 </div>
 </div>
@@ -928,7 +928,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarkers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">participants</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-<span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">num_stages</span> <span class="o">=</span> <span class="mi">10</span> 
 <span class="c1"># initialize participant_stages </span>
 <span class="c1"># note that high should be num_stages + 1; otherwise, no participants will be in the stage of 10</span>
@@ -980,6 +980,30 @@ document.write(`
   ret = ret.dtype.type(ret / rcount)
 </pre></div>
 </div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3715: RuntimeWarning: Degrees of freedom &lt;= 0 for slice
+  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:223: RuntimeWarning: invalid value encountered in divide
+  arrmean = um.true_divide(arrmean, div, out=arrmean, casting=&#39;unsafe&#39;,
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:257: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3715: RuntimeWarning: Degrees of freedom &lt;= 0 for slice
+  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:223: RuntimeWarning: invalid value encountered in divide
+  arrmean = um.true_divide(arrmean, div, out=arrmean, casting=&#39;unsafe&#39;,
+/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:257: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+</pre></div>
+</div>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1001,7 +1025,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/42fbaec65ecc04a3ae045a4b39793e08b0955c9ff7551f5ecb55115e378d30f8.png" src="_images/42fbaec65ecc04a3ae045a4b39793e08b0955c9ff7551f5ecb55115e378d30f8.png" />
+<img alt="_images/3cd9e08f1f16acd478c12d0dc5c96858d19ce278f16679a3b089f814e085560d.png" src="_images/3cd9e08f1f16acd478c12d0dc5c96858d19ce278f16679a3b089f814e085560d.png" />
 </div>
 </div>
 </section>
