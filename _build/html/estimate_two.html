@@ -68,6 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://ebm.hongtaoh.com/estimate_two.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Estimating biomarker ordering" href="estimate_three.html" />
     <link rel="prev" title="Estimating \(\theta\) and \(\phi\)" href="estimate_one.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -167,6 +168,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="generative_process.html">Generative process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimate_one.html">Estimating <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span></a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Estimating <span class="math notranslate nohighlight">\(k_j\)</span></a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimate_three.html">Estimating biomarker ordering</a></li>
 </ul>
 
     </div>
@@ -593,7 +595,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_likelihood</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Computes the likelihood of the given measurement data</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Computes the likelihood of the given measurement data; note that measurement here</span>
+<span class="sd">    is the value for a single biomarker</span>
 <span class="sd">    We know the normal distribution defined by either theta or phi</span>
 <span class="sd">    and we know the measurement. This will give us the probability</span>
 <span class="sd">    of the given measurement. </span>
@@ -894,7 +897,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ef2e61a2efae1eb73df2c87e31d9e6674a1774859afbc09de6e557c64b1d69cf.png" src="_images/ef2e61a2efae1eb73df2c87e31d9e6674a1774859afbc09de6e557c64b1d69cf.png" />
+<img alt="_images/beb71efff764438eb9c0ce85270c707b1ca0e124e77e0cf60ee2d0f668a7795c.png" src="_images/beb71efff764438eb9c0ce85270c707b1ca0e124e77e0cf60ee2d0f668a7795c.png" />
 </div>
 </div>
 </section>
@@ -947,31 +950,7 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 0 done
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
-  return _methods._mean(a, axis=axis, dtype=dtype,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3715: RuntimeWarning: Degrees of freedom &lt;= 0 for slice
-  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:223: RuntimeWarning: invalid value encountered in divide
-  arrmean = um.true_divide(arrmean, div, out=arrmean, casting=&#39;unsafe&#39;,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:257: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 1 done
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
-  return _methods._mean(a, axis=axis, dtype=dtype,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3715: RuntimeWarning: Degrees of freedom &lt;= 0 for slice
-  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:223: RuntimeWarning: invalid value encountered in divide
-  arrmean = um.true_divide(arrmean, div, out=arrmean, casting=&#39;unsafe&#39;,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:257: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 2 done
@@ -992,7 +971,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e818d576a38e78f4bfc9859d61c449672eae355245cd0fa10cdcf6e14e9f8d2e.png" src="_images/e818d576a38e78f4bfc9859d61c449672eae355245cd0fa10cdcf6e14e9f8d2e.png" />
+<img alt="_images/403587153e7a9e0522eea21b4d529c5446d2ed007e22a5662bc263c2f45b52b5.png" src="_images/403587153e7a9e0522eea21b4d529c5446d2ed007e22a5662bc263c2f45b52b5.png" />
 </div>
 </div>
 </section>
@@ -1037,6 +1016,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Estimating <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span></p>
       </div>
+    </a>
+    <a class="right-next"
+       href="estimate_three.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Estimating biomarker ordering</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
