@@ -1,11 +1,6 @@
 Biomarker,participant,measurement,k_j,S_n,affected_or_not
-Biomarker 1,5,3.4240036294045337,10,10,affected
-Biomarker 1,16,2.800921526678237,10,10,affected
-Biomarker 1,19,2.9015661888045363,10,10,affected
-Biomarker 1,62,3.7122439951656476,10,10,affected
-Biomarker 1,64,3.313952433891676,10,10,affected
-Biomarker 1,65,3.0797487030747193,10,10,affected
-Biomarker 1,84,3.028822506991513,10,10,affected
-Biomarker 1,92,3.8715384893596987,10,10,affected
-Biomarker 1,94,2.861006621027262,10,10,affected
-Biomarker 1,99,3.4202944596750995,10,10,affected
+Biomarker 1,71,2.6848939164879373,10,10,affected
+Biomarker 1,75,2.228630521260511,10,10,affected
+Biomarker 1,79,2.8860594876789296,10,10,affected
+Biomarker 1,90,3.539476708900861,10,10,affected
+Biomarker 1,94,2.577632659508949,10,10,affected

@@ -11,8 +11,8 @@ html:
   use_issues_button: false
   baseurl: https://ebm.hongtaoh.com/
 
-execute:
-  execute_notebooks: cache
+# execute:
+#   execute_notebooks: cache
 
 repository:
   url: https://github.com/hongtaoh/ebm_book

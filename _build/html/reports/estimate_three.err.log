@@ -33,11 +33,11 @@ Here is a preview of the cell contents:
 num_participants = len(data.participant.unique())
 p_order_dict = {}
 num_biomarkers = len(pdata.Biomarker.unique())
-num_iterations = 100
+num_iterations = 30
 for p in range(num_participants):
     pdata = data_we_have[data_we_have.participant == p].reset_index(drop=True)
     best_order, best_likelihood = metropolis_hastings(pdata, num_biomarkers, num_iterations)
     p_order_dict[p] = best_order
-    print(f"participant #{p} is done.")
+    # print(f"participant #{p} is done.")
 -------------------
 
