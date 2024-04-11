@@ -370,6 +370,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#randomized-initilization-result">Randomized initilization result</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-cases">Edge cases</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#result-after-gibbs-sampling">Result after gibbs sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trying-initializing-participant-stages-as-the-actual-stages">Trying initializing participant stages as the actual stages</a></li>
 </ul>
 </li>
 </ul>
@@ -393,11 +394,10 @@ document.write(`
 </div></blockquote>
 <section id="known-theta-and-phi">
 <h2>Known <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span><a class="headerlink" href="#known-theta-and-phi" title="Permalink to this heading">#</a></h2>
-<p>First, let us assume that we know <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>. We also know at which disease stage a biomarker is affected. Basically, in the <code class="docutils literal notranslate"><span class="pre">data</span></code> below, we do not have these two columns: <code class="docutils literal notranslate"><span class="pre">k_j</span></code> and <code class="docutils literal notranslate"><span class="pre">affected_or_not</span></code>.</p>
-<p>For each participant, I will iterate through all possible stages. For each stage, I will calculate the likelihood of seeing the observed biomarker sequence of values using the following formula:</p>
+<p>First, let us assume that we know <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>. We also know at which disease stage a biomarker is affected (i.e., <span class="math notranslate nohighlight">\(S_n\)</span>). Basically, in the <code class="docutils literal notranslate"><span class="pre">data</span></code> below, we do not have these two columns: <code class="docutils literal notranslate"><span class="pre">k_j</span></code> and <code class="docutils literal notranslate"><span class="pre">affected_or_not</span></code>.</p>
+<p>For each participant, I will iterate through all possible stages. For each stage, I will calculate the likelihood of seeing the observed sequence of biomarker values using the following formula:</p>
 <div class="math notranslate nohighlight">
 \[p(X_{j} | S , z_j = 1, k_j) = \prod_{i=1}^{k_j}{p(X_{S(i)j} \mid \theta_n )} \prod_{i=k_j+1}^N{p(X_{S(i)j} \mid \phi_n)}\]</div>
-<p>Then the stage associated with the maximum likelihood will be the estimated disease stage for this participant.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
@@ -444,52 +444,52 @@ document.write(`
       <th>0</th>
       <td>0</td>
       <td>0</td>
-      <td>1.737347</td>
-      <td>10</td>
-      <td>7</td>
+      <td>1.182988</td>
+      <td>8</td>
+      <td>6</td>
       <td>affected</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0</td>
       <td>1</td>
-      <td>12.378301</td>
-      <td>3</td>
-      <td>7</td>
-      <td>not_affected</td>
+      <td>1.106062</td>
+      <td>10</td>
+      <td>6</td>
+      <td>affected</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0</td>
       <td>2</td>
-      <td>12.057385</td>
-      <td>1</td>
-      <td>7</td>
+      <td>29.388512</td>
+      <td>0</td>
+      <td>6</td>
       <td>not_affected</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0</td>
       <td>3</td>
-      <td>9.538184</td>
-      <td>5</td>
-      <td>7</td>
+      <td>32.565342</td>
+      <td>2</td>
+      <td>6</td>
       <td>not_affected</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0</td>
       <td>4</td>
-      <td>12.064628</td>
+      <td>26.612593</td>
       <td>4</td>
-      <td>7</td>
+      <td>6</td>
       <td>not_affected</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Note that in <code class="docutils literal notranslate"><span class="pre">participant_data.csv</span></code>, <span class="math notranslate nohighlight">\(S_n \geq 1\)</span> because <span class="math notranslate nohighlight">\(S_n\)</span> means the disease stage associated with a specific biomarker. <span class="math notranslate nohighlight">\(k_j \geq 0\)</span>, indicating that participants may not be in any of the 10 disease stages.</p>
+<p>Note that in <code class="docutils literal notranslate"><span class="pre">participant_data.csv</span></code>, <span class="math notranslate nohighlight">\(S_n \geq 1\)</span> because <span class="math notranslate nohighlight">\(S_n\)</span> means the disease stage associated with a specific biomarker. <span class="math notranslate nohighlight">\(k_j \geq 0\)</span>, indicating that participants may not be in any of the 10 disease stages (i.e., when <span class="math notranslate nohighlight">\(k_j = 0\)</span>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">S_n</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -497,7 +497,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 7,  1,  2,  6,  8,  3, 10,  5,  4,  9])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 6,  3,  7,  1,  4, 10,  5,  8,  9,  2])
 </pre></div>
 </div>
 </div>
@@ -509,7 +509,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([10,  3,  1,  5,  4,  7,  2,  8,  0,  6,  9])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 8, 10,  0,  2,  4,  1,  5,  9,  6,  3,  7])
 </pre></div>
 </div>
 </div>
@@ -553,40 +553,40 @@ document.write(`
       <td>0</td>
       <td>1.0</td>
       <td>0.3</td>
-      <td>12.0</td>
-      <td>1.3</td>
+      <td>32.0</td>
+      <td>6.3</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
       <td>3.0</td>
       <td>0.5</td>
-      <td>11.0</td>
-      <td>2.4</td>
+      <td>31.0</td>
+      <td>7.4</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2</td>
       <td>5.0</td>
       <td>0.2</td>
-      <td>14.0</td>
-      <td>1.4</td>
+      <td>34.0</td>
+      <td>9.4</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3</td>
       <td>6.0</td>
       <td>1.3</td>
-      <td>16.0</td>
-      <td>0.9</td>
+      <td>36.0</td>
+      <td>4.9</td>
     </tr>
     <tr>
       <th>4</th>
       <td>4</td>
       <td>8.0</td>
       <td>3.3</td>
-      <td>18.0</td>
-      <td>1.5</td>
+      <td>38.0</td>
+      <td>2.5</td>
     </tr>
   </tbody>
 </table>
@@ -594,12 +594,14 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_likelihood</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Computes the likelihood of the given measurement data; note that measurement here</span>
-<span class="sd">    is the value for a single biomarker</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_single_measurement_likelihood</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Computes the likelihood of the measurement value of a single biomarker</span>
 <span class="sd">    We know the normal distribution defined by either theta or phi</span>
 <span class="sd">    and we know the measurement. This will give us the probability</span>
-<span class="sd">    of the given measurement. </span>
+<span class="sd">    of this given measurement value. </span>
+
+<span class="sd">    Note that because the likelihood tends to be very very small, </span>
+<span class="sd">    we take the natural log of it</span>
 
 <span class="sd">    input:</span>
 <span class="sd">    - theta_phi: the dataframe containing theta and phi values for each biomarker</span>
@@ -607,13 +609,36 @@ document.write(`
 <span class="sd">    - affected: boolean </span>
 <span class="sd">    - measurement: the observed value for a biomarker in a specific participant</span>
 
-<span class="sd">    output: a number </span>
+<span class="sd">    output: a scalar</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">biomarker_params</span> <span class="o">=</span> <span class="n">theta_phi</span><span class="p">[</span><span class="n">theta_phi</span><span class="o">.</span><span class="n">biomarker</span> <span class="o">==</span> <span class="n">biomarker</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;theta_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">affected</span> <span class="k">else</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">var</span> <span class="o">=</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;theta_var&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">affected</span> <span class="k">else</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;phi_var&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">measurement</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">measurement</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">likelihood</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This implementes the formula of https://ebm-book2.vercel.app/distributions.html#known-k-j</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        - pdata: data that belongs to a specific participant</span>
+<span class="sd">        - k_j: the disease stage the participant is at </span>
+<span class="sd">        - theta_phi: a dataframe containing theta and phi means &amp; vars for all biomarkers</span>
+<span class="sd">    Outputs:</span>
+<span class="sd">        - the likelihood of seeing this sequence of measurements if the participant is at this k_j</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pdata</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">biomarker</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">])</span>
+        <span class="n">measurement</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;measurement&#39;</span><span class="p">]</span>
+        <span class="n">affected</span> <span class="o">=</span> <span class="n">k_j</span> <span class="o">&gt;=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span>
+        <span class="n">likelihood</span> <span class="o">*=</span> <span class="n">compute_single_measurement_likelihood</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">likelihood</span>
 </pre></div>
 </div>
 </div>
@@ -627,8 +652,8 @@ document.write(`
 <span class="n">biomarkers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">participants</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 <span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="c1"># 11 stages in total, [0, 10]. We need to + 1 because there is no </span>
-<span class="n">num_stages</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">S_n</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="c1"># 11 stages in total, [0, 10].</span>
+<span class="n">num_stages</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">k_j</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="n">estimated_stage_dic</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">actual_stage_dic</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -637,34 +662,18 @@ document.write(`
 <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
     <span class="n">p_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">actual_stage_dic</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_data</span><span class="o">.</span><span class="n">k_j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">stage_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># assume participant is in this stage; compute the likelihood of seeing </span>
-    <span class="c1"># this sequence of observed biomarker measuremen</span>
-    <span class="c1"># [0, 10] Note that k CAN be 0</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">for</span> <span class="n">biomarker</span> <span class="ow">in</span> <span class="n">biomarkers</span><span class="p">:</span>
-            <span class="n">biomaker_data</span> <span class="o">=</span> <span class="n">p_data</span><span class="p">[</span><span class="n">p_data</span><span class="o">.</span><span class="n">Biomarker</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">biomarker</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">measurement</span> <span class="o">=</span> <span class="n">biomaker_data</span><span class="o">.</span><span class="n">measurement</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">biomarker_stage</span> <span class="o">=</span> <span class="n">biomaker_data</span><span class="o">.</span><span class="n">S_n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">affected</span> <span class="o">=</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="n">biomarker_stage</span>
-            <span class="c1"># the final updated likelihood is the likelihood of seeing </span>
-            <span class="c1"># this sequence of data of the total number of biomarkers </span>
-
-            <span class="c1"># This is using the equation here: https://ebm-book2.vercel.app/distributions.html#known-k-j</span>
-            <span class="n">likelihood</span> <span class="o">*=</span> <span class="n">compute_likelihood</span><span class="p">(</span>
-                <span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span>
-            <span class="p">)</span>
-
-            <span class="c1"># if the participant is in this stage, what is the likelihood of seeing this </span>
-            <span class="c1"># sequence of values</span>
-            <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
-    <span class="c1"># if p % 10 == 0:</span>
-    <span class="c1">#     print(stage_likelihood)</span>
-    <span class="c1"># has_duplicates = len(stage_likelihood) != len(set(stage_likelihood))</span>
-    <span class="c1"># print(has_duplicates)</span>
-    <span class="n">max_likelihood_stage</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
-    <span class="n">estimated_stage_dic</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_likelihood_stage</span>           
+    <span class="c1"># initiaze stage_likelihood</span>
+    <span class="n">stage_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_stages</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stages</span><span class="p">):</span>
+        <span class="c1"># assume participant is in this stage; compute the likelihood of seeing </span>
+        <span class="c1"># this sequence of observed biomarker measurement</span>
+        <span class="c1"># [0, 10] Note that k CAN be 0</span>
+        <span class="n">likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">p_data</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">theta_phi</span><span class="o">=</span><span class="n">theta_phi</span><span class="p">)</span>
+        <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
+    <span class="n">likelihood_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span>
+    <span class="n">normalized_stage_likelihood</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">/</span><span class="n">likelihood_sum</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">stage_likelihood</span><span class="p">]</span>
+    <span class="n">sampled_stage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_stages</span><span class="p">),</span> <span class="n">p</span> <span class="o">=</span> <span class="n">normalized_stage_likelihood</span><span class="p">)</span>
+    <span class="n">estimated_stage_dic</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled_stage</span>         
 </pre></div>
 </div>
 </div>
@@ -704,7 +713,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b2e5da4c43a647c2f3b75682b846310ede84eed51b6cb398fa89bb4a5aaf7851.png" src="_images/b2e5da4c43a647c2f3b75682b846310ede84eed51b6cb398fa89bb4a5aaf7851.png" />
+<img alt="_images/4ab33d171e52be58a2583171249b5707c832951bb1e78b33068a6feb77a3bd4d.png" src="_images/4ab33d171e52be58a2583171249b5707c832951bb1e78b33068a6feb77a3bd4d.png" />
 </div>
 </div>
 <p>From the above figure, it is clear that the method we employed is effective as it successfully estimated the stage each participant is in.</p>
@@ -749,36 +758,36 @@ document.write(`
       <th>0</th>
       <td>0</td>
       <td>0</td>
-      <td>1.737347</td>
-      <td>7</td>
+      <td>1.182988</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0</td>
       <td>1</td>
-      <td>12.378301</td>
-      <td>7</td>
+      <td>1.106062</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0</td>
       <td>2</td>
-      <td>12.057385</td>
-      <td>7</td>
+      <td>29.388512</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0</td>
       <td>3</td>
-      <td>9.538184</td>
-      <td>7</td>
+      <td>32.565342</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0</td>
       <td>4</td>
-      <td>12.064628</td>
-      <td>7</td>
+      <td>26.612593</td>
+      <td>6</td>
     </tr>
   </tbody>
 </table>
@@ -788,7 +797,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This is to fill up data_we_have. </span>
-<span class="sd">    Basically, add two columns: k_j, and affected, based on initial or updated participant_stages</span>
+<span class="sd">    Basically, add two columns: k_j, and affected, based on the initial or updated participant_stages</span>
 
 <span class="sd">    Essentially, all we do below is to get the most accurate participant_stages</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -803,8 +812,16 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">estimate_params_exact</span><span class="p">(</span><span class="n">m0</span><span class="p">,</span> <span class="n">n0</span><span class="p">,</span> <span class="n">s0_sq</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    data: a vector of measurements. It is of a specific biomarker and of a specific type (affected, or not affected)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This is to estimate means and vars based on conjugate priors</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        - data: a vector of measurements </span>
+<span class="sd">        - m0: prior estimate of $\mu$.</span>
+<span class="sd">        - n0: how strongly is the prior belief in $m_0$ is held.</span>
+<span class="sd">        - s0_sq: prior estimate of $\sigma^2$.</span>
+<span class="sd">        - v0: prior degress of freedome, influencing the certainty of $s_0^2$.</span>
+<span class="sd">    </span>
+<span class="sd">    Outputs:</span>
+<span class="sd">        - mu estiate, var estimate</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c1"># Data summary</span>
     <span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -840,10 +857,8 @@ document.write(`
 <span class="sd">    Output: </span>
 <span class="sd">    - estimate_means_vars_df, just like means_vars_df, containing the estimated mean and var for </span>
 <span class="sd">      distribution of biomarker values when the biomarker is affected and not affected</span>
-
-<span class="sd">    Special note: </span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="c1"># empty list of dictionaries to store the estimates </span>
+    <span class="c1"># empty list of dictionaries to store the estimations</span>
     <span class="n">means_vars_estimate_dict_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">biomarker</span> <span class="ow">in</span> <span class="n">biomarkers</span><span class="p">:</span> 
         <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;biomarker&#39;</span><span class="p">:</span> <span class="n">biomarker</span><span class="p">}</span>  <span class="c1"># Initialize dictionary outside the inner loop</span>
@@ -874,11 +889,9 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarkers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">participants</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-<span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="c1"># note that this is only 1-10, so the num_stage is 10</span>
 <span class="n">num_stages</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">S_n</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="c1"># initialize participant_stages </span>
-<span class="c1"># note that high should be num_stages + 1; otherwise, no participants will be in the stage of 10</span>
-<span class="n">participant_stages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">num_stages</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">participants</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -888,7 +901,11 @@ document.write(`
 <h3>Randomized initilization result<a class="headerlink" href="#randomized-initilization-result" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimated_stages</span> <span class="o">=</span> <span class="n">participant_stages</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize participant_stages </span>
+<span class="c1"># note that high should be num_stages + 1; otherwise, no participants will be in the stage of 10</span>
+<span class="n">participant_stages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">num_stages</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">participants</span><span class="p">))</span>
+
+<span class="n">estimated_stages</span> <span class="o">=</span> <span class="n">participant_stages</span>
 <span class="n">actual_stages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">actual_stage_dic</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 <span class="n">differences</span> <span class="o">=</span> <span class="n">estimated_stages</span> <span class="o">-</span> <span class="n">actual_stages</span>
 
@@ -897,51 +914,42 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/601a4d2abfc904ed1fd90035fa5148e30169b40949cecb7db71a9ec0d7f6dd50.png" src="_images/601a4d2abfc904ed1fd90035fa5148e30169b40949cecb7db71a9ec0d7f6dd50.png" />
+<img alt="_images/eefd7735a4beb294cec57477197dc03e23c27a6d5318fe4439810ab144432118.png" src="_images/eefd7735a4beb294cec57477197dc03e23c27a6d5318fe4439810ab144432118.png" />
 </div>
 </div>
 </section>
 <section id="edge-cases">
 <h3>Edge cases<a class="headerlink" href="#edge-cases" title="Permalink to this heading">#</a></h3>
-<p>When running the function <code class="docutils literal notranslate"><span class="pre">get_estimated_means_vars_df</span></code>, an edge case exists when a biomarker (Say, Biomarker <span class="math notranslate nohighlight">\(T\)</span>) indicates stage 1. In the initial set-up, since we randomized participant_stages, some participants might be in stage 0. Therefore, for this biomarker, it has both affected and not affected cases. However, this edge case  exists in later iterations where I cannot ensure that the updated <code class="docutils literal notranslate"><span class="pre">participant_stages</span></code> still contains 0. In those scenarios, this biomarker does not have not affected cases. That is to say, in <code class="docutils literal notranslate"><span class="pre">data_we_have</span></code> filled up by that <code class="docutils literal notranslate"><span class="pre">participant_stages</span></code>, the <code class="docutils literal notranslate"><span class="pre">k_j</span></code> column has no values of <span class="math notranslate nohighlight">\(0\)</span>.</p>
-<p>Why would this cause issues? Suppose no participants are in stage <span class="math notranslate nohighlight">\(0\)</span>. Then rows where Biomarker <span class="math notranslate nohighlight">\(T\)</span> resides have no <code class="docutils literal notranslate"><span class="pre">False</span></code> in the column of <code class="docutils literal notranslate"><span class="pre">affected</span></code>. Because <code class="docutils literal notranslate"><span class="pre">estimated_means_vars_df</span></code> is obtained from <code class="docutils literal notranslate"><span class="pre">data_we_have</span></code> which is in turn based upon <code class="docutils literal notranslate"><span class="pre">participant_stages</span></code>, <code class="docutils literal notranslate"><span class="pre">estimated_means_vars_df</span></code> does not have values for phi for Biomarker <span class="math notranslate nohighlight">\(T\)</span>. Then in the following codes, in the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop of <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">k</span> <span class="pre">in</span> <span class="pre">range(num_stages</span> <span class="pre">+</span> <span class="pre">1)</span></code>, when <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">biomarker</span> <span class="pre">=</span> <span class="pre">T</span></code>, we have <code class="docutils literal notranslate"><span class="pre">affected</span> <span class="pre">=</span> <span class="pre">False</span></code>. When computing <code class="docutils literal notranslate"><span class="pre">likelihood</span></code> there will be an issue because in <code class="docutils literal notranslate"><span class="pre">estimated_means_vars_df</span></code>, there are no <code class="docutils literal notranslate"><span class="pre">phi</span></code> values for biomarker <span class="math notranslate nohighlight">\(T\)</span>.</p>
-<p>I haven’t figured out how to solve this issue.</p>
+<p>Below is an issue I have when I get the maximum rather than taking the weighted random sample:</p>
+<blockquote>
+<div><p>When running the function <code class="docutils literal notranslate"><span class="pre">get_estimated_means_vars_df</span></code>, an edge case exists when a biomarker (Say, Biomarker <span class="math notranslate nohighlight">\(T\)</span>) indicates stage 1. In the initial set-up, since we randomized participant_stages, some participants might be in stage 0. Therefore, for this biomarker, it has both affected and not affected cases. However, this edge case  exists in later iterations where I cannot ensure that the updated <code class="docutils literal notranslate"><span class="pre">participant_stages</span></code> still contains 0. In those scenarios, this biomarker does not have not affected cases. That is to say, in <code class="docutils literal notranslate"><span class="pre">data_we_have</span></code> filled up by that <code class="docutils literal notranslate"><span class="pre">participant_stages</span></code>, the <code class="docutils literal notranslate"><span class="pre">k_j</span></code> column has no values of <span class="math notranslate nohighlight">\(0\)</span>.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Why would this cause issues? Suppose no participants are in stage <span class="math notranslate nohighlight">\(0\)</span>. Then rows where Biomarker <span class="math notranslate nohighlight">\(T\)</span> resides have no <code class="docutils literal notranslate"><span class="pre">False</span></code> in the column of <code class="docutils literal notranslate"><span class="pre">affected</span></code>. Because <code class="docutils literal notranslate"><span class="pre">estimated_means_vars_df</span></code> is obtained from <code class="docutils literal notranslate"><span class="pre">data_we_have</span></code> which is in turn based upon <code class="docutils literal notranslate"><span class="pre">participant_stages</span></code>, <code class="docutils literal notranslate"><span class="pre">estimated_means_vars_df</span></code> does not have values for phi for Biomarker <span class="math notranslate nohighlight">\(T\)</span>. Then in the following codes, in the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop of <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">k</span> <span class="pre">in</span> <span class="pre">range(num_stages</span> <span class="pre">+</span> <span class="pre">1)</span></code>, when <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">biomarker</span> <span class="pre">=</span> <span class="pre">T</span></code>, we have <code class="docutils literal notranslate"><span class="pre">affected</span> <span class="pre">=</span> <span class="pre">False</span></code>. When computing <code class="docutils literal notranslate"><span class="pre">likelihood</span></code> there will be an issue because in <code class="docutils literal notranslate"><span class="pre">estimated_means_vars_df</span></code>, there are no <code class="docutils literal notranslate"><span class="pre">phi</span></code> values for biomarker <span class="math notranslate nohighlight">\(T\)</span>.</p>
+</div></blockquote>
+<blockquote>
+<div><p>I haven’t figured out how to solve this issue.</p>
+</div></blockquote>
+<p>I don’t have this issue anymore this. Most likely because I will get 0 sometime in each iteration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import warnings</span>
-<span class="c1"># warnings.filterwarnings(&#39;ignore&#39;)</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
     <span class="c1"># fill up data_we_have with the current participant_stages</span>
     <span class="n">data_we_have</span> <span class="o">=</span> <span class="n">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">)</span>
     <span class="n">estimated_means_vars_df</span> <span class="o">=</span> <span class="n">get_estimated_means_vars_df</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
         <span class="n">p_data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># initiaze stage_likelihood</span>
         <span class="n">stage_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1"># note that it should be [0, 10]</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">for</span> <span class="n">biomarker</span> <span class="ow">in</span> <span class="n">biomarkers</span><span class="p">:</span>
-                <span class="c1"># biomarker data for this participant</span>
-                <span class="n">p_biomaker_data</span> <span class="o">=</span> <span class="n">p_data</span><span class="p">[</span>
-                    <span class="n">p_data</span><span class="o">.</span><span class="n">Biomarker</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">biomarker</span><span class="p">)</span>
-                <span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="n">measurement</span> <span class="o">=</span> <span class="n">p_biomaker_data</span><span class="o">.</span><span class="n">measurement</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">biomarker_stage</span> <span class="o">=</span> <span class="n">p_biomaker_data</span><span class="o">.</span><span class="n">S_n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">affected</span> <span class="o">=</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="n">biomarker_stage</span>
-
-                <span class="c1"># the final updated likelihood is the likelihood of seeing </span>
-                <span class="c1"># this sequence of data of the total number of biomarkers</span>
-                <span class="c1"># This is using the equation here: https://ebm-book2.vercel.app/distributions.html#known-k-j</span>
-                <span class="n">likelihood</span> <span class="o">*=</span> <span class="n">compute_likelihood</span><span class="p">(</span>
-                    <span class="n">estimated_means_vars_df</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span>
-                <span class="p">)</span>
-                <span class="c1"># if the participant is in this stage, what is the likelihood of seeing this </span>
-                <span class="c1"># sequence of values</span>
-                <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
-        <span class="n">max_likelihood_stage</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
-        <span class="c1"># update participant_stages</span>
-        <span class="n">participant_stages</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_likelihood_stage</span>  
+        <span class="c1"># [0, 10] Note that k CAN be 0</span>
+            <span class="n">likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">p_data</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">theta_phi</span> <span class="o">=</span> <span class="n">estimated_means_vars_df</span><span class="p">)</span>
+            <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
+        <span class="n">likelihood_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span>
+        <span class="n">normalized_stage_likelihood</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">/</span><span class="n">likelihood_sum</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">stage_likelihood</span><span class="p">]</span>
+        <span class="n">sampled_stage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">p</span> <span class="o">=</span> <span class="n">normalized_stage_likelihood</span><span class="p">)</span>
+        <span class="n">participant_stages</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled_stage</span>         
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -954,6 +962,27 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 2 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 3 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 4 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 5 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 6 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 7 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 8 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 9 done
 </pre></div>
 </div>
 </div>
@@ -971,7 +1000,80 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b2e5da4c43a647c2f3b75682b846310ede84eed51b6cb398fa89bb4a5aaf7851.png" src="_images/b2e5da4c43a647c2f3b75682b846310ede84eed51b6cb398fa89bb4a5aaf7851.png" />
+<img alt="_images/639cc295b3b11375d72e313b7df1c3d0da39b5d841467896b6cc6e0c5a5ed482.png" src="_images/639cc295b3b11375d72e313b7df1c3d0da39b5d841467896b6cc6e0c5a5ed482.png" />
+</div>
+</div>
+</section>
+<section id="trying-initializing-participant-stages-as-the-actual-stages">
+<h3>Trying initializing participant stages as the actual stages<a class="headerlink" href="#trying-initializing-participant-stages-as-the-actual-stages" title="Permalink to this heading">#</a></h3>
+<p>We can see that if we initlize participant stages as the actual stages, the result is much better.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+    <span class="c1"># fill up data_we_have with the current participant_stages</span>
+    <span class="n">data_we_have</span> <span class="o">=</span> <span class="n">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">actual_stages</span><span class="p">)</span>
+    <span class="n">estimated_means_vars_df</span> <span class="o">=</span> <span class="n">get_estimated_means_vars_df</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
+        <span class="n">p_data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># initiaze stage_likelihood</span>
+        <span class="n">stage_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># note that it should be [0, 10]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># [0, 10] Note that k CAN be 0</span>
+            <span class="n">likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">p_data</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">theta_phi</span> <span class="o">=</span> <span class="n">estimated_means_vars_df</span><span class="p">)</span>
+            <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
+        <span class="n">likelihood_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span>
+        <span class="n">normalized_stage_likelihood</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">/</span><span class="n">likelihood_sum</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">stage_likelihood</span><span class="p">]</span>
+        <span class="n">sampled_stage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_stages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">p</span> <span class="o">=</span> <span class="n">normalized_stage_likelihood</span><span class="p">)</span>
+        <span class="n">participant_stages</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled_stage</span>         
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 0 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 1 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 2 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 3 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 4 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 5 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 6 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 7 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 8 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 9 done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimated_stages</span> <span class="o">=</span> <span class="n">participant_stages</span>
+<span class="n">actual_stages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">actual_stage_dic</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<span class="n">differences</span> <span class="o">=</span> <span class="n">estimated_stages</span> <span class="o">-</span> <span class="n">actual_stages</span>
+<span class="n">scatter_plot_of_stage_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4ab33d171e52be58a2583171249b5707c832951bb1e78b33068a6feb77a3bd4d.png" src="_images/4ab33d171e52be58a2583171249b5707c832951bb1e78b33068a6feb77a3bd4d.png" />
 </div>
 </div>
 </section>
@@ -1047,6 +1149,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#randomized-initilization-result">Randomized initilization result</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-cases">Edge cases</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#result-after-gibbs-sampling">Result after gibbs sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trying-initializing-participant-stages-as-the-actual-stages">Trying initializing participant stages as the actual stages</a></li>
 </ul>
 </li>
 </ul>
