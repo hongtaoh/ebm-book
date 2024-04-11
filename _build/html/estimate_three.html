@@ -364,11 +364,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">Testing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm-implementation">Metropolis-Hastings Algorithm Implementation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-participants">All participants</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm-implementation">Metropolis-Hastings Algorithm Implementation</a></li>
 </ul>
             </nav>
         </div>
@@ -385,7 +381,7 @@ document.write(`
 <blockquote>
 <div><p>The sampler for the biomarker ordering can be a bit tricker. The simplest way to do it might be to do a Metropolis-Hastings step where you select two indicies and propose swapping their order. Then you can work out the relative probabilities, evaluate and then accept/reject based on that. It’s not the fastest sampler, but it is a lot more straightforward than some ways of doing it.</p>
 </div></blockquote>
-<p>In the following, we assume we know the actual <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> values. Other than those, we do not know anything except for participants’ observed biomarker values. And we want to estimate the current order in which different biomarkers are affected by the disease in question.</p>
+<p>In the following, we assume we know the actual <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> values. Other than those, we know nothing except for participants’ observed biomarker values. And we want to estimate the current order in which different biomarkers are affected by the disease in question.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
@@ -437,31 +433,31 @@ document.write(`
       <th>0</th>
       <td>0</td>
       <td>0</td>
-      <td>1.182988</td>
+      <td>24.714920</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0</td>
       <td>1</td>
-      <td>1.106062</td>
+      <td>32.103408</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0</td>
       <td>2</td>
-      <td>29.388512</td>
+      <td>21.084512</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0</td>
       <td>3</td>
-      <td>32.565342</td>
+      <td>27.019921</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0</td>
       <td>4</td>
-      <td>26.612593</td>
+      <td>27.673772</td>
     </tr>
   </tbody>
 </table>
@@ -575,11 +571,38 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def compute_single_measurement_log_likelihood(theta_phi, biomarker, affected, measurement):</span>
+<span class="c1">#     &#39;&#39;&#39;Computes the log likelihood of the measurement value of a single biomarker</span>
+<span class="c1">#     We know the normal distribution defined by either theta or phi</span>
+<span class="c1">#     and we know the measurement. This will give us the probability</span>
+<span class="c1">#     of the given measurement. </span>
+
+<span class="c1">#     input:</span>
+<span class="c1">#     - theta_phi: the dataframe containing theta and phi values for each biomarker</span>
+<span class="c1">#     - biomarker: an integer between 0 and 9 </span>
+<span class="c1">#     - affected: boolean </span>
+<span class="c1">#     - measurement: the observed value for a biomarker in a specific participant</span>
+
+<span class="c1">#     output: a number </span>
+<span class="c1">#     &#39;&#39;&#39;</span>
+<span class="c1">#     biomarker_params = theta_phi[theta_phi.biomarker == biomarker].reset_index()</span>
+<span class="c1">#     mu = biomarker_params[&#39;theta_mean&#39;][0] if affected else biomarker_params[&#39;phi_mean&#39;][0]</span>
+<span class="c1">#     var = biomarker_params[&#39;theta_var&#39;][0] if affected else biomarker_params[&#39;phi_var&#39;][0]</span>
+<span class="c1">#     return -0.5*np.log(2*np.pi*var) - ((measurement - mu)**2/(2*var))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_single_measurement_likelihood</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Computes the likelihood of the measurement value of a single biomarker</span>
 <span class="sd">    We know the normal distribution defined by either theta or phi</span>
 <span class="sd">    and we know the measurement. This will give us the probability</span>
-<span class="sd">    of the given measurement. </span>
+<span class="sd">    of this given measurement value. </span>
+
+<span class="sd">    Note that because the likelihood tends to be very very small, </span>
+<span class="sd">    we take the natural log of it</span>
 
 <span class="sd">    input:</span>
 <span class="sd">    - theta_phi: the dataframe containing theta and phi values for each biomarker</span>
@@ -587,13 +610,32 @@ document.write(`
 <span class="sd">    - affected: boolean </span>
 <span class="sd">    - measurement: the observed value for a biomarker in a specific participant</span>
 
-<span class="sd">    output: a number </span>
+<span class="sd">    output: a scalar</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">biomarker_params</span> <span class="o">=</span> <span class="n">theta_phi</span><span class="p">[</span><span class="n">theta_phi</span><span class="o">.</span><span class="n">biomarker</span> <span class="o">==</span> <span class="n">biomarker</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;theta_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">affected</span> <span class="k">else</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">var</span> <span class="o">=</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;theta_var&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">affected</span> <span class="k">else</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;phi_var&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">measurement</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># sigma = np.sqrt(var)</span>
+    <span class="n">likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">measurement</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">var</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">var</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">likelihood</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def compute_log_likelihood(pdata, k_j):</span>
+<span class="c1">#     &#39;&#39;&#39;This implementes the formula of https://ebm-book2.vercel.app/distributions.html#known-k-j</span>
+<span class="c1">#     &#39;&#39;&#39;</span>
+<span class="c1">#     data = fill_up_pdata(pdata, k_j)</span>
+<span class="c1">#     likelihood = 0</span>
+<span class="c1">#     for i, row in data.iterrows():</span>
+<span class="c1">#         biomarker = int(row[&#39;Biomarker&#39;])</span>
+<span class="c1">#         measurement = row[&#39;measurement&#39;]</span>
+<span class="c1">#         affected = row[&#39;affected&#39;]</span>
+<span class="c1">#         likelihood += compute_single_measurement_log_likelihood(</span>
+<span class="c1">#             theta_phi, biomarker, affected, measurement)</span>
+<span class="c1">#     return likelihood</span>
 </pre></div>
 </div>
 </div>
@@ -609,7 +651,8 @@ document.write(`
         <span class="n">biomarker</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">])</span>
         <span class="n">measurement</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;measurement&#39;</span><span class="p">]</span>
         <span class="n">affected</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;affected&#39;</span><span class="p">]</span>
-        <span class="n">likelihood</span> <span class="o">*=</span> <span class="n">compute_single_measurement_likelihood</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">)</span>
+        <span class="n">likelihood</span> <span class="o">*=</span> <span class="n">compute_single_measurement_likelihood</span><span class="p">(</span>
+            <span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">likelihood</span>
 </pre></div>
 </div>
@@ -658,91 +701,91 @@ document.write(`
       <th>0</th>
       <td>0</td>
       <td>15</td>
-      <td>26.352413</td>
-      <td>3</td>
+      <td>36.547174</td>
       <td>6</td>
+      <td>7</td>
       <td>not_affected</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
       <td>15</td>
-      <td>2.445603</td>
-      <td>3</td>
-      <td>3</td>
+      <td>2.909218</td>
+      <td>6</td>
+      <td>5</td>
       <td>affected</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2</td>
       <td>15</td>
-      <td>20.243889</td>
+      <td>5.042268</td>
+      <td>6</td>
       <td>3</td>
-      <td>7</td>
-      <td>not_affected</td>
+      <td>affected</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3</td>
       <td>15</td>
-      <td>6.821753</td>
-      <td>3</td>
-      <td>1</td>
-      <td>affected</td>
+      <td>37.349589</td>
+      <td>6</td>
+      <td>9</td>
+      <td>not_affected</td>
     </tr>
     <tr>
       <th>4</th>
       <td>4</td>
       <td>15</td>
-      <td>36.159534</td>
-      <td>3</td>
-      <td>4</td>
-      <td>not_affected</td>
+      <td>9.509030</td>
+      <td>6</td>
+      <td>1</td>
+      <td>affected</td>
     </tr>
     <tr>
       <th>5</th>
       <td>5</td>
       <td>15</td>
-      <td>25.671358</td>
-      <td>3</td>
-      <td>10</td>
-      <td>not_affected</td>
+      <td>2.335076</td>
+      <td>6</td>
+      <td>2</td>
+      <td>affected</td>
     </tr>
     <tr>
       <th>6</th>
       <td>6</td>
       <td>15</td>
-      <td>27.230595</td>
-      <td>3</td>
-      <td>5</td>
-      <td>not_affected</td>
+      <td>4.764619</td>
+      <td>6</td>
+      <td>6</td>
+      <td>affected</td>
     </tr>
     <tr>
       <th>7</th>
       <td>7</td>
       <td>15</td>
-      <td>34.500996</td>
-      <td>3</td>
-      <td>8</td>
+      <td>17.633576</td>
+      <td>6</td>
+      <td>10</td>
       <td>not_affected</td>
     </tr>
     <tr>
       <th>8</th>
       <td>8</td>
       <td>15</td>
-      <td>32.489876</td>
-      <td>3</td>
-      <td>9</td>
-      <td>not_affected</td>
+      <td>8.029674</td>
+      <td>6</td>
+      <td>4</td>
+      <td>affected</td>
     </tr>
     <tr>
       <th>9</th>
       <td>9</td>
       <td>15</td>
-      <td>9.161154</td>
-      <td>3</td>
-      <td>2</td>
-      <td>affected</td>
+      <td>35.276224</td>
+      <td>6</td>
+      <td>8</td>
+      <td>not_affected</td>
     </tr>
   </tbody>
 </table>
@@ -757,7 +800,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: 6, 1: 3, 2: 7, 3: 1, 4: 4, 5: 10, 6: 5, 7: 8, 8: 9, 9: 2}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: 7, 1: 5, 2: 3, 3: 9, 4: 1, 5: 2, 6: 6, 7: 10, 8: 4, 9: 8}
 </pre></div>
 </div>
 </div>
@@ -802,71 +845,71 @@ document.write(`
       <th>0</th>
       <td>0</td>
       <td>15</td>
-      <td>26.352413</td>
-      <td>6</td>
+      <td>36.547174</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
       <td>15</td>
-      <td>2.445603</td>
-      <td>3</td>
+      <td>2.909218</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2</td>
       <td>15</td>
-      <td>20.243889</td>
-      <td>7</td>
+      <td>5.042268</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3</td>
       <td>15</td>
-      <td>6.821753</td>
-      <td>1</td>
+      <td>37.349589</td>
+      <td>9</td>
     </tr>
     <tr>
       <th>4</th>
       <td>4</td>
       <td>15</td>
-      <td>36.159534</td>
-      <td>4</td>
+      <td>9.509030</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>5</th>
       <td>5</td>
       <td>15</td>
-      <td>25.671358</td>
-      <td>10</td>
+      <td>2.335076</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>6</th>
       <td>6</td>
       <td>15</td>
-      <td>27.230595</td>
-      <td>5</td>
+      <td>4.764619</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>7</th>
       <td>7</td>
       <td>15</td>
-      <td>34.500996</td>
-      <td>8</td>
+      <td>17.633576</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>8</th>
       <td>8</td>
       <td>15</td>
-      <td>32.489876</td>
-      <td>9</td>
+      <td>8.029674</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>9</th>
       <td>9</td>
       <td>15</td>
-      <td>9.161154</td>
-      <td>2</td>
+      <td>35.276224</td>
+      <td>8</td>
     </tr>
   </tbody>
 </table>
@@ -876,7 +919,8 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pdata</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="c1"># calculate likelihood for all possible k_j</span>
-<span class="n">likelihood_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="o">=</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="o">=</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">likelihood_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="o">=</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="o">=</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
 <span class="n">kjs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
 <span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">kjs</span><span class="p">,</span> <span class="n">likelihood_list</span><span class="p">))</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">dic</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -909,39 +953,39 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>2.461540e-20</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>1.031913e-44</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>2.796883e-72</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>3.776499e-101</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>4.705906e-139</td>
+      <th>6</th>
+      <td>6</td>
+      <td>8.498626e-15</td>
     </tr>
     <tr>
       <th>5</th>
       <td>5</td>
-      <td>4.744534e-218</td>
+      <td>1.070326e-36</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>6</td>
-      <td>0.000000e+00</td>
+      <th>4</th>
+      <td>4</td>
+      <td>1.961882e-60</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2.230992e-80</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1.390695e-100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>9.775606e-150</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>4.941208e-220</td>
     </tr>
     <tr>
       <th>7</th>
@@ -967,7 +1011,7 @@ document.write(`
 </table>
 </div></div></div>
 </div>
-<p>From the above result, we can see that the most likelihood <code class="docutils literal notranslate"><span class="pre">k_j</span></code> is 8, which is in fact the real <code class="docutils literal notranslate"><span class="pre">k_j</span></code> in the participant data.</p>
+<!-- From the above result, we can see that the most likelihood `k_j` is 8, which is in fact the real `k_j` in the participant data.  -->
 </section>
 <section id="metropolis-hastings-algorithm-implementation">
 <h2>Metropolis-Hastings Algorithm Implementation<a class="headerlink" href="#metropolis-hastings-algorithm-implementation" title="Permalink to this heading">#</a></h2>
@@ -984,7 +1028,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">metropolis_hastings</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">metropolis_hastings</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Implement the metropolis-hastings algorithm</span>
 <span class="sd">    Inputs: </span>
 <span class="sd">        - pdata: a dataframe of ten biomarker values for a specific participant</span>
@@ -995,141 +1039,641 @@ document.write(`
 <span class="sd">        - best_order: a numpy array</span>
 <span class="sd">        - best_likelihood: a scalar </span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">num_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+
     <span class="c1"># initialize an ordering and likelihood</span>
     <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">)</span>
     <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
-    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
         <span class="n">new_order</span> <span class="o">=</span> <span class="n">best_order</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="c1"># randomly select two indices</span>
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="c1"># swaping the order</span>
         <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
-        <span class="n">pdata</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_order</span>
-        <span class="n">likelihood</span> <span class="o">=</span> <span class="n">average_all_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">)</span>
+        <span class="c1"># biomarker - order dict</span>
+        <span class="n">ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">),</span> <span class="n">new_order</span><span class="p">))</span>
+        <span class="c1"># fill up S_n column using the ordering dict</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">])],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participants</span><span class="p">):</span>
+            <span class="n">pdata</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">average_likelihood</span> <span class="o">=</span> <span class="n">average_all_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">)</span>
+            <span class="c1"># print(average_likelihood)</span>
+            <span class="n">log_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">average_likelihood</span><span class="p">)</span>
+            <span class="n">likelihood</span> <span class="o">+=</span> <span class="n">log_likelihood</span>
         <span class="k">if</span> <span class="n">likelihood</span> <span class="o">&gt;</span> <span class="n">best_likelihood</span><span class="p">:</span>
             <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">likelihood</span> 
             <span class="n">best_order</span> <span class="o">=</span> <span class="n">new_order</span>
         <span class="k">else</span><span class="p">:</span> 
             <span class="n">ratio</span> <span class="o">=</span> <span class="n">likelihood</span><span class="o">/</span><span class="n">best_likelihood</span>
-            <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">ratio</span><span class="p">:</span>
                 <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">likelihood</span>
                 <span class="n">best_order</span> <span class="o">=</span> <span class="n">new_order</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">best_order</span><span class="p">,</span> <span class="n">best_likelihood</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s test the algorithm with one specific participant:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pdata</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pdata</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">best_order</span><span class="p">,</span> <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">metropolis_hastings</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">)</span>
-<span class="n">best_order</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_order</span><span class="p">,</span> <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">metropolis_hastings</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_75813/3826826747.py:27: RuntimeWarning: invalid value encountered in double_scalars
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  ratio = likelihood/best_likelihood
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 1 done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  ratio = likelihood/best_likelihood
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 2 done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  ratio = likelihood/best_likelihood
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 3 done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 4 done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:33: RuntimeWarning: divide by zero encountered in log
+  log_likelihood = np.log(average_likelihood)
+/var/folders/wx/xz5y_06d15q5pgl_mhv76c8r0000gn/T/ipykernel_76646/1654032762.py:39: RuntimeWarning: invalid value encountered in double_scalars
   ratio = likelihood/best_likelihood
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pdata</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">best_order</span><span class="p">,</span> <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">metropolis_hastings</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">best_order</span>
-
-<span class="nn">Cell In[13], line 28,</span> in <span class="ni">metropolis_hastings</span><span class="nt">(pdata, num_biomarkers, iterations)</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="k">else</span><span class="p">:</span> 
-<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">ratio</span> <span class="o">=</span> <span class="n">likelihood</span><span class="o">/</span><span class="n">best_likelihood</span>
-<span class="ne">---&gt; </span><span class="mi">28</span>     <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">ratio</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span>         <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">likelihood</span>
-
-<span class="ne">TypeError</span>: &#39;module&#39; object is not callable
-</pre></div>
-</div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># real order</span>
-<span class="n">real_ordering</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">real_ordering_dic</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-<span class="n">real_ordering</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_order</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 1, 10,  5,  6,  4,  2,  9,  3,  8,  7])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 </pre></div>
 </div>
 </div>
 </div>
-<p>We find that the <code class="docutils literal notranslate"><span class="pre">best_order</span></code> obtained from our algorithm is different from the real ordering.</p>
-<section id="all-participants">
-<h3>All participants<a class="headerlink" href="#all-participants" title="Permalink to this heading">#</a></h3>
-<p>One problem is that we only considered one specific participant; we have have 100 participants. We can do estimate the ordering for all participants:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="n">p_order_dict</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pdata</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participants</span><span class="p">):</span>
-    <span class="n">pdata</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">best_order</span><span class="p">,</span> <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">metropolis_hastings</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">)</span>
-    <span class="n">p_order_dict</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_order</span>
-    <span class="c1"># print(f&quot;participant #{p} is done.&quot;)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimated_orderings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p_order_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="n">tuples</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">estimated_orderings</span><span class="p">]</span>
-<span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">tuples</span><span class="p">)</span>
-<span class="n">most_common_tuple</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">most_common_tuple</span><span class="p">,</span> <span class="n">count</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((1, 5, 4, 7, 2, 0, 6, 3, 8, 9), 2)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to see whether the real ordering is in the estimated ordering list</span>
-<span class="n">result</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">real_ordering</span><span class="p">,</span> <span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">estimated_orderings</span><span class="p">)</span>
-<span class="n">result</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h3>
-<p>It seems this method is slow and also not accurate. The correct ordering is not in the estimated ordering array. I am not sure whether it is because the iterations (100) is too small.</p>
-</section>
 </section>
 </section>
 
@@ -1188,11 +1732,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">Testing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm-implementation">Metropolis-Hastings Algorithm Implementation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-participants">All participants</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm-implementation">Metropolis-Hastings Algorithm Implementation</a></li>
 </ul>
   </nav></div>
 
