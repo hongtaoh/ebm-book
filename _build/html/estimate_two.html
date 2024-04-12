@@ -795,11 +795,15 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">participants</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This is to fill up data_we_have. </span>
 <span class="sd">    Basically, add two columns: k_j, and affected, based on the initial or updated participant_stages</span>
-
 <span class="sd">    Essentially, all we do below is to get the most accurate participant_stages</span>
+<span class="sd">    </span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        - data_we_have</span>
+<span class="sd">        - participant_stages: np array </span>
+<span class="sd">        - participants: 0-199</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">participant_stage_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">participants</span><span class="p">)),</span> <span class="n">participant_stages</span><span class="p">))</span>
     <span class="n">data_we_have</span><span class="p">[</span><span class="s1">&#39;k_j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">participant_stage_dic</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">participant</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
@@ -814,7 +818,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">estimate_params_exact</span><span class="p">(</span><span class="n">m0</span><span class="p">,</span> <span class="n">n0</span><span class="p">,</span> <span class="n">s0_sq</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This is to estimate means and vars based on conjugate priors</span>
 <span class="sd">    Inputs:</span>
-<span class="sd">        - data: a vector of measurements </span>
+<span class="sd">        - data: a vector of measurements for a specific biomarker in a specific group (affected or not)</span>
 <span class="sd">        - m0: prior estimate of $\mu$.</span>
 <span class="sd">        - n0: how strongly is the prior belief in $m_0$ is held.</span>
 <span class="sd">        - s0_sq: prior estimate of $\sigma^2$.</span>
@@ -914,7 +918,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4c54810414e84539e098f07835263534ef96d0638747cde5cc5e511ffda6dd63.png" src="_images/4c54810414e84539e098f07835263534ef96d0638747cde5cc5e511ffda6dd63.png" />
+<img alt="_images/0af7933215a67e3f0967a9932af98b5bd9c06c47d605518254da129dce50e4e7.png" src="_images/0af7933215a67e3f0967a9932af98b5bd9c06c47d605518254da129dce50e4e7.png" />
 </div>
 </div>
 </section>
@@ -935,7 +939,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
     <span class="c1"># fill up data_we_have with the current participant_stages</span>
-    <span class="n">data_we_have</span> <span class="o">=</span> <span class="n">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">)</span>
+    <span class="n">data_we_have</span> <span class="o">=</span> <span class="n">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">participants</span><span class="p">)</span>
     <span class="n">estimated_means_vars_df</span> <span class="o">=</span> <span class="n">get_estimated_means_vars_df</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
         <span class="n">p_data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1000,7 +1004,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f9dfab67be73046202e8b26e98c1a4494f31a297c8e25d7bdb68cd22663199e5.png" src="_images/f9dfab67be73046202e8b26e98c1a4494f31a297c8e25d7bdb68cd22663199e5.png" />
+<img alt="_images/ead9d0a9a6c2b7a4eed381edd68b9d81143d87d8b229073f22346189a16c833d.png" src="_images/ead9d0a9a6c2b7a4eed381edd68b9d81143d87d8b229073f22346189a16c833d.png" />
 </div>
 </div>
 </section>
@@ -1011,7 +1015,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
     <span class="c1"># fill up data_we_have with the current participant_stages</span>
-    <span class="n">data_we_have</span> <span class="o">=</span> <span class="n">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">actual_stages</span><span class="p">)</span>
+    <span class="n">data_we_have</span> <span class="o">=</span> <span class="n">fill_up_data_we_have</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">actual_stages</span><span class="p">,</span> <span class="n">participants</span><span class="p">)</span>
     <span class="n">estimated_means_vars_df</span> <span class="o">=</span> <span class="n">get_estimated_means_vars_df</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
         <span class="n">p_data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1073,7 +1077,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1acb189bbbe29477b69c122e6089db411e6eaa23364d5c2d68bbbf373410e7e2.png" src="_images/1acb189bbbe29477b69c122e6089db411e6eaa23364d5c2d68bbbf373410e7e2.png" />
+<img alt="_images/63ad7d680294533c350463349a0b219c35e76788d05ed76b03ea8995d8de346e.png" src="_images/63ad7d680294533c350463349a0b219c35e76788d05ed76b03ea8995d8de346e.png" />
 </div>
 </div>
 </section>
