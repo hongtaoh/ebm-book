@@ -755,6 +755,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ordering of biomarker affected by the disease</span>
+<span class="c1"># biomarker: disease stage</span>
+<span class="c1"># note that the key &gt;= 1</span>
 <span class="n">real_ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">pdata</span><span class="o">.</span><span class="n">S_n</span><span class="p">))</span>
 <span class="n">real_ordering_dic</span>
 </pre></div>
@@ -1038,7 +1040,8 @@ document.write(`
     <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 
     <span class="c1"># initialize an ordering and likelihood</span>
-    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">)</span>
+    <span class="c1"># note that it should be a random permutation of numbers 1-10</span>
+    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
     <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
     <span class="c1"># best_order = np.array(list(real_ordering_dic.values()))</span>
     <span class="c1"># best_likelihood = compute_likelihood_based_on_ordering(</span>
@@ -1112,7 +1115,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0, 9, 4, 6, 3, 2, 1, 7, 8, 5]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([10,  6,  3,  4,  8,  1,  7,  5,  9,  2]),
  array([ 7,  5,  3,  9,  1,  2,  6, 10,  4,  8]))
 </pre></div>
 </div>
@@ -1366,8 +1369,9 @@ document.write(`
             <span class="n">data_full</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">Biomarker</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">biomarker</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span>
             <span class="n">data_we_have</span><span class="o">.</span><span class="n">affected</span> <span class="o">==</span> <span class="n">affected</span><span class="p">)]</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_full</span><span class="o">.</span><span class="n">measurement</span><span class="p">)</span>
-            <span class="c1"># if len(data) == 0:</span>
-            <span class="c1">#     print(data_full)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">biomarker</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">data_full</span><span class="p">)</span>
             <span class="n">mu_estimate</span><span class="p">,</span> <span class="n">var_estimate</span> <span class="o">=</span> <span class="n">estimate_params_exact</span><span class="p">(</span>
                 <span class="n">m0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">s0_sq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">affected</span><span class="p">:</span>
@@ -1390,7 +1394,8 @@ document.write(`
     <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 
     <span class="c1"># initialize an ordering and likelihood</span>
-    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">)</span>
+    <span class="c1"># note that it should be a random permutation of numbers 1-10</span>
+    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
     <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
 
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
@@ -1412,13 +1417,10 @@ document.write(`
         <span class="c1"># initialize participant_stages </span>
         <span class="c1"># note that high should be num_stages + 1; otherwise, no participants will be in the stage of 10</span>
         <span class="n">participant_stages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">num_participants</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">participant_stages</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0 is in stage_likelihood&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0 is not in stage_likelihood&quot;</span><span class="p">)</span>
 
         <span class="c1"># add kj and affected</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">add_kj_and_affected</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">)</span>
+        <span class="c1"># print(data.head())</span>
 
         <span class="c1"># get estimated_theta_phi</span>
         <span class="n">estimated_theta_phi</span> <span class="o">=</span> <span class="n">get_estimated_theta_phi</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
@@ -1454,10 +1456,14 @@ document.write(`
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">log_average_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">average_likelihood</span><span class="p">)</span>
             <span class="n">all_participant_likelihood</span> <span class="o">+=</span> <span class="n">log_average_likelihood</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">participant_stages</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0 is in participant stages&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0 is not in participant stages&quot;</span><span class="p">)</span>
+
+        <span class="c1"># if all_participant_likelihood == 0:</span>
+        <span class="c1">#     print(&quot;all_participant_likelihood is zero&quot;)</span>
+            
+        <span class="c1"># if np.any(participant_stages == 0):</span>
+        <span class="c1">#     print(&quot;0 is in participant stages&quot;)</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     print(&quot;0 is not in participant stages&quot;)</span>
         <span class="k">if</span>  <span class="n">all_participant_likelihood</span> <span class="o">&gt;</span> <span class="n">best_likelihood</span><span class="p">:</span>
             <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">all_participant_likelihood</span> 
             <span class="n">best_order</span> <span class="o">=</span> <span class="n">new_order</span>
@@ -1480,40 +1486,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 is in stage_likelihood
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 1 done
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
-  return _methods._mean(a, axis=axis, dtype=dtype,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3715: RuntimeWarning: Degrees of freedom &lt;= 0 for slice
-  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:223: RuntimeWarning: invalid value encountered in divide
-  arrmean = um.true_divide(arrmean, div, out=arrmean, casting=&#39;unsafe&#39;,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:257: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 is in participant stages
-iteration 1 done
-0 is in stage_likelihood
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
-  return _methods._mean(a, axis=axis, dtype=dtype,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3715: RuntimeWarning: Degrees of freedom &lt;= 0 for slice
-  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:223: RuntimeWarning: invalid value encountered in divide
-  arrmean = um.true_divide(arrmean, div, out=arrmean, casting=&#39;unsafe&#39;,
-/Users/hongtaoh/anaconda3/envs/bayes/lib/python3.8/site-packages/numpy/core/_methods.py:257: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 is in participant stages
-iteration 2 done
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 2 done
 </pre></div>
 </div>
 </div>
@@ -1525,7 +1501,7 @@ iteration 2 done
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 5, 3, 4, 2, 7, 6, 8, 9])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 3,  4,  8,  2,  1,  5,  9,  7,  6, 10])
 </pre></div>
 </div>
 </div>
