@@ -169,6 +169,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="estimate_one.html">Estimating <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span></a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimate_two.html">Estimating <span class="math notranslate nohighlight">\(k_j\)</span></a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimate_three.html">Estimating biomarker ordering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plan.html">Research Plan</a></li>
 </ul>
 
     </div>
@@ -429,7 +430,7 @@ document.write(`
 <p>Also note that we need to consider <span class="math notranslate nohighlight">\(L_0\)</span> because in the equation above, <span class="math notranslate nohighlight">\(k_j\)</span> starts from <span class="math notranslate nohighlight">\(0\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[L_0 = p(X_j | S, k_j = 0) = p (X_b | \phi_b) \times p (X_a | \phi_a) \times p (X_d | \phi_d) \times p (X_c | \phi_c)\]</div>
-<p>So</p>
+<p><span class="math notranslate nohighlight">\(P(k_j)\)</span> is the prior likelihood of being at stage <span class="math notranslate nohighlight">\(k\)</span>. If we have a uniform prior on <span class="math notranslate nohighlight">\(k_j\)</span>, then:</p>
 <p><span class="math notranslate nohighlight">\(P(X_{j} | z_j=1, S) = \frac{1}{5} \left(L_0 + L_1 + L_2 + L_3 + L_4 \right)\)</span></p>
 </section>
 </section>
