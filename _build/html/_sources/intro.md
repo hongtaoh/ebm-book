@@ -12,3 +12,11 @@ This book contains chapters that explain the how to compuate the likelihood of b
 - [Likelihood of Biomarker Data](./distributions.ipynb)
 
 - [Generative Process](./generative_process.ipynb)
+
+- [Estimating theta and phi](./estimate_one.ipynb)
+
+- [Estimating k_j](./estimate_two.ipynb)
+
+- [Estimating biomarker ordering](./estimate_three.ipynb)
+
+- [Research Plan](./plan.md)

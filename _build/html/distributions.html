@@ -166,9 +166,9 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Likelihood of observed biomarker data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generative_process.html">Generative process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimate_one.html">Estimating <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span></a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimate_two.html">Estimating <span class="math notranslate nohighlight">\(k_j\)</span></a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimate_three.html">Estimating biomarker ordering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimate_distribution_params.html">Estimating distribution parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimate_disease_stages.html">Estimating participants’ disease stages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimate_biomarker_ordering.html">Estimating biomarker ordering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plan.html">Research Plan</a></li>
 </ul>
 
@@ -430,6 +430,14 @@ document.write(`
 <p>Also note that we need to consider <span class="math notranslate nohighlight">\(L_0\)</span> because in the equation above, <span class="math notranslate nohighlight">\(k_j\)</span> starts from <span class="math notranslate nohighlight">\(0\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[L_0 = p(X_j | S, k_j = 0) = p (X_b | \phi_b) \times p (X_a | \phi_a) \times p (X_d | \phi_d) \times p (X_c | \phi_c)\]</div>
+<div class="math notranslate nohighlight">
+\[L_1 = p(X_j | S, k_j = 1) = p (X_b | \theta_b) \times p (X_a | \phi_a) \times p (X_d | \phi_d) \times p (X_c | \phi_c)\]</div>
+<div class="math notranslate nohighlight">
+\[L_2 = p(X_j | S, k_j = 2) = p (X_b | \theta_b) \times p (X_a | \theta_a) \times p (X_d | \phi_d) \times p (X_c | \phi_c)\]</div>
+<div class="math notranslate nohighlight">
+\[L_3 = p(X_j | S, k_j = 3) = p (X_b | \theta_b) \times p (X_a | \theta_a) \times p (X_d | \theta_d) \times p (X_c | \phi_c)\]</div>
+<div class="math notranslate nohighlight">
+\[L_4 = p(X_j | S, k_j = 4) = p (X_b | \theta_b) \times p (X_a | \theta_a) \times p (X_d | \theta_d) \times p (X_c | \theta_c)\]</div>
 <p><span class="math notranslate nohighlight">\(P(k_j)\)</span> is the prior likelihood of being at stage <span class="math notranslate nohighlight">\(k\)</span>. If we have a uniform prior on <span class="math notranslate nohighlight">\(k_j\)</span>, then:</p>
 <p><span class="math notranslate nohighlight">\(P(X_{j} | z_j=1, S) = \frac{1}{5} \left(L_0 + L_1 + L_2 + L_3 + L_4 \right)\)</span></p>
 </section>
