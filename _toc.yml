@@ -3,7 +3,7 @@ root: intro
 chapters:
   - file: distributions
   - file: generative_process
-  - file: estimate_distribution_params
-  - file: estimate_disease_stages
-  - file: estimate_biomarker_ordering
+  - file: one_estimate_distribution_params
+  - file: two_estimate_disease_stages
+  - file: three_estimate_biomarker_ordering
   - file: plan
