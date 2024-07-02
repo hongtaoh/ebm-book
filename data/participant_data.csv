@@ -1,1001 +1,1001 @@
-Biomarker,participant,measurement,k_j,S_n,affected_or_not
-Biomarker 0,0,28.430421963314704,5,1,affected
-Biomarker 0,1,27.271974614212755,4,1,affected
-Biomarker 0,2,15.562816346325768,0,1,not_affected
-Biomarker 0,3,27.592558337200455,5,1,affected
-Biomarker 0,4,28.28298650801936,4,1,affected
-Biomarker 0,5,29.044355478914508,7,1,affected
-Biomarker 0,6,28.521123507678997,8,1,affected
-Biomarker 0,7,28.277780429944823,1,1,affected
-Biomarker 0,8,27.083519160330486,6,1,affected
-Biomarker 0,9,28.463414602997688,1,1,affected
-Biomarker 0,10,26.7499305383888,6,1,affected
-Biomarker 0,11,28.207890965599113,10,1,affected
-Biomarker 0,12,26.81823686921835,2,1,affected
-Biomarker 0,13,27.34403464490627,9,1,affected
-Biomarker 0,14,27.618851954627996,2,1,affected
-Biomarker 0,15,29.480355350643165,10,1,affected
-Biomarker 0,16,28.80435589516639,10,1,affected
-Biomarker 0,17,28.09008834742786,4,1,affected
-Biomarker 0,18,27.79801377243919,7,1,affected
-Biomarker 0,19,27.709626833480193,8,1,affected
-Biomarker 0,20,27.808517693424317,10,1,affected
-Biomarker 0,21,27.79194145490645,6,1,affected
-Biomarker 0,22,27.957492222978715,9,1,affected
-Biomarker 0,23,27.691201061678903,3,1,affected
-Biomarker 0,24,29.1719764739597,7,1,affected
-Biomarker 0,25,27.867371146183984,1,1,affected
-Biomarker 0,26,27.452359715035723,4,1,affected
-Biomarker 0,27,28.8704464914641,4,1,affected
-Biomarker 0,28,27.770759545014556,10,1,affected
-Biomarker 0,29,28.55939800264661,8,1,affected
-Biomarker 0,30,28.01630888010176,4,1,affected
-Biomarker 0,31,28.502492294131027,6,1,affected
-Biomarker 0,32,27.197598289654977,5,1,affected
-Biomarker 0,33,27.887285458439912,1,1,affected
-Biomarker 0,34,27.489198288620276,4,1,affected
-Biomarker 0,35,19.321460530170402,0,1,not_affected
-Biomarker 0,36,27.94734746958626,3,1,affected
-Biomarker 0,37,27.674659673847614,10,1,affected
-Biomarker 0,38,28.577362755308002,1,1,affected
-Biomarker 0,39,28.044400612290794,7,1,affected
-Biomarker 0,40,28.598798315985157,2,1,affected
-Biomarker 0,41,28.61507529955568,1,1,affected
-Biomarker 0,42,28.333612334122922,5,1,affected
-Biomarker 0,43,27.780557310131748,10,1,affected
-Biomarker 0,44,28.143290658415644,3,1,affected
-Biomarker 0,45,28.26669045837323,6,1,affected
-Biomarker 0,46,27.4747327280083,1,1,affected
-Biomarker 0,47,29.39295258841922,1,1,affected
-Biomarker 0,48,27.76068138215568,7,1,affected
-Biomarker 0,49,28.702480077170417,1,1,affected
-Biomarker 0,50,27.518969535190923,4,1,affected
-Biomarker 0,51,27.824721365648692,4,1,affected
-Biomarker 0,52,27.32234655401832,1,1,affected
-Biomarker 0,53,28.67128067260334,1,1,affected
-Biomarker 0,54,27.970564996026464,10,1,affected
-Biomarker 0,55,27.158503251449236,4,1,affected
-Biomarker 0,56,28.21519846539068,4,1,affected
-Biomarker 0,57,29.204319217838727,10,1,affected
-Biomarker 0,58,28.345517315601956,9,1,affected
-Biomarker 0,59,26.703686422577906,5,1,affected
-Biomarker 0,60,27.576954351435624,5,1,affected
-Biomarker 0,61,28.112102119042294,5,1,affected
-Biomarker 0,62,27.632280103855937,6,1,affected
-Biomarker 0,63,28.71257765968838,10,1,affected
-Biomarker 0,64,28.16025622384182,2,1,affected
-Biomarker 0,65,29.10661846170383,6,1,affected
-Biomarker 0,66,29.026861479578407,8,1,affected
-Biomarker 0,67,26.824257660882957,9,1,affected
-Biomarker 0,68,27.989100184462856,6,1,affected
-Biomarker 0,69,28.819311915003205,7,1,affected
-Biomarker 0,70,28.235917049550476,6,1,affected
-Biomarker 0,71,27.754124587432074,5,1,affected
-Biomarker 0,72,27.346778549212015,7,1,affected
-Biomarker 0,73,28.456509029068194,8,1,affected
-Biomarker 0,74,28.617851081127064,10,1,affected
-Biomarker 0,75,27.70697769348173,1,1,affected
-Biomarker 0,76,27.820181864120585,8,1,affected
-Biomarker 0,77,28.188364068327452,6,1,affected
-Biomarker 0,78,27.996364791256124,8,1,affected
-Biomarker 0,79,27.553928887880392,5,1,affected
-Biomarker 0,80,28.055927998426228,4,1,affected
-Biomarker 0,81,19.798210404743518,0,1,not_affected
-Biomarker 0,82,27.373021121998573,9,1,affected
-Biomarker 0,83,28.602981011486722,4,1,affected
-Biomarker 0,84,27.201370135044268,7,1,affected
-Biomarker 0,85,27.565234419424893,6,1,affected
-Biomarker 0,86,28.006433960693574,2,1,affected
-Biomarker 0,87,20.88014577953626,0,1,not_affected
-Biomarker 0,88,29.069447237550147,8,1,affected
-Biomarker 0,89,27.897179086537584,3,1,affected
-Biomarker 0,90,28.076956492369707,4,1,affected
-Biomarker 0,91,28.662096748462417,6,1,affected
-Biomarker 0,92,21.20294913068477,0,1,not_affected
-Biomarker 0,93,27.460370669899486,6,1,affected
-Biomarker 0,94,27.84463203416151,4,1,affected
-Biomarker 0,95,28.972162054540288,8,1,affected
-Biomarker 0,96,27.85015192551824,1,1,affected
-Biomarker 0,97,27.265391485830563,1,1,affected
-Biomarker 0,98,28.23448349151832,7,1,affected
-Biomarker 0,99,27.063822896653637,9,1,affected
-Biomarker 1,0,-5.294011547368504,5,5,affected
-Biomarker 1,1,-11.255858572567165,4,5,not_affected
-Biomarker 1,2,-23.821059429542114,0,5,not_affected
-Biomarker 1,3,-5.259738748283611,5,5,affected
-Biomarker 1,4,-19.082737089472605,4,5,not_affected
-Biomarker 1,5,-5.8474836921211875,7,5,affected
-Biomarker 1,6,-6.259717874632468,8,5,affected
-Biomarker 1,7,-21.84864605400459,1,5,not_affected
-Biomarker 1,8,-6.111415668052394,6,5,affected
-Biomarker 1,9,-16.565480496914695,1,5,not_affected
-Biomarker 1,10,-6.515359735168746,6,5,affected
-Biomarker 1,11,-3.725885264373282,10,5,affected
-Biomarker 1,12,-25.09334109942958,2,5,not_affected
-Biomarker 1,13,-7.195726165495708,9,5,affected
-Biomarker 1,14,-20.0751785973345,2,5,not_affected
-Biomarker 1,15,-5.662743174405387,10,5,affected
-Biomarker 1,16,-4.7894325582746795,10,5,affected
-Biomarker 1,17,-21.57405550903519,4,5,not_affected
-Biomarker 1,18,-6.912818620942942,7,5,affected
-Biomarker 1,19,-6.629603532721027,8,5,affected
-Biomarker 1,20,-5.231479821052644,10,5,affected
-Biomarker 1,21,-5.891775534338064,6,5,affected
-Biomarker 1,22,-8.628859619528699,9,5,affected
-Biomarker 1,23,-26.09814315113523,3,5,not_affected
-Biomarker 1,24,-7.726240295860872,7,5,affected
-Biomarker 1,25,-20.829158867550934,1,5,not_affected
-Biomarker 1,26,-25.07546487914712,4,5,not_affected
-Biomarker 1,27,-23.024958564119768,4,5,not_affected
-Biomarker 1,28,-7.4102039626470955,10,5,affected
-Biomarker 1,29,-6.229139263568982,8,5,affected
-Biomarker 1,30,-16.25943285810973,4,5,not_affected
-Biomarker 1,31,-3.8853062717307285,6,5,affected
-Biomarker 1,32,-5.327072992356211,5,5,affected
-Biomarker 1,33,-19.617352547938815,1,5,not_affected
-Biomarker 1,34,-20.173209911454567,4,5,not_affected
-Biomarker 1,35,-23.41782456474209,0,5,not_affected
-Biomarker 1,36,-16.19389062415187,3,5,not_affected
-Biomarker 1,37,-5.892514050777184,10,5,affected
-Biomarker 1,38,-14.649780444639159,1,5,not_affected
-Biomarker 1,39,-8.568488726800972,7,5,affected
-Biomarker 1,40,-24.63001462836183,2,5,not_affected
-Biomarker 1,41,-20.37335593856133,1,5,not_affected
-Biomarker 1,42,-6.058182743841867,5,5,affected
-Biomarker 1,43,-6.7951919556841,10,5,affected
-Biomarker 1,44,-17.444895668558885,3,5,not_affected
-Biomarker 1,45,-7.837820099259903,6,5,affected
-Biomarker 1,46,-16.840276634402645,1,5,not_affected
-Biomarker 1,47,-15.207651716745595,1,5,not_affected
-Biomarker 1,48,-3.8451389858332763,7,5,affected
-Biomarker 1,49,-23.504464707848392,1,5,not_affected
-Biomarker 1,50,-19.22155317964458,4,5,not_affected
-Biomarker 1,51,-21.13827394719292,4,5,not_affected
-Biomarker 1,52,-20.10078588836515,1,5,not_affected
-Biomarker 1,53,-18.078575058362574,1,5,not_affected
-Biomarker 1,54,-6.474826000216611,10,5,affected
-Biomarker 1,55,-15.894469412785204,4,5,not_affected
-Biomarker 1,56,-28.312267811419744,4,5,not_affected
-Biomarker 1,57,-5.268490533439052,10,5,affected
-Biomarker 1,58,-7.973064613705269,9,5,affected
-Biomarker 1,59,-6.687279773593416,5,5,affected
-Biomarker 1,60,-6.148548003164839,5,5,affected
-Biomarker 1,61,-8.949445699597444,5,5,affected
-Biomarker 1,62,-5.146910139093267,6,5,affected
-Biomarker 1,63,-5.676750228622195,10,5,affected
-Biomarker 1,64,-22.461950482338867,2,5,not_affected
-Biomarker 1,65,-6.067223855378459,6,5,affected
-Biomarker 1,66,-5.275049442798027,8,5,affected
-Biomarker 1,67,-5.984764081579908,9,5,affected
-Biomarker 1,68,-8.036794430978073,6,5,affected
-Biomarker 1,69,-6.527931589351734,7,5,affected
-Biomarker 1,70,-6.1237814690518135,6,5,affected
-Biomarker 1,71,-4.076000458321293,5,5,affected
-Biomarker 1,72,-6.741702419813033,7,5,affected
-Biomarker 1,73,-9.022641849502206,8,5,affected
-Biomarker 1,74,-5.930259649749597,10,5,affected
-Biomarker 1,75,-23.819346893763058,1,5,not_affected
-Biomarker 1,76,-6.005089989718942,8,5,affected
-Biomarker 1,77,-6.125058354476238,6,5,affected
-Biomarker 1,78,-5.477062855740246,8,5,affected
-Biomarker 1,79,-4.085147795386707,5,5,affected
-Biomarker 1,80,-24.89421243256203,4,5,not_affected
-Biomarker 1,81,-10.681973347113628,0,5,not_affected
-Biomarker 1,82,-6.3084408119205975,9,5,affected
-Biomarker 1,83,-19.927186342835867,4,5,not_affected
-Biomarker 1,84,-4.502254551464523,7,5,affected
-Biomarker 1,85,-5.365623094319287,6,5,affected
-Biomarker 1,86,-24.698452371978583,2,5,not_affected
-Biomarker 1,87,-22.69244138119141,0,5,not_affected
-Biomarker 1,88,-5.3281913229734075,8,5,affected
-Biomarker 1,89,-23.49603631909078,3,5,not_affected
-Biomarker 1,90,-11.836147218175714,4,5,not_affected
-Biomarker 1,91,-4.647216351819261,6,5,affected
-Biomarker 1,92,-21.770604966346895,0,5,not_affected
-Biomarker 1,93,-5.706966833070115,6,5,affected
-Biomarker 1,94,-24.63863181065979,4,5,not_affected
-Biomarker 1,95,-5.809450687123748,8,5,affected
-Biomarker 1,96,-22.840332940978794,1,5,not_affected
-Biomarker 1,97,-17.186992245222868,1,5,not_affected
-Biomarker 1,98,-7.612803119433557,7,5,affected
-Biomarker 1,99,-3.263891149734226,9,5,affected
-Biomarker 2,0,220.50098570235517,5,2,affected
-Biomarker 2,1,295.54518198168114,4,2,affected
-Biomarker 2,2,137.31974484626772,0,2,not_affected
-Biomarker 2,3,201.36058132986528,5,2,affected
-Biomarker 2,4,146.6959710221884,4,2,affected
-Biomarker 2,5,288.9903616704178,7,2,affected
-Biomarker 2,6,368.0753279280191,8,2,affected
-Biomarker 2,7,153.35080136432993,1,2,not_affected
-Biomarker 2,8,259.42088431819593,6,2,affected
-Biomarker 2,9,111.37411871364282,1,2,not_affected
-Biomarker 2,10,272.7715174275015,6,2,affected
-Biomarker 2,11,220.96672610556027,10,2,affected
-Biomarker 2,12,148.47072320006447,2,2,affected
-Biomarker 2,13,307.60920998089705,9,2,affected
-Biomarker 2,14,259.61575541479215,2,2,affected
-Biomarker 2,15,238.56581257952854,10,2,affected
-Biomarker 2,16,308.0860184401784,10,2,affected
-Biomarker 2,17,289.6021487230287,4,2,affected
-Biomarker 2,18,177.46662468118978,7,2,affected
-Biomarker 2,19,193.75689169771485,8,2,affected
-Biomarker 2,20,251.31365398441974,10,2,affected
-Biomarker 2,21,234.65288626810766,6,2,affected
-Biomarker 2,22,149.38169876733352,9,2,affected
-Biomarker 2,23,271.7658883718128,3,2,affected
-Biomarker 2,24,225.94509174739258,7,2,affected
-Biomarker 2,25,159.86875507466524,1,2,not_affected
-Biomarker 2,26,231.5182660980002,4,2,affected
-Biomarker 2,27,178.73622455291178,4,2,affected
-Biomarker 2,28,395.53788960864586,10,2,affected
-Biomarker 2,29,334.54313378944636,8,2,affected
-Biomarker 2,30,181.66508911926203,4,2,affected
-Biomarker 2,31,150.32883932641454,6,2,affected
-Biomarker 2,32,309.1638655628829,5,2,affected
-Biomarker 2,33,133.33587987736212,1,2,not_affected
-Biomarker 2,34,214.58113607256405,4,2,affected
-Biomarker 2,35,133.53761241917192,0,2,not_affected
-Biomarker 2,36,266.47808647027125,3,2,affected
-Biomarker 2,37,253.28027786126316,10,2,affected
-Biomarker 2,38,134.7194795570375,1,2,not_affected
-Biomarker 2,39,156.2676253756661,7,2,affected
-Biomarker 2,40,239.68654716631684,2,2,affected
-Biomarker 2,41,158.54893930385114,1,2,not_affected
-Biomarker 2,42,293.95458998873477,5,2,affected
-Biomarker 2,43,249.43125710689864,10,2,affected
-Biomarker 2,44,229.39876523681806,3,2,affected
-Biomarker 2,45,208.87954616669924,6,2,affected
-Biomarker 2,46,134.8126857455378,1,2,not_affected
-Biomarker 2,47,139.70229115474947,1,2,not_affected
-Biomarker 2,48,265.31730350484173,7,2,affected
-Biomarker 2,49,162.5198411180358,1,2,not_affected
-Biomarker 2,50,231.63160458569266,4,2,affected
-Biomarker 2,51,253.65640180731302,4,2,affected
-Biomarker 2,52,147.67220953691634,1,2,not_affected
-Biomarker 2,53,159.89876303103566,1,2,not_affected
-Biomarker 2,54,244.10895150722914,10,2,affected
-Biomarker 2,55,185.96254219187716,4,2,affected
-Biomarker 2,56,227.62877750843538,4,2,affected
-Biomarker 2,57,322.32647862561635,10,2,affected
-Biomarker 2,58,223.84437847646768,9,2,affected
-Biomarker 2,59,232.31894757859504,5,2,affected
-Biomarker 2,60,224.9701990036978,5,2,affected
-Biomarker 2,61,225.15464124902434,5,2,affected
-Biomarker 2,62,274.68593143999004,6,2,affected
-Biomarker 2,63,210.42701673983936,10,2,affected
-Biomarker 2,64,264.0822310214855,2,2,affected
-Biomarker 2,65,205.2168912661996,6,2,affected
-Biomarker 2,66,237.06726417209984,8,2,affected
-Biomarker 2,67,264.4449686342595,9,2,affected
-Biomarker 2,68,240.00070700635487,6,2,affected
-Biomarker 2,69,329.6463951048637,7,2,affected
-Biomarker 2,70,205.72950380149905,6,2,affected
-Biomarker 2,71,199.04055818736805,5,2,affected
-Biomarker 2,72,251.78854240747074,7,2,affected
-Biomarker 2,73,353.90305953654996,8,2,affected
-Biomarker 2,74,220.75855347265943,10,2,affected
-Biomarker 2,75,154.15232835274776,1,2,not_affected
-Biomarker 2,76,220.0533406184925,8,2,affected
-Biomarker 2,77,349.55407600427276,6,2,affected
-Biomarker 2,78,240.19051615874247,8,2,affected
-Biomarker 2,79,268.93532206175064,5,2,affected
-Biomarker 2,80,209.91571927023188,4,2,affected
-Biomarker 2,81,176.50532391549382,0,2,not_affected
-Biomarker 2,82,271.45874603624645,9,2,affected
-Biomarker 2,83,265.2703428360589,4,2,affected
-Biomarker 2,84,239.66273051978078,7,2,affected
-Biomarker 2,85,238.6871381320636,6,2,affected
-Biomarker 2,86,269.3226636229115,2,2,affected
-Biomarker 2,87,171.03020532837888,0,2,not_affected
-Biomarker 2,88,203.40482626168054,8,2,affected
-Biomarker 2,89,252.95704974079536,3,2,affected
-Biomarker 2,90,176.5620970694111,4,2,affected
-Biomarker 2,91,186.77870978039076,6,2,affected
-Biomarker 2,92,129.51554933459857,0,2,not_affected
-Biomarker 2,93,292.4171347852795,6,2,affected
-Biomarker 2,94,198.155220436415,4,2,affected
-Biomarker 2,95,364.5876978102908,8,2,affected
-Biomarker 2,96,116.68141188802423,1,2,not_affected
-Biomarker 2,97,172.50009299098303,1,2,not_affected
-Biomarker 2,98,324.156287289003,7,2,affected
-Biomarker 2,99,303.7990295349855,9,2,affected
-Biomarker 3,0,7.491299712614527,5,6,not_affected
-Biomarker 3,1,-81.78129259809778,4,6,not_affected
-Biomarker 3,2,-53.709039284834326,0,6,not_affected
-Biomarker 3,3,-49.96764666009083,5,6,not_affected
-Biomarker 3,4,-63.37300944239479,4,6,not_affected
-Biomarker 3,5,-47.887171714976375,7,6,affected
-Biomarker 3,6,-31.56057277088185,8,6,affected
-Biomarker 3,7,-36.45288764413387,1,6,not_affected
-Biomarker 3,8,-23.819857977747265,6,6,affected
-Biomarker 3,9,-58.08046954714532,1,6,not_affected
-Biomarker 3,10,-77.71950497929794,6,6,affected
-Biomarker 3,11,-35.21814933205178,10,6,affected
-Biomarker 3,12,-40.421822895308594,2,6,not_affected
-Biomarker 3,13,-39.871882368476214,9,6,affected
-Biomarker 3,14,-41.4078940400876,2,6,not_affected
-Biomarker 3,15,-34.30211909971918,10,6,affected
-Biomarker 3,16,-23.31771804232323,10,6,affected
-Biomarker 3,17,21.143133175771638,4,6,not_affected
-Biomarker 3,18,-28.00871147011751,7,6,affected
-Biomarker 3,19,-26.970142653897142,8,6,affected
-Biomarker 3,20,-21.92986127430342,10,6,affected
-Biomarker 3,21,-30.08340141865372,6,6,affected
-Biomarker 3,22,-30.442809748637316,9,6,affected
-Biomarker 3,23,-57.19727993743741,3,6,not_affected
-Biomarker 3,24,-26.816899360604214,7,6,affected
-Biomarker 3,25,-37.12940220184297,1,6,not_affected
-Biomarker 3,26,-14.282334466472967,4,6,not_affected
-Biomarker 3,27,-29.734396858145537,4,6,not_affected
-Biomarker 3,28,-25.23378591416149,10,6,affected
-Biomarker 3,29,-1.438826110177363,8,6,affected
-Biomarker 3,30,-32.67742816348968,4,6,not_affected
-Biomarker 3,31,-16.59750158057453,6,6,affected
-Biomarker 3,32,-27.792689110307634,5,6,not_affected
-Biomarker 3,33,-96.16298723279301,1,6,not_affected
-Biomarker 3,34,-2.2543900918644226,4,6,not_affected
-Biomarker 3,35,-21.794166588722128,0,6,not_affected
-Biomarker 3,36,-41.17719428264904,3,6,not_affected
-Biomarker 3,37,-43.2530184694817,10,6,affected
-Biomarker 3,38,-79.76627874748186,1,6,not_affected
-Biomarker 3,39,-24.13490017707368,7,6,affected
-Biomarker 3,40,-133.2891596422955,2,6,not_affected
-Biomarker 3,41,-41.078378185309525,1,6,not_affected
-Biomarker 3,42,-63.95130684911248,5,6,not_affected
-Biomarker 3,43,-21.63616528593066,10,6,affected
-Biomarker 3,44,-8.359628655192424,3,6,not_affected
-Biomarker 3,45,-13.617581217346867,6,6,affected
-Biomarker 3,46,-104.75068620641036,1,6,not_affected
-Biomarker 3,47,-31.723327692902796,1,6,not_affected
-Biomarker 3,48,-37.10554149135561,7,6,affected
-Biomarker 3,49,-42.21876262361714,1,6,not_affected
-Biomarker 3,50,-12.742848111807916,4,6,not_affected
-Biomarker 3,51,-53.68523959602591,4,6,not_affected
-Biomarker 3,52,-91.44490782096464,1,6,not_affected
-Biomarker 3,53,-28.186547790429497,1,6,not_affected
-Biomarker 3,54,-47.38656997017867,10,6,affected
-Biomarker 3,55,22.986830960319466,4,6,not_affected
-Biomarker 3,56,-56.2687450893045,4,6,not_affected
-Biomarker 3,57,-20.123899973070486,10,6,affected
-Biomarker 3,58,-20.576697557578964,9,6,affected
-Biomarker 3,59,-57.50396218886441,5,6,not_affected
-Biomarker 3,60,-31.282433513709027,5,6,not_affected
-Biomarker 3,61,-20.458169547971714,5,6,not_affected
-Biomarker 3,62,4.98054740155618,6,6,affected
-Biomarker 3,63,-44.5650747670317,10,6,affected
-Biomarker 3,64,-35.43337949573788,2,6,not_affected
-Biomarker 3,65,-4.16775376968608,6,6,affected
-Biomarker 3,66,-23.398123825269945,8,6,affected
-Biomarker 3,67,-55.189354109534136,9,6,affected
-Biomarker 3,68,-25.051701313374423,6,6,affected
-Biomarker 3,69,-14.510981955806754,7,6,affected
-Biomarker 3,70,-36.818894924110324,6,6,affected
-Biomarker 3,71,-36.145644578404294,5,6,not_affected
-Biomarker 3,72,-22.779694842284247,7,6,affected
-Biomarker 3,73,-23.84764251516546,8,6,affected
-Biomarker 3,74,-42.26479557655627,10,6,affected
-Biomarker 3,75,-85.85760660421053,1,6,not_affected
-Biomarker 3,76,-22.677954088133838,8,6,affected
-Biomarker 3,77,-22.946270174561175,6,6,affected
-Biomarker 3,78,-24.84674950420857,8,6,affected
-Biomarker 3,79,-96.78527651586174,5,6,not_affected
-Biomarker 3,80,-18.7871880458692,4,6,not_affected
-Biomarker 3,81,-48.491567555670755,0,6,not_affected
-Biomarker 3,82,-20.67273360209001,9,6,affected
-Biomarker 3,83,-26.68013222043031,4,6,not_affected
-Biomarker 3,84,-21.089141321041794,7,6,affected
-Biomarker 3,85,-30.996362308530806,6,6,affected
-Biomarker 3,86,5.52084761286978,2,6,not_affected
-Biomarker 3,87,-33.820602593127205,0,6,not_affected
-Biomarker 3,88,-12.036412264124317,8,6,affected
-Biomarker 3,89,-11.498350461656152,3,6,not_affected
-Biomarker 3,90,-52.41139209858737,4,6,not_affected
-Biomarker 3,91,-30.948887185356554,6,6,affected
-Biomarker 3,92,-11.821321575597509,0,6,not_affected
-Biomarker 3,93,-24.06710774381225,6,6,affected
-Biomarker 3,94,-48.676174898873654,4,6,not_affected
-Biomarker 3,95,-4.248666191066569,8,6,affected
-Biomarker 3,96,-41.17412146231403,1,6,not_affected
-Biomarker 3,97,-27.237135638984224,1,6,not_affected
-Biomarker 3,98,-58.29780393237627,7,6,affected
-Biomarker 3,99,-37.168658156557555,9,6,affected
-Biomarker 4,0,-9.112603336022925,5,8,not_affected
-Biomarker 4,1,-3.2469763959836104,4,8,not_affected
-Biomarker 4,2,-5.354190280136582,0,8,not_affected
-Biomarker 4,3,-6.740603997608092,5,8,not_affected
-Biomarker 4,4,12.70315477137759,4,8,not_affected
-Biomarker 4,5,-10.187187940500845,7,8,not_affected
-Biomarker 4,6,4.133450911195101,8,8,affected
-Biomarker 4,7,-5.351666270164122,1,8,not_affected
-Biomarker 4,8,-9.792408079537381,6,8,not_affected
-Biomarker 4,9,-1.0603815608685219,1,8,not_affected
-Biomarker 4,10,-3.9411045123641646,6,8,not_affected
-Biomarker 4,11,6.887426055040603,10,8,affected
-Biomarker 4,12,-12.257443999562758,2,8,not_affected
-Biomarker 4,13,4.563061542018311,9,8,affected
-Biomarker 4,14,6.690704134719102,2,8,not_affected
-Biomarker 4,15,6.185946187739247,10,8,affected
-Biomarker 4,16,1.8982971506156359,10,8,affected
-Biomarker 4,17,-0.5748804044105009,4,8,not_affected
-Biomarker 4,18,1.2833132199929285,7,8,not_affected
-Biomarker 4,19,5.068329538396406,8,8,affected
-Biomarker 4,20,4.277104840872106,10,8,affected
-Biomarker 4,21,7.133116587705333,6,8,not_affected
-Biomarker 4,22,7.041024841705094,9,8,affected
-Biomarker 4,23,-4.200455497067212,3,8,not_affected
-Biomarker 4,24,7.480646674027907,7,8,not_affected
-Biomarker 4,25,-11.122969296759848,1,8,not_affected
-Biomarker 4,26,1.2393360210397306,4,8,not_affected
-Biomarker 4,27,-16.90986742737581,4,8,not_affected
-Biomarker 4,28,5.6318537425163315,10,8,affected
-Biomarker 4,29,0.34462477313864515,8,8,affected
-Biomarker 4,30,-17.532933007431847,4,8,not_affected
-Biomarker 4,31,-18.17614316604622,6,8,not_affected
-Biomarker 4,32,7.949486113511755,5,8,not_affected
-Biomarker 4,33,-11.622496506070974,1,8,not_affected
-Biomarker 4,34,1.714237966732834,4,8,not_affected
-Biomarker 4,35,-6.801202365278203,0,8,not_affected
-Biomarker 4,36,-6.173261078926217,3,8,not_affected
-Biomarker 4,37,4.116436991269307,10,8,affected
-Biomarker 4,38,-10.373531586931854,1,8,not_affected
-Biomarker 4,39,-2.8665223866505856,7,8,not_affected
-Biomarker 4,40,-11.190208556218764,2,8,not_affected
-Biomarker 4,41,-8.577750448263854,1,8,not_affected
-Biomarker 4,42,-9.337962484840327,5,8,not_affected
-Biomarker 4,43,5.6197822528843275,10,8,affected
-Biomarker 4,44,12.484548976771165,3,8,not_affected
-Biomarker 4,45,-19.93319702782631,6,8,not_affected
-Biomarker 4,46,-11.806439683340814,1,8,not_affected
-Biomarker 4,47,-0.20751377051191522,1,8,not_affected
-Biomarker 4,48,0.5141917970240355,7,8,not_affected
-Biomarker 4,49,-14.379981173921065,1,8,not_affected
-Biomarker 4,50,-1.890918955138722,4,8,not_affected
-Biomarker 4,51,-7.188506469638252,4,8,not_affected
-Biomarker 4,52,1.0483877630875362,1,8,not_affected
-Biomarker 4,53,-7.298263199556944,1,8,not_affected
-Biomarker 4,54,3.998139123627375,10,8,affected
-Biomarker 4,55,-2.003440211649518,4,8,not_affected
-Biomarker 4,56,-6.328758265666403,4,8,not_affected
-Biomarker 4,57,4.606394354304421,10,8,affected
-Biomarker 4,58,6.894673694198454,9,8,affected
-Biomarker 4,59,-7.45246669423535,5,8,not_affected
-Biomarker 4,60,-27.629613445938393,5,8,not_affected
-Biomarker 4,61,1.8888578120287587,5,8,not_affected
-Biomarker 4,62,-13.50057482995621,6,8,not_affected
-Biomarker 4,63,4.977135550994771,10,8,affected
-Biomarker 4,64,-7.5331490595585375,2,8,not_affected
-Biomarker 4,65,-4.648217405439702,6,8,not_affected
-Biomarker 4,66,6.73396816325678,8,8,affected
-Biomarker 4,67,3.7811040098771223,9,8,affected
-Biomarker 4,68,-7.712994426090253,6,8,not_affected
-Biomarker 4,69,2.039296823614456,7,8,not_affected
-Biomarker 4,70,-3.9955744276935716,6,8,not_affected
-Biomarker 4,71,3.467884770978422,5,8,not_affected
-Biomarker 4,72,-5.297469402393589,7,8,not_affected
-Biomarker 4,73,6.18580309082773,8,8,affected
-Biomarker 4,74,4.224540887741111,10,8,affected
-Biomarker 4,75,-0.819519349570915,1,8,not_affected
-Biomarker 4,76,6.219741067435005,8,8,affected
-Biomarker 4,77,-8.214386928886487,6,8,not_affected
-Biomarker 4,78,5.2943846765259055,8,8,affected
-Biomarker 4,79,-13.532772178014135,5,8,not_affected
-Biomarker 4,80,-2.4947298790450936,4,8,not_affected
-Biomarker 4,81,-8.769014797399397,0,8,not_affected
-Biomarker 4,82,1.9082953697365785,9,8,affected
-Biomarker 4,83,-2.7548184864068146,4,8,not_affected
-Biomarker 4,84,6.54734272006298,7,8,not_affected
-Biomarker 4,85,-9.66029279860909,6,8,not_affected
-Biomarker 4,86,2.5605199191927275,2,8,not_affected
-Biomarker 4,87,-1.5811325786495591,0,8,not_affected
-Biomarker 4,88,2.6317402973736628,8,8,affected
-Biomarker 4,89,-5.104752290271994,3,8,not_affected
-Biomarker 4,90,-3.364156406395883,4,8,not_affected
-Biomarker 4,91,-2.3956711211511883,6,8,not_affected
-Biomarker 4,92,-7.751847112674907,0,8,not_affected
-Biomarker 4,93,-8.193169982379573,6,8,not_affected
-Biomarker 4,94,-6.156487560664562,4,8,not_affected
-Biomarker 4,95,3.9259895670768525,8,8,affected
-Biomarker 4,96,-13.96514160677649,1,8,not_affected
-Biomarker 4,97,-15.98118240799421,1,8,not_affected
-Biomarker 4,98,-5.2798559522207436,7,8,not_affected
-Biomarker 4,99,3.558607433059313,9,8,affected
-Biomarker 5,0,-0.20897524254942246,5,3,affected
-Biomarker 5,1,0.3910075626440695,4,3,affected
-Biomarker 5,2,0.8260226294046731,0,3,not_affected
-Biomarker 5,3,0.2310859695669015,5,3,affected
-Biomarker 5,4,0.6054117448796258,4,3,affected
-Biomarker 5,5,0.42755744380874183,7,3,affected
-Biomarker 5,6,0.2960156603703561,8,3,affected
-Biomarker 5,7,0.5997362424966655,1,3,not_affected
-Biomarker 5,8,0.30348757578101965,6,3,affected
-Biomarker 5,9,-0.044676859142692205,1,3,not_affected
-Biomarker 5,10,0.2986910604426661,6,3,affected
-Biomarker 5,11,-0.03825936811743463,10,3,affected
-Biomarker 5,12,0.22257703376929577,2,3,not_affected
-Biomarker 5,13,1.032671453104784,9,3,affected
-Biomarker 5,14,0.236799762806902,2,3,not_affected
-Biomarker 5,15,0.3925850508361135,10,3,affected
-Biomarker 5,16,0.41605698379007333,10,3,affected
-Biomarker 5,17,0.08505875801360546,4,3,affected
-Biomarker 5,18,0.23059478111502418,7,3,affected
-Biomarker 5,19,0.508291874700416,8,3,affected
-Biomarker 5,20,0.25067998218806065,10,3,affected
-Biomarker 5,21,0.5082415817463555,6,3,affected
-Biomarker 5,22,0.2089305853078303,9,3,affected
-Biomarker 5,23,0.7007186607303678,3,3,affected
-Biomarker 5,24,0.5695012351359822,7,3,affected
-Biomarker 5,25,0.3495998542890132,1,3,not_affected
-Biomarker 5,26,0.26969875494753937,4,3,affected
-Biomarker 5,27,0.5433509373330334,4,3,affected
-Biomarker 5,28,0.6265221209341612,10,3,affected
-Biomarker 5,29,0.43235058517600494,8,3,affected
-Biomarker 5,30,0.37635618393032494,4,3,affected
-Biomarker 5,31,0.14176807566906835,6,3,affected
-Biomarker 5,32,0.3870311178093418,5,3,affected
-Biomarker 5,33,0.03530559469233413,1,3,not_affected
-Biomarker 5,34,0.7701077008457053,4,3,affected
-Biomarker 5,35,0.4096624582265217,0,3,not_affected
-Biomarker 5,36,0.11063113864475105,3,3,affected
-Biomarker 5,37,0.3942837633260343,10,3,affected
-Biomarker 5,38,0.008421164303805295,1,3,not_affected
-Biomarker 5,39,0.4319591221513468,7,3,affected
-Biomarker 5,40,0.3222252923750938,2,3,not_affected
-Biomarker 5,41,0.4181394223525989,1,3,not_affected
-Biomarker 5,42,0.0978221196930043,5,3,affected
-Biomarker 5,43,0.5195500846527416,10,3,affected
-Biomarker 5,44,0.5903549446191223,3,3,affected
-Biomarker 5,45,0.09189430516707636,6,3,affected
-Biomarker 5,46,-0.21515383796761994,1,3,not_affected
-Biomarker 5,47,0.5816387765391811,1,3,not_affected
-Biomarker 5,48,0.4456538347080125,7,3,affected
-Biomarker 5,49,0.4415150919357255,1,3,not_affected
-Biomarker 5,50,0.7937807408991145,4,3,affected
-Biomarker 5,51,0.20629851212713024,4,3,affected
-Biomarker 5,52,0.14820040321884534,1,3,not_affected
-Biomarker 5,53,0.05637699787985431,1,3,not_affected
-Biomarker 5,54,0.2867108142525654,10,3,affected
-Biomarker 5,55,0.6781513322898699,4,3,affected
-Biomarker 5,56,0.5035769478747635,4,3,affected
-Biomarker 5,57,0.15054857956620446,10,3,affected
-Biomarker 5,58,0.09997389338672558,9,3,affected
-Biomarker 5,59,0.5021354350809729,5,3,affected
-Biomarker 5,60,0.7802144756011913,5,3,affected
-Biomarker 5,61,0.8644542625517793,5,3,affected
-Biomarker 5,62,0.5419721133740273,6,3,affected
-Biomarker 5,63,0.2960453483487213,10,3,affected
-Biomarker 5,64,0.2304192275852407,2,3,not_affected
-Biomarker 5,65,0.4629289461944227,6,3,affected
-Biomarker 5,66,0.3757304449234558,8,3,affected
-Biomarker 5,67,0.37909593823586607,9,3,affected
-Biomarker 5,68,0.32611717478905544,6,3,affected
-Biomarker 5,69,1.1585209062506912,7,3,affected
-Biomarker 5,70,0.5550041867432451,6,3,affected
-Biomarker 5,71,0.6870199122638856,5,3,affected
-Biomarker 5,72,0.5741970849990076,7,3,affected
-Biomarker 5,73,0.4661216504302591,8,3,affected
-Biomarker 5,74,-0.004452407656302004,10,3,affected
-Biomarker 5,75,-0.006115189938009025,1,3,not_affected
-Biomarker 5,76,0.980622819283907,8,3,affected
-Biomarker 5,77,0.3455736476633303,6,3,affected
-Biomarker 5,78,0.31610061686903596,8,3,affected
-Biomarker 5,79,0.2829316115445997,5,3,affected
-Biomarker 5,80,0.6235196512269562,4,3,affected
-Biomarker 5,81,0.5335029199607892,0,3,not_affected
-Biomarker 5,82,-0.04269067241744595,9,3,affected
-Biomarker 5,83,0.2783715989862825,4,3,affected
-Biomarker 5,84,0.2637756719831317,7,3,affected
-Biomarker 5,85,0.3424939692924055,6,3,affected
-Biomarker 5,86,0.20554138501758423,2,3,not_affected
-Biomarker 5,87,0.03575144621435922,0,3,not_affected
-Biomarker 5,88,0.315239615955908,8,3,affected
-Biomarker 5,89,0.031919510560614706,3,3,affected
-Biomarker 5,90,0.7801724799458387,4,3,affected
-Biomarker 5,91,0.659495063901146,6,3,affected
-Biomarker 5,92,0.6514926406242387,0,3,not_affected
-Biomarker 5,93,0.2487821828960521,6,3,affected
-Biomarker 5,94,0.2759848299482687,4,3,affected
-Biomarker 5,95,0.8981487050645195,8,3,affected
-Biomarker 5,96,0.19811117567041303,1,3,not_affected
-Biomarker 5,97,0.35827930616457443,1,3,not_affected
-Biomarker 5,98,0.5788468408492522,7,3,affected
-Biomarker 5,99,0.4636543365642378,9,3,affected
-Biomarker 6,0,29.044721910778097,5,9,not_affected
-Biomarker 6,1,19.336815834806494,4,9,not_affected
-Biomarker 6,2,20.259088382309226,0,9,not_affected
-Biomarker 6,3,17.795468556258772,5,9,not_affected
-Biomarker 6,4,29.489367601656348,4,9,not_affected
-Biomarker 6,5,19.436969092152342,7,9,not_affected
-Biomarker 6,6,22.842607740684322,8,9,not_affected
-Biomarker 6,7,21.27221883244968,1,9,not_affected
-Biomarker 6,8,5.809935576559472,6,9,not_affected
-Biomarker 6,9,18.287932204944795,1,9,not_affected
-Biomarker 6,10,16.522584063519183,6,9,not_affected
-Biomarker 6,11,53.399341104815825,10,9,affected
-Biomarker 6,12,12.017769289028944,2,9,not_affected
-Biomarker 6,13,41.880069259982875,9,9,affected
-Biomarker 6,14,30.885125084556243,2,9,not_affected
-Biomarker 6,15,50.390961374215806,10,9,affected
-Biomarker 6,16,51.012918753882566,10,9,affected
-Biomarker 6,17,21.219761303370483,4,9,not_affected
-Biomarker 6,18,21.613399571638585,7,9,not_affected
-Biomarker 6,19,32.7583012020055,8,9,not_affected
-Biomarker 6,20,18.832733067316184,10,9,affected
-Biomarker 6,21,13.263948159772719,6,9,not_affected
-Biomarker 6,22,31.274026811925204,9,9,affected
-Biomarker 6,23,19.97739374395202,3,9,not_affected
-Biomarker 6,24,11.377892221387157,7,9,not_affected
-Biomarker 6,25,12.485397310080987,1,9,not_affected
-Biomarker 6,26,16.037534010319806,4,9,not_affected
-Biomarker 6,27,18.520638038196626,4,9,not_affected
-Biomarker 6,28,60.619504097124505,10,9,affected
-Biomarker 6,29,23.561478590808093,8,9,not_affected
-Biomarker 6,30,15.869882893399705,4,9,not_affected
-Biomarker 6,31,20.220849545700872,6,9,not_affected
-Biomarker 6,32,9.170986247202073,5,9,not_affected
-Biomarker 6,33,19.685969770178882,1,9,not_affected
-Biomarker 6,34,24.835156424041013,4,9,not_affected
-Biomarker 6,35,12.73491433870657,0,9,not_affected
-Biomarker 6,36,32.20436122271543,3,9,not_affected
-Biomarker 6,37,68.46958103290538,10,9,affected
-Biomarker 6,38,15.588405861594415,1,9,not_affected
-Biomarker 6,39,19.15528758728264,7,9,not_affected
-Biomarker 6,40,14.571117478737714,2,9,not_affected
-Biomarker 6,41,8.72430804503665,1,9,not_affected
-Biomarker 6,42,25.989652673627223,5,9,not_affected
-Biomarker 6,43,26.67993579900981,10,9,affected
-Biomarker 6,44,13.040690643687594,3,9,not_affected
-Biomarker 6,45,22.777793250952072,6,9,not_affected
-Biomarker 6,46,25.51725052426218,1,9,not_affected
-Biomarker 6,47,9.749900240848664,1,9,not_affected
-Biomarker 6,48,18.875841532871068,7,9,not_affected
-Biomarker 6,49,14.51563716743469,1,9,not_affected
-Biomarker 6,50,18.478294283796536,4,9,not_affected
-Biomarker 6,51,36.42040143562984,4,9,not_affected
-Biomarker 6,52,15.039637990283667,1,9,not_affected
-Biomarker 6,53,26.308564158703966,1,9,not_affected
-Biomarker 6,54,63.72697498919608,10,9,affected
-Biomarker 6,55,19.76499365559558,4,9,not_affected
-Biomarker 6,56,20.033615085885646,4,9,not_affected
-Biomarker 6,57,35.795702549927356,10,9,affected
-Biomarker 6,58,66.10076380850012,9,9,affected
-Biomarker 6,59,19.810457633342047,5,9,not_affected
-Biomarker 6,60,19.733653265973384,5,9,not_affected
-Biomarker 6,61,27.111407063760385,5,9,not_affected
-Biomarker 6,62,24.14003116741739,6,9,not_affected
-Biomarker 6,63,53.210707918923625,10,9,affected
-Biomarker 6,64,25.44783421335213,2,9,not_affected
-Biomarker 6,65,22.90006160469845,6,9,not_affected
-Biomarker 6,66,17.706900009474516,8,9,not_affected
-Biomarker 6,67,34.1117560122191,9,9,affected
-Biomarker 6,68,14.584372521687028,6,9,not_affected
-Biomarker 6,69,17.608244714913916,7,9,not_affected
-Biomarker 6,70,14.530071531117324,6,9,not_affected
-Biomarker 6,71,14.28291699768847,5,9,not_affected
-Biomarker 6,72,15.005475859568843,7,9,not_affected
-Biomarker 6,73,19.244264971246647,8,9,not_affected
-Biomarker 6,74,37.0589991347946,10,9,affected
-Biomarker 6,75,15.187093579266323,1,9,not_affected
-Biomarker 6,76,24.106300822057307,8,9,not_affected
-Biomarker 6,77,27.37713481804892,6,9,not_affected
-Biomarker 6,78,20.70303781457098,8,9,not_affected
-Biomarker 6,79,16.97887175687397,5,9,not_affected
-Biomarker 6,80,27.548050337195637,4,9,not_affected
-Biomarker 6,81,37.78659351871221,0,9,not_affected
-Biomarker 6,82,57.71884565917027,9,9,affected
-Biomarker 6,83,24.19560082417509,4,9,not_affected
-Biomarker 6,84,14.142672706953181,7,9,not_affected
-Biomarker 6,85,24.73952890179746,6,9,not_affected
-Biomarker 6,86,16.724421849584928,2,9,not_affected
-Biomarker 6,87,15.199454347148995,0,9,not_affected
-Biomarker 6,88,14.646098738619258,8,9,not_affected
-Biomarker 6,89,29.245585629168083,3,9,not_affected
-Biomarker 6,90,25.951504867737036,4,9,not_affected
-Biomarker 6,91,22.046369243045067,6,9,not_affected
-Biomarker 6,92,22.4399793394973,0,9,not_affected
-Biomarker 6,93,20.144934341655077,6,9,not_affected
-Biomarker 6,94,17.72408535955192,4,9,not_affected
-Biomarker 6,95,18.25392032101353,8,9,not_affected
-Biomarker 6,96,25.986224969014167,1,9,not_affected
-Biomarker 6,97,28.446272648397787,1,9,not_affected
-Biomarker 6,98,6.721331725389211,7,9,not_affected
-Biomarker 6,99,29.64199615625075,9,9,affected
-Biomarker 7,0,8.429132472825689,5,7,not_affected
-Biomarker 7,1,6.089129189669992,4,7,not_affected
-Biomarker 7,2,-1.0681800035272992,0,7,not_affected
-Biomarker 7,3,6.118554021528663,5,7,not_affected
-Biomarker 7,4,5.563705944109655,4,7,not_affected
-Biomarker 7,5,13.954360856365263,7,7,affected
-Biomarker 7,6,7.306359746459452,8,7,affected
-Biomarker 7,7,1.861827358929852,1,7,not_affected
-Biomarker 7,8,3.778966377932168,6,7,not_affected
-Biomarker 7,9,1.2153673716270497,1,7,not_affected
-Biomarker 7,10,9.424704038784224,6,7,not_affected
-Biomarker 7,11,21.8014494100134,10,7,affected
-Biomarker 7,12,9.408952180286507,2,7,not_affected
-Biomarker 7,13,11.639859890787088,9,7,affected
-Biomarker 7,14,5.5149371302327355,2,7,not_affected
-Biomarker 7,15,11.766208630683938,10,7,affected
-Biomarker 7,16,12.51875309546004,10,7,affected
-Biomarker 7,17,15.994489302468894,4,7,not_affected
-Biomarker 7,18,10.2652901026438,7,7,affected
-Biomarker 7,19,17.23676606127127,8,7,affected
-Biomarker 7,20,15.069733813628256,10,7,affected
-Biomarker 7,21,8.253099943221759,6,7,not_affected
-Biomarker 7,22,10.194826875979176,9,7,affected
-Biomarker 7,23,2.1662316752890622,3,7,not_affected
-Biomarker 7,24,17.32716404245162,7,7,affected
-Biomarker 7,25,6.688840592598661,1,7,not_affected
-Biomarker 7,26,3.0928217259896935,4,7,not_affected
-Biomarker 7,27,1.0827077861996064,4,7,not_affected
-Biomarker 7,28,8.329175155251132,10,7,affected
-Biomarker 7,29,17.263548242735478,8,7,affected
-Biomarker 7,30,5.0433047208870745,4,7,not_affected
-Biomarker 7,31,5.3016524479046625,6,7,not_affected
-Biomarker 7,32,4.244723303444214,5,7,not_affected
-Biomarker 7,33,0.9786814484334503,1,7,not_affected
-Biomarker 7,34,7.4295715742308435,4,7,not_affected
-Biomarker 7,35,5.4656123379395485,0,7,not_affected
-Biomarker 7,36,3.5054445401629613,3,7,not_affected
-Biomarker 7,37,10.593156538886205,10,7,affected
-Biomarker 7,38,8.098616036119395,1,7,not_affected
-Biomarker 7,39,11.283092960903655,7,7,affected
-Biomarker 7,40,1.6924344867469538,2,7,not_affected
-Biomarker 7,41,2.4388513592248233,1,7,not_affected
-Biomarker 7,42,2.0035340315849837,5,7,not_affected
-Biomarker 7,43,9.511370158233648,10,7,affected
-Biomarker 7,44,2.8626780649143937,3,7,not_affected
-Biomarker 7,45,3.7993472662010603,6,7,not_affected
-Biomarker 7,46,5.047303500915951,1,7,not_affected
-Biomarker 7,47,4.263230578655364,1,7,not_affected
-Biomarker 7,48,5.3918447907309215,7,7,affected
-Biomarker 7,49,8.07658925880984,1,7,not_affected
-Biomarker 7,50,0.8439069695447152,4,7,not_affected
-Biomarker 7,51,10.340120782125812,4,7,not_affected
-Biomarker 7,52,0.13882698090169932,1,7,not_affected
-Biomarker 7,53,7.805414959365782,1,7,not_affected
-Biomarker 7,54,13.014120513194987,10,7,affected
-Biomarker 7,55,0.6923437502698491,4,7,not_affected
-Biomarker 7,56,3.6628099487792145,4,7,not_affected
-Biomarker 7,57,8.27058394396743,10,7,affected
-Biomarker 7,58,6.411769992190327,9,7,affected
-Biomarker 7,59,4.652342597596123,5,7,not_affected
-Biomarker 7,60,1.2203644557817794,5,7,not_affected
-Biomarker 7,61,10.279303798109984,5,7,not_affected
-Biomarker 7,62,6.376959304913665,6,7,not_affected
-Biomarker 7,63,7.293976210031937,10,7,affected
-Biomarker 7,64,7.593087917314765,2,7,not_affected
-Biomarker 7,65,10.753096623682994,6,7,not_affected
-Biomarker 7,66,16.835405522986,8,7,affected
-Biomarker 7,67,10.074304921283442,9,7,affected
-Biomarker 7,68,9.037317646611573,6,7,not_affected
-Biomarker 7,69,17.045039082190968,7,7,affected
-Biomarker 7,70,8.046918807705138,6,7,not_affected
-Biomarker 7,71,9.498226321441896,5,7,not_affected
-Biomarker 7,72,10.600950529922937,7,7,affected
-Biomarker 7,73,4.512470651551107,8,7,affected
-Biomarker 7,74,13.465007583248536,10,7,affected
-Biomarker 7,75,3.030436854905584,1,7,not_affected
-Biomarker 7,76,15.545942155145804,8,7,affected
-Biomarker 7,77,4.096494729072977,6,7,not_affected
-Biomarker 7,78,8.418247062133071,8,7,affected
-Biomarker 7,79,10.834150840951704,5,7,not_affected
-Biomarker 7,80,7.439284839504034,4,7,not_affected
-Biomarker 7,81,8.330303326648504,0,7,not_affected
-Biomarker 7,82,10.45768574637405,9,7,affected
-Biomarker 7,83,6.562122355790996,4,7,not_affected
-Biomarker 7,84,9.756939991774658,7,7,affected
-Biomarker 7,85,2.621165125002144,6,7,not_affected
-Biomarker 7,86,-3.886658056932454,2,7,not_affected
-Biomarker 7,87,8.62119633354199,0,7,not_affected
-Biomarker 7,88,14.88577143250716,8,7,affected
-Biomarker 7,89,5.33419090758293,3,7,not_affected
-Biomarker 7,90,3.6183587302159657,4,7,not_affected
-Biomarker 7,91,6.299577897142611,6,7,not_affected
-Biomarker 7,92,8.660403735516251,0,7,not_affected
-Biomarker 7,93,4.821741635199288,6,7,not_affected
-Biomarker 7,94,-1.798818142497142,4,7,not_affected
-Biomarker 7,95,15.598003445962231,8,7,affected
-Biomarker 7,96,4.428432967156569,1,7,not_affected
-Biomarker 7,97,8.318268945945341,1,7,not_affected
-Biomarker 7,98,14.007857859868952,7,7,affected
-Biomarker 7,99,3.9868877186831817,9,7,affected
-Biomarker 8,0,0.6588809316020374,5,4,affected
-Biomarker 8,1,0.5950465259436437,4,4,affected
-Biomarker 8,2,0.4290411628089901,0,4,not_affected
-Biomarker 8,3,0.5852718076041591,5,4,affected
-Biomarker 8,4,0.5697261078253819,4,4,affected
-Biomarker 8,5,0.7042247886856944,7,4,affected
-Biomarker 8,6,0.4473801385877144,8,4,affected
-Biomarker 8,7,0.42407799699898013,1,4,not_affected
-Biomarker 8,8,0.66760631656179,6,4,affected
-Biomarker 8,9,0.45921031816827396,1,4,not_affected
-Biomarker 8,10,0.6643576070922765,6,4,affected
-Biomarker 8,11,0.6181273578507103,10,4,affected
-Biomarker 8,12,0.5199780374623987,2,4,not_affected
-Biomarker 8,13,0.6826119274737055,9,4,affected
-Biomarker 8,14,0.3838738831562958,2,4,not_affected
-Biomarker 8,15,0.652523850054778,10,4,affected
-Biomarker 8,16,0.6001014761769811,10,4,affected
-Biomarker 8,17,0.6091884102892589,4,4,affected
-Biomarker 8,18,0.539306315286417,7,4,affected
-Biomarker 8,19,0.5319393818436361,8,4,affected
-Biomarker 8,20,0.6460426009432975,10,4,affected
-Biomarker 8,21,0.6079109933075396,6,4,affected
-Biomarker 8,22,0.5077802277978551,9,4,affected
-Biomarker 8,23,0.4074597054873629,3,4,not_affected
-Biomarker 8,24,0.6252015512537881,7,4,affected
-Biomarker 8,25,0.46577766959684835,1,4,not_affected
-Biomarker 8,26,0.6617960637269206,4,4,affected
-Biomarker 8,27,0.5142510888573719,4,4,affected
-Biomarker 8,28,0.548625461917722,10,4,affected
-Biomarker 8,29,0.6628982777365465,8,4,affected
-Biomarker 8,30,0.5241923860376424,4,4,affected
-Biomarker 8,31,0.6753756612973089,6,4,affected
-Biomarker 8,32,0.5912873192774029,5,4,affected
-Biomarker 8,33,0.5769970349354074,1,4,not_affected
-Biomarker 8,34,0.5521177507506626,4,4,affected
-Biomarker 8,35,0.4810231176776328,0,4,not_affected
-Biomarker 8,36,0.48508028473103065,3,4,not_affected
-Biomarker 8,37,0.6580711002917635,10,4,affected
-Biomarker 8,38,0.5760724664903063,1,4,not_affected
-Biomarker 8,39,0.4059532973315829,7,4,affected
-Biomarker 8,40,0.6253024573338889,2,4,not_affected
-Biomarker 8,41,0.5062029829880272,1,4,not_affected
-Biomarker 8,42,0.7091436064315192,5,4,affected
-Biomarker 8,43,0.5472399246182476,10,4,affected
-Biomarker 8,44,0.44600043222637475,3,4,not_affected
-Biomarker 8,45,0.5501080835017467,6,4,affected
-Biomarker 8,46,0.5479452229130166,1,4,not_affected
-Biomarker 8,47,0.5262150783058982,1,4,not_affected
-Biomarker 8,48,0.6139196765978616,7,4,affected
-Biomarker 8,49,0.40234064406837394,1,4,not_affected
-Biomarker 8,50,0.5748661158279469,4,4,affected
-Biomarker 8,51,0.5407074972193194,4,4,affected
-Biomarker 8,52,0.5664073682136956,1,4,not_affected
-Biomarker 8,53,0.48072384894933706,1,4,not_affected
-Biomarker 8,54,0.5908030514431958,10,4,affected
-Biomarker 8,55,0.635915314741134,4,4,affected
-Biomarker 8,56,0.5565517913391645,4,4,affected
-Biomarker 8,57,0.666338819968425,10,4,affected
-Biomarker 8,58,0.6647405557012569,9,4,affected
-Biomarker 8,59,0.6715386542908934,5,4,affected
-Biomarker 8,60,0.6424058289319765,5,4,affected
-Biomarker 8,61,0.5589250628598541,5,4,affected
-Biomarker 8,62,0.6446567697420645,6,4,affected
-Biomarker 8,63,0.5962632923391737,10,4,affected
-Biomarker 8,64,0.4341674664195875,2,4,not_affected
-Biomarker 8,65,0.57863024050104,6,4,affected
-Biomarker 8,66,0.6707835403418919,8,4,affected
-Biomarker 8,67,0.680560455337264,9,4,affected
-Biomarker 8,68,0.5598300759160102,6,4,affected
-Biomarker 8,69,0.5802134587169878,7,4,affected
-Biomarker 8,70,0.5439642549636953,6,4,affected
-Biomarker 8,71,0.6563094810337758,5,4,affected
-Biomarker 8,72,0.6153585492012646,7,4,affected
-Biomarker 8,73,0.5910310789771303,8,4,affected
-Biomarker 8,74,0.5811115756099202,10,4,affected
-Biomarker 8,75,0.48063782843816416,1,4,not_affected
-Biomarker 8,76,0.6989669389705231,8,4,affected
-Biomarker 8,77,0.5821792878704217,6,4,affected
-Biomarker 8,78,0.37215737158275636,8,4,affected
-Biomarker 8,79,0.623294011207193,5,4,affected
-Biomarker 8,80,0.6930190020209426,4,4,affected
-Biomarker 8,81,0.5628333808139165,0,4,not_affected
-Biomarker 8,82,0.5900362720166471,9,4,affected
-Biomarker 8,83,0.539996604563481,4,4,affected
-Biomarker 8,84,0.540995237276016,7,4,affected
-Biomarker 8,85,0.5922381757342964,6,4,affected
-Biomarker 8,86,0.4509533044382532,2,4,not_affected
-Biomarker 8,87,0.4705869653135549,0,4,not_affected
-Biomarker 8,88,0.5193532899311559,8,4,affected
-Biomarker 8,89,0.4586270927130035,3,4,not_affected
-Biomarker 8,90,0.5843091961671281,4,4,affected
-Biomarker 8,91,0.6284662343390512,6,4,affected
-Biomarker 8,92,0.3085562001397072,0,4,not_affected
-Biomarker 8,93,0.6163156786727816,6,4,affected
-Biomarker 8,94,0.6384415987953955,4,4,affected
-Biomarker 8,95,0.6760782436598826,8,4,affected
-Biomarker 8,96,0.4541481959080823,1,4,not_affected
-Biomarker 8,97,0.5485326434100489,1,4,not_affected
-Biomarker 8,98,0.5623268241280899,7,4,affected
-Biomarker 8,99,0.5404365086107498,9,4,affected
-Biomarker 9,0,-17.992411068389487,5,10,not_affected
-Biomarker 9,1,-22.229816871030373,4,10,not_affected
-Biomarker 9,2,-21.04167434201911,0,10,not_affected
-Biomarker 9,3,-26.788143018725638,5,10,not_affected
-Biomarker 9,4,-25.442120269105338,4,10,not_affected
-Biomarker 9,5,-14.62587391048078,7,10,not_affected
-Biomarker 9,6,-23.82724362095015,8,10,not_affected
-Biomarker 9,7,-26.21868019186289,1,10,not_affected
-Biomarker 9,8,-13.805999965925178,6,10,not_affected
-Biomarker 9,9,-18.302017425910797,1,10,not_affected
-Biomarker 9,10,-22.696584395408475,6,10,not_affected
-Biomarker 9,11,-12.40215049752928,10,10,affected
-Biomarker 9,12,-27.58790824593212,2,10,not_affected
-Biomarker 9,13,-28.93788318044072,9,10,not_affected
-Biomarker 9,14,-19.660971198446106,2,10,not_affected
-Biomarker 9,15,-7.199526286311963,10,10,affected
-Biomarker 9,16,-15.994002884359837,10,10,affected
-Biomarker 9,17,-23.699648657103186,4,10,not_affected
-Biomarker 9,18,-18.597058277984843,7,10,not_affected
-Biomarker 9,19,-25.51511487754346,8,10,not_affected
-Biomarker 9,20,-15.259961225645364,10,10,affected
-Biomarker 9,21,-18.836553635139037,6,10,not_affected
-Biomarker 9,22,-16.617746422170278,9,10,not_affected
-Biomarker 9,23,-21.048740011730402,3,10,not_affected
-Biomarker 9,24,-15.13264169992392,7,10,not_affected
-Biomarker 9,25,-16.873640543703083,1,10,not_affected
-Biomarker 9,26,-21.975694691533754,4,10,not_affected
-Biomarker 9,27,-26.37195966183453,4,10,not_affected
-Biomarker 9,28,-6.981682726653367,10,10,affected
-Biomarker 9,29,-21.530710911142393,8,10,not_affected
-Biomarker 9,30,-20.995197354817005,4,10,not_affected
-Biomarker 9,31,-18.217073379928852,6,10,not_affected
-Biomarker 9,32,-11.893967257322615,5,10,not_affected
-Biomarker 9,33,-24.067467915799938,1,10,not_affected
-Biomarker 9,34,-14.439830527531342,4,10,not_affected
-Biomarker 9,35,-21.826907708669477,0,10,not_affected
-Biomarker 9,36,-12.142947626107741,3,10,not_affected
-Biomarker 9,37,-11.53982016118257,10,10,affected
-Biomarker 9,38,-14.327086693258666,1,10,not_affected
-Biomarker 9,39,-24.621863278464865,7,10,not_affected
-Biomarker 9,40,-20.35023641073563,2,10,not_affected
-Biomarker 9,41,-15.763088540225285,1,10,not_affected
-Biomarker 9,42,-11.818213134179695,5,10,not_affected
-Biomarker 9,43,-11.101663044825663,10,10,affected
-Biomarker 9,44,-14.108253293802267,3,10,not_affected
-Biomarker 9,45,-22.150378226641017,6,10,not_affected
-Biomarker 9,46,-39.37629987777875,1,10,not_affected
-Biomarker 9,47,-22.903236621653107,1,10,not_affected
-Biomarker 9,48,-22.05588554227707,7,10,not_affected
-Biomarker 9,49,-18.190132764971594,1,10,not_affected
-Biomarker 9,50,-22.44029343591415,4,10,not_affected
-Biomarker 9,51,-23.576719559543573,4,10,not_affected
-Biomarker 9,52,-11.278728002682417,1,10,not_affected
-Biomarker 9,53,-19.374015918541,1,10,not_affected
-Biomarker 9,54,-18.002107742436376,10,10,affected
-Biomarker 9,55,-23.850616239123262,4,10,not_affected
-Biomarker 9,56,-19.76536862964977,4,10,not_affected
-Biomarker 9,57,-7.775561538501503,10,10,affected
-Biomarker 9,58,-30.988561411545376,9,10,not_affected
-Biomarker 9,59,-13.257265314493653,5,10,not_affected
-Biomarker 9,60,-19.77554369619517,5,10,not_affected
-Biomarker 9,61,-22.036105368885124,5,10,not_affected
-Biomarker 9,62,-8.461759513429126,6,10,not_affected
-Biomarker 9,63,-14.490663461116984,10,10,affected
-Biomarker 9,64,-15.938537293207213,2,10,not_affected
-Biomarker 9,65,-24.895765510334435,6,10,not_affected
-Biomarker 9,66,-25.51195069326983,8,10,not_affected
-Biomarker 9,67,-15.862871818481638,9,10,not_affected
-Biomarker 9,68,-10.96677315970236,6,10,not_affected
-Biomarker 9,69,-20.916882048952786,7,10,not_affected
-Biomarker 9,70,-15.509033136751263,6,10,not_affected
-Biomarker 9,71,-24.04144390115074,5,10,not_affected
-Biomarker 9,72,-21.735784671254105,7,10,not_affected
-Biomarker 9,73,-11.41839907808256,8,10,not_affected
-Biomarker 9,74,-10.854866810526637,10,10,affected
-Biomarker 9,75,-22.23178407662254,1,10,not_affected
-Biomarker 9,76,-18.518600087903636,8,10,not_affected
-Biomarker 9,77,-22.475471267079723,6,10,not_affected
-Biomarker 9,78,-22.648939376440797,8,10,not_affected
-Biomarker 9,79,-12.319740920022474,5,10,not_affected
-Biomarker 9,80,-12.81310614597692,4,10,not_affected
-Biomarker 9,81,-7.106663523891733,0,10,not_affected
-Biomarker 9,82,-19.793295137949666,9,10,not_affected
-Biomarker 9,83,-19.14134480891768,4,10,not_affected
-Biomarker 9,84,-23.693131863777268,7,10,not_affected
-Biomarker 9,85,-28.872765215822852,6,10,not_affected
-Biomarker 9,86,-30.372234492619658,2,10,not_affected
-Biomarker 9,87,-17.776577661536408,0,10,not_affected
-Biomarker 9,88,-11.157729825185154,8,10,not_affected
-Biomarker 9,89,-24.12838282739591,3,10,not_affected
-Biomarker 9,90,-1.5027115698275324,4,10,not_affected
-Biomarker 9,91,-23.082774008643913,6,10,not_affected
-Biomarker 9,92,-11.056889535142583,0,10,not_affected
-Biomarker 9,93,-33.11043618193216,6,10,not_affected
-Biomarker 9,94,-16.248683274588387,4,10,not_affected
-Biomarker 9,95,-22.00834909334269,8,10,not_affected
-Biomarker 9,96,-23.281182947819836,1,10,not_affected
-Biomarker 9,97,-25.757095194214806,1,10,not_affected
-Biomarker 9,98,-21.285312986130037,7,10,not_affected
-Biomarker 9,99,-21.451502740960507,9,10,not_affected
+participant,biomarker,measurement,k_j,S_n,affected_or_not
+0,MMSE,27.506251015984386,8,5,affected
+1,MMSE,20.17789726891614,1,5,not_affected
+2,MMSE,27.821436447237996,10,5,affected
+3,MMSE,27.799397101552408,9,5,affected
+4,MMSE,20.916697521435218,3,5,not_affected
+5,MMSE,27.166103583534255,5,5,affected
+6,MMSE,20.96159563033015,4,5,not_affected
+7,MMSE,28.33633766007863,10,5,affected
+8,MMSE,21.358627262598187,1,5,not_affected
+9,MMSE,25.419102796900972,0,5,not_affected
+10,MMSE,18.963486438624823,0,5,not_affected
+11,MMSE,22.293180291180605,4,5,not_affected
+12,MMSE,28.278764915252985,6,5,affected
+13,MMSE,27.98315165313984,10,5,affected
+14,MMSE,27.793528492338233,8,5,affected
+15,MMSE,28.50845672390609,9,5,affected
+16,MMSE,28.28570270814858,8,5,affected
+17,MMSE,28.411668237014943,6,5,affected
+18,MMSE,28.4737962156437,7,5,affected
+19,MMSE,28.71134411474274,5,5,affected
+20,MMSE,25.941283815600645,0,5,not_affected
+21,MMSE,20.389973189879083,3,5,not_affected
+22,MMSE,27.375005869110407,6,5,affected
+23,MMSE,19.28558837593752,4,5,not_affected
+24,MMSE,24.681853911673755,0,5,not_affected
+25,MMSE,22.806465323926822,1,5,not_affected
+26,MMSE,28.017067295935934,7,5,affected
+27,MMSE,19.86117233557827,0,5,not_affected
+28,MMSE,16.71223924554935,4,5,not_affected
+29,MMSE,25.526397025741602,4,5,not_affected
+30,MMSE,26.49336678914854,3,5,not_affected
+31,MMSE,28.547886456460695,5,5,affected
+32,MMSE,28.701911003738505,9,5,affected
+33,MMSE,28.233843344388998,8,5,affected
+34,MMSE,22.205210599730595,2,5,not_affected
+35,MMSE,26.622648417032543,7,5,affected
+36,MMSE,22.58735683124944,1,5,not_affected
+37,MMSE,29.25035673490525,6,5,affected
+38,MMSE,27.899242044274423,10,5,affected
+39,MMSE,20.926435225993373,0,5,not_affected
+40,MMSE,27.209423788004752,5,5,affected
+41,MMSE,28.003226719426582,8,5,affected
+42,MMSE,21.713210804434862,2,5,not_affected
+43,MMSE,27.885478332144594,7,5,affected
+44,MMSE,19.99285784088108,4,5,not_affected
+45,MMSE,28.3050123168003,8,5,affected
+46,MMSE,24.61481518882159,3,5,not_affected
+47,MMSE,27.624780349744636,6,5,affected
+48,MMSE,28.33067928599238,6,5,affected
+49,MMSE,29.074798683183015,10,5,affected
+50,MMSE,20.01884426329064,2,5,not_affected
+51,MMSE,22.349234347875203,0,5,not_affected
+52,MMSE,27.089799386277132,10,5,affected
+53,MMSE,21.348103180773126,1,5,not_affected
+54,MMSE,24.048910079276894,1,5,not_affected
+55,MMSE,27.422725677022086,5,5,affected
+56,MMSE,28.588791964091623,7,5,affected
+57,MMSE,27.546861196225127,8,5,affected
+58,MMSE,23.67293458035354,4,5,not_affected
+59,MMSE,25.12339777963077,2,5,not_affected
+60,MMSE,27.661548156614316,7,5,affected
+61,MMSE,19.819597351856697,4,5,not_affected
+62,MMSE,20.209215569530695,2,5,not_affected
+63,MMSE,25.27886314278918,3,5,not_affected
+64,MMSE,28.492111691471454,10,5,affected
+65,MMSE,26.772135956343924,10,5,affected
+66,MMSE,28.444473822849293,6,5,affected
+67,MMSE,20.90737868754027,0,5,not_affected
+68,MMSE,26.560588181639602,2,5,not_affected
+69,MMSE,18.480971633526142,0,5,not_affected
+70,MMSE,27.919546302455718,8,5,affected
+71,MMSE,20.085514299816218,2,5,not_affected
+72,MMSE,28.784039588526717,5,5,affected
+73,MMSE,28.25687232197679,9,5,affected
+74,MMSE,20.751982139642294,3,5,not_affected
+75,MMSE,28.153475047634288,9,5,affected
+76,MMSE,27.977439411148886,9,5,affected
+77,MMSE,28.297395349619876,5,5,affected
+78,MMSE,17.283498444964838,2,5,not_affected
+79,MMSE,29.000116425002776,5,5,affected
+80,MMSE,26.400297102521588,8,5,affected
+81,MMSE,21.222699230058986,0,5,not_affected
+82,MMSE,28.313907204131347,10,5,affected
+83,MMSE,28.74988667923567,10,5,affected
+84,MMSE,27.835685637501648,9,5,affected
+85,MMSE,27.122064420496283,9,5,affected
+86,MMSE,27.64446543094003,9,5,affected
+87,MMSE,28.510070062197993,6,5,affected
+88,MMSE,27.662452117833233,7,5,affected
+89,MMSE,23.271320719049726,4,5,not_affected
+90,MMSE,28.629718506799108,5,5,affected
+91,MMSE,27.533222779218743,6,5,affected
+92,MMSE,27.235710609354914,10,5,affected
+93,MMSE,23.493115439658638,1,5,not_affected
+94,MMSE,18.99276151719929,3,5,not_affected
+95,MMSE,19.979883653215566,1,5,not_affected
+96,MMSE,28.509119413580162,3,5,not_affected
+97,MMSE,28.8675883004443,10,5,affected
+98,MMSE,28.52894623729548,9,5,affected
+99,MMSE,27.802242167654587,10,5,affected
+0,ADAS,-5.120212513625647,8,6,affected
+1,ADAS,-18.00614095175657,1,6,not_affected
+2,ADAS,-5.3740565369592,10,6,affected
+3,ADAS,-9.260109185450663,9,6,affected
+4,ADAS,-21.222700183919073,3,6,not_affected
+5,ADAS,-22.69901986480149,5,6,not_affected
+6,ADAS,-16.595850844873915,4,6,not_affected
+7,ADAS,-4.7065031667879325,10,6,affected
+8,ADAS,-21.07979232073325,1,6,not_affected
+9,ADAS,-19.83686742295251,0,6,not_affected
+10,ADAS,-18.887430870796408,0,6,not_affected
+11,ADAS,-23.227116398229374,4,6,not_affected
+12,ADAS,-8.832193527989848,6,6,affected
+13,ADAS,-5.948391848684397,10,6,affected
+14,ADAS,-7.798267599538747,8,6,affected
+15,ADAS,-7.347818869289852,9,6,affected
+16,ADAS,-5.174983675229468,8,6,affected
+17,ADAS,-4.30571524393414,6,6,affected
+18,ADAS,-6.587878919562115,7,6,affected
+19,ADAS,-21.382226793321323,5,6,not_affected
+20,ADAS,-21.679036444797568,0,6,not_affected
+21,ADAS,-18.992206482637755,3,6,not_affected
+22,ADAS,-4.770113923640478,6,6,affected
+23,ADAS,-23.86499293977846,4,6,not_affected
+24,ADAS,-19.1504673441386,0,6,not_affected
+25,ADAS,-18.899289974929182,1,6,not_affected
+26,ADAS,-7.776352678120379,7,6,affected
+27,ADAS,-19.37571144098125,0,6,not_affected
+28,ADAS,-20.16507605514323,4,6,not_affected
+29,ADAS,-17.87728019368809,4,6,not_affected
+30,ADAS,-20.737988089071102,3,6,not_affected
+31,ADAS,-17.336068175564215,5,6,not_affected
+32,ADAS,-5.844065332703324,9,6,affected
+33,ADAS,-7.334267993569296,8,6,affected
+34,ADAS,-28.12804522491848,2,6,not_affected
+35,ADAS,-5.208187748330157,7,6,affected
+36,ADAS,-14.606311988868434,1,6,not_affected
+37,ADAS,-7.815868705269992,6,6,affected
+38,ADAS,-7.0772752702097765,10,6,affected
+39,ADAS,-20.227507150912054,0,6,not_affected
+40,ADAS,-22.466517358076974,5,6,not_affected
+41,ADAS,-5.7510329859059794,8,6,affected
+42,ADAS,-17.890870859774044,2,6,not_affected
+43,ADAS,-6.17839950995066,7,6,affected
+44,ADAS,-19.227638111449906,4,6,not_affected
+45,ADAS,-7.446907076245525,8,6,affected
+46,ADAS,-18.602900684287913,3,6,not_affected
+47,ADAS,-8.606670574263735,6,6,affected
+48,ADAS,-8.49811991689557,6,6,affected
+49,ADAS,-2.162981409482412,10,6,affected
+50,ADAS,-18.141873401714683,2,6,not_affected
+51,ADAS,-19.20945505682371,0,6,not_affected
+52,ADAS,-5.20876109791283,10,6,affected
+53,ADAS,-24.3428011089632,1,6,not_affected
+54,ADAS,-17.872587083100385,1,6,not_affected
+55,ADAS,-24.93232236351535,5,6,not_affected
+56,ADAS,-4.857568913175889,7,6,affected
+57,ADAS,-7.38388268587776,8,6,affected
+58,ADAS,-24.738760788637602,4,6,not_affected
+59,ADAS,-22.746112146833664,2,6,not_affected
+60,ADAS,-5.552885310263148,7,6,affected
+61,ADAS,-15.35720914354707,4,6,not_affected
+62,ADAS,-27.100298582690538,2,6,not_affected
+63,ADAS,-25.44047941607344,3,6,not_affected
+64,ADAS,-5.81021390435557,10,6,affected
+65,ADAS,-4.363879176621623,10,6,affected
+66,ADAS,-6.09104279814404,6,6,affected
+67,ADAS,-22.780088003907267,0,6,not_affected
+68,ADAS,-17.27714902994105,2,6,not_affected
+69,ADAS,-22.369007447532255,0,6,not_affected
+70,ADAS,-5.610057760508398,8,6,affected
+71,ADAS,-15.5614914599565,2,6,not_affected
+72,ADAS,-24.117964226607043,5,6,not_affected
+73,ADAS,-4.729898827941209,9,6,affected
+74,ADAS,-18.83409469644052,3,6,not_affected
+75,ADAS,-7.375423689476634,9,6,affected
+76,ADAS,-5.902528084311408,9,6,affected
+77,ADAS,-19.979338948252174,5,6,not_affected
+78,ADAS,-22.91069694412776,2,6,not_affected
+79,ADAS,-18.66114305308344,5,6,not_affected
+80,ADAS,-9.005533449069933,8,6,affected
+81,ADAS,-17.85915227576386,0,6,not_affected
+82,ADAS,-7.517001925213102,10,6,affected
+83,ADAS,-6.5222566259123544,10,6,affected
+84,ADAS,-3.3357551027046624,9,6,affected
+85,ADAS,-7.259848894672331,9,6,affected
+86,ADAS,-5.1145632802847585,9,6,affected
+87,ADAS,-6.667864663519266,6,6,affected
+88,ADAS,-6.228738637162638,7,6,affected
+89,ADAS,-25.82144844483487,4,6,not_affected
+90,ADAS,-21.264720874619922,5,6,not_affected
+91,ADAS,-6.384930633429844,6,6,affected
+92,ADAS,-6.482007368148656,10,6,affected
+93,ADAS,-16.04785004796961,1,6,not_affected
+94,ADAS,-22.950146989452406,3,6,not_affected
+95,ADAS,-22.59890534664662,1,6,not_affected
+96,ADAS,-25.941169393634617,3,6,not_affected
+97,ADAS,-6.4599283983199305,10,6,affected
+98,ADAS,-5.948967046476535,9,6,affected
+99,ADAS,-6.004985077599356,10,6,affected
+0,AB,182.42689723464653,8,3,affected
+1,AB,170.01771647703833,1,3,not_affected
+2,AB,314.3333661094305,10,3,affected
+3,AB,161.5981234382153,9,3,affected
+4,AB,298.6270690641481,3,3,affected
+5,AB,288.16977055535915,5,3,affected
+6,AB,278.8149687323032,4,3,affected
+7,AB,320.7198218776802,10,3,affected
+8,AB,168.2135530884998,1,3,not_affected
+9,AB,147.47275718863878,0,3,not_affected
+10,AB,168.42239628173917,0,3,not_affected
+11,AB,315.88578969158414,4,3,affected
+12,AB,250.200838850473,6,3,affected
+13,AB,213.28743031775127,10,3,affected
+14,AB,287.147466380461,8,3,affected
+15,AB,272.4202529395656,9,3,affected
+16,AB,344.6067723439296,8,3,affected
+17,AB,254.09422927299372,6,3,affected
+18,AB,296.8798192308318,7,3,affected
+19,AB,182.33207286383424,5,3,affected
+20,AB,139.6844609971144,0,3,not_affected
+21,AB,264.13305923723715,3,3,affected
+22,AB,253.32936488945086,6,3,affected
+23,AB,138.20624843052803,4,3,affected
+24,AB,151.6114390108358,0,3,not_affected
+25,AB,159.6069291974976,1,3,not_affected
+26,AB,226.40121748936528,7,3,affected
+27,AB,133.98889552432723,0,3,not_affected
+28,AB,206.9003766385924,4,3,affected
+29,AB,255.36231237400952,4,3,affected
+30,AB,238.63535102895736,3,3,affected
+31,AB,246.8264820292861,5,3,affected
+32,AB,187.7279108644937,9,3,affected
+33,AB,187.04167451725078,8,3,affected
+34,AB,167.84832111465022,2,3,not_affected
+35,AB,176.9836744905075,7,3,affected
+36,AB,206.53811838793092,1,3,not_affected
+37,AB,260.8740458423562,6,3,affected
+38,AB,237.23831399748585,10,3,affected
+39,AB,161.03891725448057,0,3,not_affected
+40,AB,341.98843414446605,5,3,affected
+41,AB,208.50741027076728,8,3,affected
+42,AB,170.0537365337813,2,3,not_affected
+43,AB,280.53067807942625,7,3,affected
+44,AB,271.68933360575335,4,3,affected
+45,AB,312.683018186081,8,3,affected
+46,AB,265.58611680273935,3,3,affected
+47,AB,307.7080643899355,6,3,affected
+48,AB,327.45617328888625,6,3,affected
+49,AB,253.3356654382931,10,3,affected
+50,AB,144.93496072779283,2,3,not_affected
+51,AB,130.79288594547324,0,3,not_affected
+52,AB,235.1511089834206,10,3,affected
+53,AB,150.56169536704633,1,3,not_affected
+54,AB,150.68180861314704,1,3,not_affected
+55,AB,201.3139340962632,5,3,affected
+56,AB,292.0056101716261,7,3,affected
+57,AB,289.55092402798186,8,3,affected
+58,AB,233.10431183993433,4,3,affected
+59,AB,169.13986635386888,2,3,not_affected
+60,AB,174.25073074868973,7,3,affected
+61,AB,282.36307407595706,4,3,affected
+62,AB,141.3984900956671,2,3,not_affected
+63,AB,253.0425869665319,3,3,affected
+64,AB,271.08152759193825,10,3,affected
+65,AB,146.01739283797855,10,3,affected
+66,AB,246.3236242742813,6,3,affected
+67,AB,165.03041497608444,0,3,not_affected
+68,AB,140.66939656580826,2,3,not_affected
+69,AB,143.8204588562885,0,3,not_affected
+70,AB,273.7047985771569,8,3,affected
+71,AB,141.2760747344708,2,3,not_affected
+72,AB,234.84922852611922,5,3,affected
+73,AB,316.2429060982985,9,3,affected
+74,AB,308.037761008835,3,3,affected
+75,AB,291.7727650178553,9,3,affected
+76,AB,222.53512399082925,9,3,affected
+77,AB,204.10202839531127,5,3,affected
+78,AB,147.1140821897173,2,3,not_affected
+79,AB,226.83028953718295,5,3,affected
+80,AB,248.26327127420328,8,3,affected
+81,AB,132.44670500525086,0,3,not_affected
+82,AB,306.43306075105136,10,3,affected
+83,AB,186.1918500024107,10,3,affected
+84,AB,314.51233265923446,9,3,affected
+85,AB,239.47265844121577,9,3,affected
+86,AB,232.02766496651395,9,3,affected
+87,AB,217.31633453089043,6,3,affected
+88,AB,339.84824022776695,7,3,affected
+89,AB,278.26130687179113,4,3,affected
+90,AB,289.7405925726119,5,3,affected
+91,AB,245.64637335169985,6,3,affected
+92,AB,176.57701462273533,10,3,affected
+93,AB,147.63655904366075,1,3,not_affected
+94,AB,219.21199393058683,3,3,affected
+95,AB,165.84900542781634,1,3,not_affected
+96,AB,313.2017490727526,3,3,affected
+97,AB,272.832428386791,10,3,affected
+98,AB,237.77180979866174,9,3,affected
+99,AB,366.0869917047424,10,3,affected
+0,P-Tau,-12.423679803035542,8,4,affected
+1,P-Tau,-95.75986732573745,1,4,not_affected
+2,P-Tau,-45.69921024341011,10,4,affected
+3,P-Tau,-26.4764160554428,9,4,affected
+4,P-Tau,-35.202000328549154,3,4,not_affected
+5,P-Tau,-26.09655377030261,5,4,affected
+6,P-Tau,-43.97250035876421,4,4,affected
+7,P-Tau,-21.056253682188512,10,4,affected
+8,P-Tau,-109.0543576302187,1,4,not_affected
+9,P-Tau,7.788459256669121,0,4,not_affected
+10,P-Tau,-49.76985397730504,0,4,not_affected
+11,P-Tau,-22.2036010805826,4,4,affected
+12,P-Tau,-28.5930385978747,6,4,affected
+13,P-Tau,-5.725905864899083,10,4,affected
+14,P-Tau,-42.54131713178428,8,4,affected
+15,P-Tau,-37.55913427773062,9,4,affected
+16,P-Tau,-4.934293216018457,8,4,affected
+17,P-Tau,-18.55524917656878,6,4,affected
+18,P-Tau,-5.153326907886154,7,4,affected
+19,P-Tau,-48.18249098778031,5,4,affected
+20,P-Tau,-19.574749285144957,0,4,not_affected
+21,P-Tau,-19.11237407993757,3,4,not_affected
+22,P-Tau,-5.461508787915932,6,4,affected
+23,P-Tau,-25.060382181878378,4,4,affected
+24,P-Tau,44.49937758379774,0,4,not_affected
+25,P-Tau,-45.51396589795307,1,4,not_affected
+26,P-Tau,-44.5460737656292,7,4,affected
+27,P-Tau,-29.706780375722804,0,4,not_affected
+28,P-Tau,-37.910798505189646,4,4,affected
+29,P-Tau,-53.6943906976707,4,4,affected
+30,P-Tau,17.41262580990687,3,4,not_affected
+31,P-Tau,8.698436825208738,5,4,affected
+32,P-Tau,-20.080685831808395,9,4,affected
+33,P-Tau,-12.674558257984994,8,4,affected
+34,P-Tau,-71.92755984662992,2,4,not_affected
+35,P-Tau,-45.90704994382957,7,4,affected
+36,P-Tau,-91.24136129943605,1,4,not_affected
+37,P-Tau,-27.303800059161137,6,4,affected
+38,P-Tau,-47.71164689883734,10,4,affected
+39,P-Tau,-76.74171479142115,0,4,not_affected
+40,P-Tau,-54.45481682126868,5,4,affected
+41,P-Tau,-26.027661440697944,8,4,affected
+42,P-Tau,-33.389193361786795,2,4,not_affected
+43,P-Tau,-32.31821109576352,7,4,affected
+44,P-Tau,-22.063332847244066,4,4,affected
+45,P-Tau,-51.216098587169675,8,4,affected
+46,P-Tau,-41.17472464595261,3,4,not_affected
+47,P-Tau,-35.433375603706146,6,4,affected
+48,P-Tau,-8.084690110351765,6,4,affected
+49,P-Tau,-23.64854717592858,10,4,affected
+50,P-Tau,-82.79828642338452,2,4,not_affected
+51,P-Tau,-68.17031305974075,0,4,not_affected
+52,P-Tau,-11.42789432667745,10,4,affected
+53,P-Tau,-26.17698831472085,1,4,not_affected
+54,P-Tau,-92.26160204010026,1,4,not_affected
+55,P-Tau,-40.9655672687457,5,4,affected
+56,P-Tau,-7.971353823335299,7,4,affected
+57,P-Tau,-2.186939231633417,8,4,affected
+58,P-Tau,-24.032721313260044,4,4,affected
+59,P-Tau,-18.56327191550451,2,4,not_affected
+60,P-Tau,-17.32736802260535,7,4,affected
+61,P-Tau,-25.08608338824164,4,4,affected
+62,P-Tau,-12.658286033297237,2,4,not_affected
+63,P-Tau,-34.067298399885686,3,4,not_affected
+64,P-Tau,-8.909604524672623,10,4,affected
+65,P-Tau,-30.415376061234017,10,4,affected
+66,P-Tau,-18.044357718336528,6,4,affected
+67,P-Tau,-42.32182125879282,0,4,not_affected
+68,P-Tau,-70.92282802502135,2,4,not_affected
+69,P-Tau,3.106210232254604,0,4,not_affected
+70,P-Tau,-6.851663657579561,8,4,affected
+71,P-Tau,-66.06492879854758,2,4,not_affected
+72,P-Tau,-50.4439240983483,5,4,affected
+73,P-Tau,-28.577213638748567,9,4,affected
+74,P-Tau,-56.791297012458685,3,4,not_affected
+75,P-Tau,-6.2934161775687585,9,4,affected
+76,P-Tau,-11.164120520424648,9,4,affected
+77,P-Tau,-47.735827785312495,5,4,affected
+78,P-Tau,-46.64140070917592,2,4,not_affected
+79,P-Tau,-35.63297996144921,5,4,affected
+80,P-Tau,-43.06781280556879,8,4,affected
+81,P-Tau,-81.71277794669253,0,4,not_affected
+82,P-Tau,-44.00816242894966,10,4,affected
+83,P-Tau,-23.170448617326027,10,4,affected
+84,P-Tau,-7.86606072444334,9,4,affected
+85,P-Tau,-22.98696386666516,9,4,affected
+86,P-Tau,-33.605255214549885,9,4,affected
+87,P-Tau,-16.729178372653383,6,4,affected
+88,P-Tau,-16.920072766814776,7,4,affected
+89,P-Tau,-27.285333752963783,4,4,affected
+90,P-Tau,-39.208307875484735,5,4,affected
+91,P-Tau,10.516858877124854,6,4,affected
+92,P-Tau,-6.82526744544279,10,4,affected
+93,P-Tau,-54.9459559979441,1,4,not_affected
+94,P-Tau,-79.27159121089377,3,4,not_affected
+95,P-Tau,-48.009482357492736,1,4,not_affected
+96,P-Tau,-146.649735758039,3,4,not_affected
+97,P-Tau,-17.5166681564569,10,4,affected
+98,P-Tau,-27.224906792634506,9,4,affected
+99,P-Tau,-9.141037955795337,10,4,affected
+0,HIP-FCI,7.537111455838819,8,1,affected
+1,HIP-FCI,4.918365760758939,1,1,affected
+2,HIP-FCI,4.611800662261942,10,1,affected
+3,HIP-FCI,6.58313969018954,9,1,affected
+4,HIP-FCI,6.013386862263854,3,1,affected
+5,HIP-FCI,4.640067957903563,5,1,affected
+6,HIP-FCI,6.1299536913261505,4,1,affected
+7,HIP-FCI,1.4426578881283239,10,1,affected
+8,HIP-FCI,6.727099490022882,1,1,affected
+9,HIP-FCI,-13.517860960986502,0,1,not_affected
+10,HIP-FCI,-4.1371546028093,0,1,not_affected
+11,HIP-FCI,6.361911760487237,4,1,affected
+12,HIP-FCI,5.716702361487801,6,1,affected
+13,HIP-FCI,5.497530119352307,10,1,affected
+14,HIP-FCI,6.3510855165807945,8,1,affected
+15,HIP-FCI,4.941479605654095,9,1,affected
+16,HIP-FCI,3.893419648513751,8,1,affected
+17,HIP-FCI,5.243960264977306,6,1,affected
+18,HIP-FCI,4.378408386242577,7,1,affected
+19,HIP-FCI,1.526135624465688,5,1,affected
+20,HIP-FCI,-5.586970261819427,0,1,not_affected
+21,HIP-FCI,6.581953515498116,3,1,affected
+22,HIP-FCI,3.5757071017652597,6,1,affected
+23,HIP-FCI,6.778563482202595,4,1,affected
+24,HIP-FCI,-2.720759419601046,0,1,not_affected
+25,HIP-FCI,5.462570725165035,1,1,affected
+26,HIP-FCI,4.728945295467216,7,1,affected
+27,HIP-FCI,4.880248689765645,0,1,not_affected
+28,HIP-FCI,2.049298088341795,4,1,affected
+29,HIP-FCI,5.911278563775324,4,1,affected
+30,HIP-FCI,5.677820738841053,3,1,affected
+31,HIP-FCI,3.773203789470567,5,1,affected
+32,HIP-FCI,4.277909074876575,9,1,affected
+33,HIP-FCI,2.225135567358994,8,1,affected
+34,HIP-FCI,3.2693866293562768,2,1,affected
+35,HIP-FCI,5.216174792941407,7,1,affected
+36,HIP-FCI,5.032253171213229,1,1,affected
+37,HIP-FCI,6.094338282430507,6,1,affected
+38,HIP-FCI,7.522882639665723,10,1,affected
+39,HIP-FCI,-11.108293613452275,0,1,not_affected
+40,HIP-FCI,4.021184414673002,5,1,affected
+41,HIP-FCI,4.600186414610937,8,1,affected
+42,HIP-FCI,5.398116612403134,2,1,affected
+43,HIP-FCI,3.6729829651034613,7,1,affected
+44,HIP-FCI,5.811416309845734,4,1,affected
+45,HIP-FCI,2.2239540863973675,8,1,affected
+46,HIP-FCI,5.46045231384018,3,1,affected
+47,HIP-FCI,4.0290434098995185,6,1,affected
+48,HIP-FCI,7.486927531611098,6,1,affected
+49,HIP-FCI,2.28765933711812,10,1,affected
+50,HIP-FCI,2.838921177250822,2,1,affected
+51,HIP-FCI,-9.236857040758052,0,1,not_affected
+52,HIP-FCI,5.594641296965622,10,1,affected
+53,HIP-FCI,3.580212120269815,1,1,affected
+54,HIP-FCI,5.028181971280317,1,1,affected
+55,HIP-FCI,3.9420157894208874,5,1,affected
+56,HIP-FCI,6.731189379902736,7,1,affected
+57,HIP-FCI,6.3138475578813225,8,1,affected
+58,HIP-FCI,3.1337098197987707,4,1,affected
+59,HIP-FCI,4.443955683801568,2,1,affected
+60,HIP-FCI,4.247796141947257,7,1,affected
+61,HIP-FCI,3.979373920640811,4,1,affected
+62,HIP-FCI,4.661318352369309,2,1,affected
+63,HIP-FCI,5.20128101855527,3,1,affected
+64,HIP-FCI,5.74798534671468,10,1,affected
+65,HIP-FCI,6.8397618958745365,10,1,affected
+66,HIP-FCI,6.987139643840855,6,1,affected
+67,HIP-FCI,-5.702391876456253,0,1,not_affected
+68,HIP-FCI,5.785712530661718,2,1,affected
+69,HIP-FCI,-18.34306531331937,0,1,not_affected
+70,HIP-FCI,5.414051960240456,8,1,affected
+71,HIP-FCI,5.87692279978968,2,1,affected
+72,HIP-FCI,8.968438225267978,5,1,affected
+73,HIP-FCI,5.39810673316724,9,1,affected
+74,HIP-FCI,5.799516263406987,3,1,affected
+75,HIP-FCI,4.754270573928042,9,1,affected
+76,HIP-FCI,5.368043312939288,9,1,affected
+77,HIP-FCI,5.6765364116316235,5,1,affected
+78,HIP-FCI,3.8864729992971223,2,1,affected
+79,HIP-FCI,5.074159569961262,5,1,affected
+80,HIP-FCI,5.918569991481819,8,1,affected
+81,HIP-FCI,2.644519720476013,0,1,not_affected
+82,HIP-FCI,4.088115990545985,10,1,affected
+83,HIP-FCI,5.0721575770017004,10,1,affected
+84,HIP-FCI,5.458668305880932,9,1,affected
+85,HIP-FCI,6.166663890389858,9,1,affected
+86,HIP-FCI,3.9598221117977532,9,1,affected
+87,HIP-FCI,6.940289930192224,6,1,affected
+88,HIP-FCI,6.286329345477877,7,1,affected
+89,HIP-FCI,5.518772169727443,4,1,affected
+90,HIP-FCI,4.05829702691325,5,1,affected
+91,HIP-FCI,4.5479713049363015,6,1,affected
+92,HIP-FCI,5.242774497161911,10,1,affected
+93,HIP-FCI,4.410583316290568,1,1,affected
+94,HIP-FCI,3.0860282350335613,3,1,affected
+95,HIP-FCI,6.986072110072783,1,1,affected
+96,HIP-FCI,4.936670364045567,3,1,affected
+97,HIP-FCI,5.608931391658066,10,1,affected
+98,HIP-FCI,2.0488955928340546,9,1,affected
+99,HIP-FCI,4.406535102478939,10,1,affected
+0,HIP-GMI,0.43463141359726504,8,7,affected
+1,HIP-GMI,0.19796786997441757,1,7,not_affected
+2,HIP-GMI,0.31688306751531153,10,7,affected
+3,HIP-GMI,0.08472688385673599,9,7,affected
+4,HIP-GMI,0.7155214046647935,3,7,not_affected
+5,HIP-GMI,0.9585678253804606,5,7,not_affected
+6,HIP-GMI,0.27839925237073626,4,7,not_affected
+7,HIP-GMI,0.37882900944959785,10,7,affected
+8,HIP-GMI,0.6583791253447455,1,7,not_affected
+9,HIP-GMI,0.4892352439505864,0,7,not_affected
+10,HIP-GMI,1.0501213747167428,0,7,not_affected
+11,HIP-GMI,0.24146224230066962,4,7,not_affected
+12,HIP-GMI,0.39631017282382724,6,7,not_affected
+13,HIP-GMI,0.5939447417793278,10,7,affected
+14,HIP-GMI,0.49127611070140864,8,7,affected
+15,HIP-GMI,0.0036226383676456475,9,7,affected
+16,HIP-GMI,0.575807578416151,8,7,affected
+17,HIP-GMI,0.2887174014860611,6,7,not_affected
+18,HIP-GMI,0.5641014434276745,7,7,affected
+19,HIP-GMI,0.0343271299695484,5,7,not_affected
+20,HIP-GMI,0.6492147384202809,0,7,not_affected
+21,HIP-GMI,0.21786037489815485,3,7,not_affected
+22,HIP-GMI,-0.04956135506793907,6,7,not_affected
+23,HIP-GMI,0.348554211093776,4,7,not_affected
+24,HIP-GMI,0.36557233476064155,0,7,not_affected
+25,HIP-GMI,0.48953320553453705,1,7,not_affected
+26,HIP-GMI,-0.18240377949133646,7,7,affected
+27,HIP-GMI,0.0887546951304296,0,7,not_affected
+28,HIP-GMI,0.025319154190656168,4,7,not_affected
+29,HIP-GMI,0.1858031321666401,4,7,not_affected
+30,HIP-GMI,0.29587906894312843,3,7,not_affected
+31,HIP-GMI,0.4039037417308937,5,7,not_affected
+32,HIP-GMI,0.21822708571430965,9,7,affected
+33,HIP-GMI,-0.04531516943456454,8,7,affected
+34,HIP-GMI,0.11543805663319676,2,7,not_affected
+35,HIP-GMI,0.29474461575981287,7,7,affected
+36,HIP-GMI,1.0964537157210774,1,7,not_affected
+37,HIP-GMI,0.0066458973123526555,6,7,not_affected
+38,HIP-GMI,0.8312559632558671,10,7,affected
+39,HIP-GMI,0.37966594701364287,0,7,not_affected
+40,HIP-GMI,0.43724208335477616,5,7,not_affected
+41,HIP-GMI,0.5231829572676501,8,7,affected
+42,HIP-GMI,-0.1993427489766056,2,7,not_affected
+43,HIP-GMI,0.46785510957171644,7,7,affected
+44,HIP-GMI,-0.09215465547786017,4,7,not_affected
+45,HIP-GMI,0.3213332655483511,8,7,affected
+46,HIP-GMI,1.0043953482470906,3,7,not_affected
+47,HIP-GMI,0.4378765849123643,6,7,not_affected
+48,HIP-GMI,0.4084427007142286,6,7,not_affected
+49,HIP-GMI,0.12317272864910134,10,7,affected
+50,HIP-GMI,0.4134397565054475,2,7,not_affected
+51,HIP-GMI,0.3971504233787595,0,7,not_affected
+52,HIP-GMI,0.22492346900783194,10,7,affected
+53,HIP-GMI,0.7849543031649675,1,7,not_affected
+54,HIP-GMI,0.27757614028120564,1,7,not_affected
+55,HIP-GMI,0.6293017594736273,5,7,not_affected
+56,HIP-GMI,0.55040064936221,7,7,affected
+57,HIP-GMI,0.026574645746561598,8,7,affected
+58,HIP-GMI,0.47830202669347077,4,7,not_affected
+59,HIP-GMI,0.5099289410393784,2,7,not_affected
+60,HIP-GMI,0.5258333933004902,7,7,affected
+61,HIP-GMI,0.3990401230073516,4,7,not_affected
+62,HIP-GMI,0.5485451065712991,2,7,not_affected
+63,HIP-GMI,0.022273943708408683,3,7,not_affected
+64,HIP-GMI,0.3706412687853526,10,7,affected
+65,HIP-GMI,0.40645244734507385,10,7,affected
+66,HIP-GMI,0.08950875850334078,6,7,not_affected
+67,HIP-GMI,0.5341198646244262,0,7,not_affected
+68,HIP-GMI,0.258947961683491,2,7,not_affected
+69,HIP-GMI,-0.33613178319413756,0,7,not_affected
+70,HIP-GMI,0.5632580317861157,8,7,affected
+71,HIP-GMI,0.8052395415457809,2,7,not_affected
+72,HIP-GMI,-0.0723625572162297,5,7,not_affected
+73,HIP-GMI,0.3347932806025079,9,7,affected
+74,HIP-GMI,0.353728886538245,3,7,not_affected
+75,HIP-GMI,0.2729702366434033,9,7,affected
+76,HIP-GMI,0.43075291682219136,9,7,affected
+77,HIP-GMI,-0.15577704870807724,5,7,not_affected
+78,HIP-GMI,0.5036471639954727,2,7,not_affected
+79,HIP-GMI,0.5440126357307111,5,7,not_affected
+80,HIP-GMI,0.6495478522608001,8,7,affected
+81,HIP-GMI,0.042775011861970025,0,7,not_affected
+82,HIP-GMI,0.469185735610532,10,7,affected
+83,HIP-GMI,0.16917023733732597,10,7,affected
+84,HIP-GMI,0.64385320398281,9,7,affected
+85,HIP-GMI,0.8634902258703363,9,7,affected
+86,HIP-GMI,0.16629503142462834,9,7,affected
+87,HIP-GMI,0.5000136254627582,6,7,not_affected
+88,HIP-GMI,0.623132002507836,7,7,affected
+89,HIP-GMI,-0.13150132600093023,4,7,not_affected
+90,HIP-GMI,-0.17852389107664945,5,7,not_affected
+91,HIP-GMI,0.4991764289384681,6,7,not_affected
+92,HIP-GMI,0.495145369285545,10,7,affected
+93,HIP-GMI,-0.30547300637781677,1,7,not_affected
+94,HIP-GMI,0.2839261205608702,3,7,not_affected
+95,HIP-GMI,1.0213724998382967,1,7,not_affected
+96,HIP-GMI,0.23670666839881682,3,7,not_affected
+97,HIP-GMI,0.17000443289497225,10,7,affected
+98,HIP-GMI,0.7679781633932938,9,7,affected
+99,HIP-GMI,0.4323617902044281,10,7,affected
+0,AVLT-Sum,34.940467476869564,8,8,affected
+1,AVLT-Sum,11.043940032173849,1,8,not_affected
+2,AVLT-Sum,26.226581448637347,10,8,affected
+3,AVLT-Sum,60.32318838931803,9,8,affected
+4,AVLT-Sum,25.001930985123803,3,8,not_affected
+5,AVLT-Sum,17.926092909229872,5,8,not_affected
+6,AVLT-Sum,19.95334034726773,4,8,not_affected
+7,AVLT-Sum,32.07973876304884,10,8,affected
+8,AVLT-Sum,12.160184194046867,1,8,not_affected
+9,AVLT-Sum,16.344293698968173,0,8,not_affected
+10,AVLT-Sum,14.375365078015655,0,8,not_affected
+11,AVLT-Sum,16.470972254982296,4,8,not_affected
+12,AVLT-Sum,21.35784903873917,6,8,not_affected
+13,AVLT-Sum,50.241581179704546,10,8,affected
+14,AVLT-Sum,22.78748568124417,8,8,affected
+15,AVLT-Sum,66.62529224947002,9,8,affected
+16,AVLT-Sum,34.55799695152069,8,8,affected
+17,AVLT-Sum,17.18115630311613,6,8,not_affected
+18,AVLT-Sum,13.798559923090636,7,8,not_affected
+19,AVLT-Sum,16.899643040565525,5,8,not_affected
+20,AVLT-Sum,21.637576483085954,0,8,not_affected
+21,AVLT-Sum,22.37486717974418,3,8,not_affected
+22,AVLT-Sum,9.68405508525235,6,8,not_affected
+23,AVLT-Sum,19.933786671123926,4,8,not_affected
+24,AVLT-Sum,21.77769945574338,0,8,not_affected
+25,AVLT-Sum,27.921717200364554,1,8,not_affected
+26,AVLT-Sum,28.64862290022925,7,8,not_affected
+27,AVLT-Sum,21.103963902809962,0,8,not_affected
+28,AVLT-Sum,20.867658231663928,4,8,not_affected
+29,AVLT-Sum,15.745782092732483,4,8,not_affected
+30,AVLT-Sum,25.64544962672454,3,8,not_affected
+31,AVLT-Sum,30.336871338657495,5,8,not_affected
+32,AVLT-Sum,45.135183316974754,9,8,affected
+33,AVLT-Sum,41.45756137284379,8,8,affected
+34,AVLT-Sum,21.163675645658454,2,8,not_affected
+35,AVLT-Sum,25.589763433305723,7,8,not_affected
+36,AVLT-Sum,21.980414361043312,1,8,not_affected
+37,AVLT-Sum,14.45874906866101,6,8,not_affected
+38,AVLT-Sum,33.49907010670646,10,8,affected
+39,AVLT-Sum,11.958079461253966,0,8,not_affected
+40,AVLT-Sum,16.359897520237908,5,8,not_affected
+41,AVLT-Sum,27.14069809976234,8,8,affected
+42,AVLT-Sum,8.55780030902806,2,8,not_affected
+43,AVLT-Sum,21.547165217795275,7,8,not_affected
+44,AVLT-Sum,14.115585159934577,4,8,not_affected
+45,AVLT-Sum,32.624617424263874,8,8,affected
+46,AVLT-Sum,32.01523386835494,3,8,not_affected
+47,AVLT-Sum,17.41753682083752,6,8,not_affected
+48,AVLT-Sum,25.18552975499681,6,8,not_affected
+49,AVLT-Sum,23.580401913123637,10,8,affected
+50,AVLT-Sum,24.754267163105926,2,8,not_affected
+51,AVLT-Sum,14.365856669440259,0,8,not_affected
+52,AVLT-Sum,35.621257446986064,10,8,affected
+53,AVLT-Sum,28.81031339235605,1,8,not_affected
+54,AVLT-Sum,12.488133776830356,1,8,not_affected
+55,AVLT-Sum,25.868486017148015,5,8,not_affected
+56,AVLT-Sum,20.033058557207195,7,8,not_affected
+57,AVLT-Sum,45.863042693420034,8,8,affected
+58,AVLT-Sum,19.627343305485063,4,8,not_affected
+59,AVLT-Sum,20.051386284947498,2,8,not_affected
+60,AVLT-Sum,33.48795707798674,7,8,not_affected
+61,AVLT-Sum,25.427583043607214,4,8,not_affected
+62,AVLT-Sum,17.86395778973063,2,8,not_affected
+63,AVLT-Sum,12.598095214443433,3,8,not_affected
+64,AVLT-Sum,13.501664895868199,10,8,affected
+65,AVLT-Sum,63.710274379825925,10,8,affected
+66,AVLT-Sum,13.905957663454505,6,8,not_affected
+67,AVLT-Sum,16.775804699751102,0,8,not_affected
+68,AVLT-Sum,15.941388500224352,2,8,not_affected
+69,AVLT-Sum,13.799292479727779,0,8,not_affected
+70,AVLT-Sum,14.832341216955054,8,8,affected
+71,AVLT-Sum,13.600973676172448,2,8,not_affected
+72,AVLT-Sum,14.680295663363113,5,8,not_affected
+73,AVLT-Sum,57.242048594281016,9,8,affected
+74,AVLT-Sum,20.319695606035655,3,8,not_affected
+75,AVLT-Sum,52.66774870528401,9,8,affected
+76,AVLT-Sum,7.195197396553304,9,8,affected
+77,AVLT-Sum,11.307789499800911,5,8,not_affected
+78,AVLT-Sum,22.36008501571308,2,8,not_affected
+79,AVLT-Sum,19.113118535652532,5,8,not_affected
+80,AVLT-Sum,30.859426225297817,8,8,affected
+81,AVLT-Sum,27.920967730699125,0,8,not_affected
+82,AVLT-Sum,63.44249609372765,10,8,affected
+83,AVLT-Sum,40.87088660330225,10,8,affected
+84,AVLT-Sum,49.128136100210384,9,8,affected
+85,AVLT-Sum,44.05455108240583,9,8,affected
+86,AVLT-Sum,45.56356694351799,9,8,affected
+87,AVLT-Sum,21.808125281902512,6,8,not_affected
+88,AVLT-Sum,16.572104142174027,7,8,not_affected
+89,AVLT-Sum,14.135914285809879,4,8,not_affected
+90,AVLT-Sum,24.546390527216463,5,8,not_affected
+91,AVLT-Sum,20.45796132693832,6,8,not_affected
+92,AVLT-Sum,23.320164584172794,10,8,affected
+93,AVLT-Sum,15.29131521359292,1,8,not_affected
+94,AVLT-Sum,15.9166389774184,3,8,not_affected
+95,AVLT-Sum,13.469281282611966,1,8,not_affected
+96,AVLT-Sum,14.099190462173677,3,8,not_affected
+97,AVLT-Sum,62.39757783695521,10,8,affected
+98,AVLT-Sum,56.74300361641231,9,8,affected
+99,AVLT-Sum,27.456274014160492,10,8,affected
+0,PCC-FCI,13.97006674734786,8,2,affected
+1,PCC-FCI,7.391180539513757,1,2,not_affected
+2,PCC-FCI,7.6481673387237805,10,2,affected
+3,PCC-FCI,18.877654331647754,9,2,affected
+4,PCC-FCI,14.189824278673328,3,2,affected
+5,PCC-FCI,18.746417192266385,5,2,affected
+6,PCC-FCI,7.087022284513349,4,2,affected
+7,PCC-FCI,14.02304021774609,10,2,affected
+8,PCC-FCI,11.68266133441055,1,2,not_affected
+9,PCC-FCI,4.318021448341635,0,2,not_affected
+10,PCC-FCI,0.0033754036036546253,0,2,not_affected
+11,PCC-FCI,12.078232746836868,4,2,affected
+12,PCC-FCI,13.8062066268659,6,2,affected
+13,PCC-FCI,18.35184605008705,10,2,affected
+14,PCC-FCI,8.850479114418452,8,2,affected
+15,PCC-FCI,14.861075497094937,9,2,affected
+16,PCC-FCI,17.143070911508023,8,2,affected
+17,PCC-FCI,10.489132340431654,6,2,affected
+18,PCC-FCI,16.451143426663403,7,2,affected
+19,PCC-FCI,22.959149301429278,5,2,affected
+20,PCC-FCI,1.307389123178179,0,2,not_affected
+21,PCC-FCI,10.313201562567716,3,2,affected
+22,PCC-FCI,12.93552999656944,6,2,affected
+23,PCC-FCI,10.264843953999742,4,2,affected
+24,PCC-FCI,11.993664175174072,0,2,not_affected
+25,PCC-FCI,12.239612864160767,1,2,not_affected
+26,PCC-FCI,6.417621545370696,7,2,affected
+27,PCC-FCI,2.708395914640062,0,2,not_affected
+28,PCC-FCI,12.878225918339275,4,2,affected
+29,PCC-FCI,4.649856910872843,4,2,affected
+30,PCC-FCI,15.61086612184565,3,2,affected
+31,PCC-FCI,15.55224552563184,5,2,affected
+32,PCC-FCI,9.706494778766888,9,2,affected
+33,PCC-FCI,8.199448868548698,8,2,affected
+34,PCC-FCI,12.682547702920672,2,2,affected
+35,PCC-FCI,16.98808688998891,7,2,affected
+36,PCC-FCI,3.0707355256669286,1,2,not_affected
+37,PCC-FCI,13.223207486927805,6,2,affected
+38,PCC-FCI,6.370018953775523,10,2,affected
+39,PCC-FCI,4.129413484285817,0,2,not_affected
+40,PCC-FCI,16.421145247937453,5,2,affected
+41,PCC-FCI,9.238288918869294,8,2,affected
+42,PCC-FCI,12.62612607064818,2,2,affected
+43,PCC-FCI,9.805124409728755,7,2,affected
+44,PCC-FCI,11.17122608401237,4,2,affected
+45,PCC-FCI,7.979387869959929,8,2,affected
+46,PCC-FCI,14.529817376750046,3,2,affected
+47,PCC-FCI,14.43798376987053,6,2,affected
+48,PCC-FCI,10.634136427357282,6,2,affected
+49,PCC-FCI,18.797193924275952,10,2,affected
+50,PCC-FCI,13.962143244381904,2,2,affected
+51,PCC-FCI,1.4597148824719022,0,2,not_affected
+52,PCC-FCI,15.04236107159873,10,2,affected
+53,PCC-FCI,9.716534874234894,1,2,not_affected
+54,PCC-FCI,6.262891215699544,1,2,not_affected
+55,PCC-FCI,15.051715344483087,5,2,affected
+56,PCC-FCI,9.202276748551819,7,2,affected
+57,PCC-FCI,9.24695203275015,8,2,affected
+58,PCC-FCI,12.23717227819486,4,2,affected
+59,PCC-FCI,11.965783297794598,2,2,affected
+60,PCC-FCI,7.8814686332082955,7,2,affected
+61,PCC-FCI,13.002827104273912,4,2,affected
+62,PCC-FCI,13.524976030129425,2,2,affected
+63,PCC-FCI,8.847267339907496,3,2,affected
+64,PCC-FCI,10.93944380108146,10,2,affected
+65,PCC-FCI,10.06932955591883,10,2,affected
+66,PCC-FCI,10.959900054860997,6,2,affected
+67,PCC-FCI,9.473062487326668,0,2,not_affected
+68,PCC-FCI,12.551195248650103,2,2,affected
+69,PCC-FCI,8.652674089055655,0,2,not_affected
+70,PCC-FCI,13.549028397974256,8,2,affected
+71,PCC-FCI,15.10900368012268,2,2,affected
+72,PCC-FCI,9.937241459072293,5,2,affected
+73,PCC-FCI,5.133220411840588,9,2,affected
+74,PCC-FCI,11.61888392855484,3,2,affected
+75,PCC-FCI,6.3031280765694095,9,2,affected
+76,PCC-FCI,15.3292214647857,9,2,affected
+77,PCC-FCI,7.231795087720797,5,2,affected
+78,PCC-FCI,6.861072276502583,2,2,affected
+79,PCC-FCI,10.930889052062525,5,2,affected
+80,PCC-FCI,9.04726218245226,8,2,affected
+81,PCC-FCI,9.33700385565282,0,2,not_affected
+82,PCC-FCI,15.875550678535426,10,2,affected
+83,PCC-FCI,4.897481407438976,10,2,affected
+84,PCC-FCI,11.135660418523095,9,2,affected
+85,PCC-FCI,10.47072968432007,9,2,affected
+86,PCC-FCI,3.10538291699835,9,2,affected
+87,PCC-FCI,15.04662397392536,6,2,affected
+88,PCC-FCI,13.817659004444074,7,2,affected
+89,PCC-FCI,13.497853497964474,4,2,affected
+90,PCC-FCI,11.701364158885356,5,2,affected
+91,PCC-FCI,7.762370974936475,6,2,affected
+92,PCC-FCI,16.959657370105134,10,2,affected
+93,PCC-FCI,-0.06443317008943694,1,2,not_affected
+94,PCC-FCI,14.83563799865032,3,2,affected
+95,PCC-FCI,3.745678516501754,1,2,not_affected
+96,PCC-FCI,8.87821707676465,3,2,affected
+97,PCC-FCI,8.574929145162535,10,2,affected
+98,PCC-FCI,12.029563431733353,9,2,affected
+99,PCC-FCI,19.693510544107728,10,2,affected
+0,FUS-GMI,0.5496919184004858,8,9,not_affected
+1,FUS-GMI,0.43133620225710684,1,9,not_affected
+2,FUS-GMI,0.5661762703980165,10,9,affected
+3,FUS-GMI,0.5509000524568148,9,9,affected
+4,FUS-GMI,0.6521152640775524,3,9,not_affected
+5,FUS-GMI,0.5341051685891819,5,9,not_affected
+6,FUS-GMI,0.6561162901827515,4,9,not_affected
+7,FUS-GMI,0.6859753056362642,10,9,affected
+8,FUS-GMI,0.4437193076640801,1,9,not_affected
+9,FUS-GMI,0.575263321010727,0,9,not_affected
+10,FUS-GMI,0.482755707586837,0,9,not_affected
+11,FUS-GMI,0.418766280939877,4,9,not_affected
+12,FUS-GMI,0.4020973982125931,6,9,not_affected
+13,FUS-GMI,0.5942190763227212,10,9,affected
+14,FUS-GMI,0.5270201078917436,8,9,not_affected
+15,FUS-GMI,0.6431187180911174,9,9,affected
+16,FUS-GMI,0.4164402010027385,8,9,not_affected
+17,FUS-GMI,0.4918589831727281,6,9,not_affected
+18,FUS-GMI,0.482319546581898,7,9,not_affected
+19,FUS-GMI,0.4966864059132374,5,9,not_affected
+20,FUS-GMI,0.3508599044608297,0,9,not_affected
+21,FUS-GMI,0.4334842604733782,3,9,not_affected
+22,FUS-GMI,0.5103076333702762,6,9,not_affected
+23,FUS-GMI,0.45153464994948256,4,9,not_affected
+24,FUS-GMI,0.549457329582094,0,9,not_affected
+25,FUS-GMI,0.46968852684025975,1,9,not_affected
+26,FUS-GMI,0.6068224113759373,7,9,not_affected
+27,FUS-GMI,0.489484227478466,0,9,not_affected
+28,FUS-GMI,0.4866833351208635,4,9,not_affected
+29,FUS-GMI,0.5072231616588571,4,9,not_affected
+30,FUS-GMI,0.40576972880275686,3,9,not_affected
+31,FUS-GMI,0.5471343283116782,5,9,not_affected
+32,FUS-GMI,0.600836331839021,9,9,affected
+33,FUS-GMI,0.6489373234820264,8,9,not_affected
+34,FUS-GMI,0.5256881963061945,2,9,not_affected
+35,FUS-GMI,0.4778306886752208,7,9,not_affected
+36,FUS-GMI,0.4996752607434377,1,9,not_affected
+37,FUS-GMI,0.514484758477939,6,9,not_affected
+38,FUS-GMI,0.5164556031826053,10,9,affected
+39,FUS-GMI,0.5148261871989664,0,9,not_affected
+40,FUS-GMI,0.4479129391533083,5,9,not_affected
+41,FUS-GMI,0.5137370796683155,8,9,not_affected
+42,FUS-GMI,0.5659215665366143,2,9,not_affected
+43,FUS-GMI,0.5296850936432757,7,9,not_affected
+44,FUS-GMI,0.5708079518507669,4,9,not_affected
+45,FUS-GMI,0.5009687127391684,8,9,not_affected
+46,FUS-GMI,0.4514771787129862,3,9,not_affected
+47,FUS-GMI,0.5327819954153018,6,9,not_affected
+48,FUS-GMI,0.559879272289603,6,9,not_affected
+49,FUS-GMI,0.48197074569467396,10,9,affected
+50,FUS-GMI,0.5088759315558982,2,9,not_affected
+51,FUS-GMI,0.5867023561994908,0,9,not_affected
+52,FUS-GMI,0.5698442359838791,10,9,affected
+53,FUS-GMI,0.5393447193486416,1,9,not_affected
+54,FUS-GMI,0.36411981524020515,1,9,not_affected
+55,FUS-GMI,0.5366741235548408,5,9,not_affected
+56,FUS-GMI,0.4816843128872597,7,9,not_affected
+57,FUS-GMI,0.5594637152012677,8,9,not_affected
+58,FUS-GMI,0.5711745860922015,4,9,not_affected
+59,FUS-GMI,0.455714727411897,2,9,not_affected
+60,FUS-GMI,0.5193555822072438,7,9,not_affected
+61,FUS-GMI,0.5658928463683708,4,9,not_affected
+62,FUS-GMI,0.5757769529441865,2,9,not_affected
+63,FUS-GMI,0.5326714633772528,3,9,not_affected
+64,FUS-GMI,0.6150307760210886,10,9,affected
+65,FUS-GMI,0.5771478790901408,10,9,affected
+66,FUS-GMI,0.5128484893565093,6,9,not_affected
+67,FUS-GMI,0.5104850737675568,0,9,not_affected
+68,FUS-GMI,0.44644737067951656,2,9,not_affected
+69,FUS-GMI,0.5326804660403329,0,9,not_affected
+70,FUS-GMI,0.4788551901706377,8,9,not_affected
+71,FUS-GMI,0.49084155570103205,2,9,not_affected
+72,FUS-GMI,0.40907387273436374,5,9,not_affected
+73,FUS-GMI,0.4872562447072261,9,9,affected
+74,FUS-GMI,0.5174534691353997,3,9,not_affected
+75,FUS-GMI,0.6178346908188953,9,9,affected
+76,FUS-GMI,0.5966560251368391,9,9,affected
+77,FUS-GMI,0.523930690047523,5,9,not_affected
+78,FUS-GMI,0.5845045737181056,2,9,not_affected
+79,FUS-GMI,0.5808232372076693,5,9,not_affected
+80,FUS-GMI,0.5302753089198573,8,9,not_affected
+81,FUS-GMI,0.42065364058010973,0,9,not_affected
+82,FUS-GMI,0.6102221781939531,10,9,affected
+83,FUS-GMI,0.725700796217237,10,9,affected
+84,FUS-GMI,0.6193200028953527,9,9,affected
+85,FUS-GMI,0.6343213123556206,9,9,affected
+86,FUS-GMI,0.5743055447002747,9,9,affected
+87,FUS-GMI,0.5636107347000646,6,9,not_affected
+88,FUS-GMI,0.4667815081373097,7,9,not_affected
+89,FUS-GMI,0.4231999127726858,4,9,not_affected
+90,FUS-GMI,0.5099539730959397,5,9,not_affected
+91,FUS-GMI,0.4012764449915444,6,9,not_affected
+92,FUS-GMI,0.5574805207945602,10,9,affected
+93,FUS-GMI,0.3515628316587978,1,9,not_affected
+94,FUS-GMI,0.6239941956034603,3,9,not_affected
+95,FUS-GMI,0.5719564171228755,1,9,not_affected
+96,FUS-GMI,0.46636750590881393,3,9,not_affected
+97,FUS-GMI,0.6159292467872617,10,9,affected
+98,FUS-GMI,0.5819609671330028,9,9,affected
+99,FUS-GMI,0.5985414542636477,10,9,affected
+0,FUS-FCI,-26.72541905404709,8,10,not_affected
+1,FUS-FCI,-18.362956985240118,1,10,not_affected
+2,FUS-FCI,-8.031560447092925,10,10,affected
+3,FUS-FCI,-23.857749987068217,9,10,not_affected
+4,FUS-FCI,-17.934508899126765,3,10,not_affected
+5,FUS-FCI,-19.481705719975096,5,10,not_affected
+6,FUS-FCI,-18.94330324234317,4,10,not_affected
+7,FUS-FCI,-11.525531040302512,10,10,affected
+8,FUS-FCI,-10.88214195178929,1,10,not_affected
+9,FUS-FCI,-10.589142138042522,0,10,not_affected
+10,FUS-FCI,-4.888963929443971,0,10,not_affected
+11,FUS-FCI,-18.091626243922107,4,10,not_affected
+12,FUS-FCI,-20.35576456085869,6,10,not_affected
+13,FUS-FCI,-4.336048929835456,10,10,affected
+14,FUS-FCI,-20.617034609443458,8,10,not_affected
+15,FUS-FCI,-25.892480405350135,9,10,not_affected
+16,FUS-FCI,-30.214991748679093,8,10,not_affected
+17,FUS-FCI,-21.102753215529717,6,10,not_affected
+18,FUS-FCI,-9.83350757667455,7,10,not_affected
+19,FUS-FCI,-22.557421866759064,5,10,not_affected
+20,FUS-FCI,-16.159702187476075,0,10,not_affected
+21,FUS-FCI,-19.86754984795012,3,10,not_affected
+22,FUS-FCI,-17.91989924861545,6,10,not_affected
+23,FUS-FCI,-23.503780225512724,4,10,not_affected
+24,FUS-FCI,-17.217581364659882,0,10,not_affected
+25,FUS-FCI,-20.163906163490115,1,10,not_affected
+26,FUS-FCI,-23.09504382474894,7,10,not_affected
+27,FUS-FCI,-22.119560457556336,0,10,not_affected
+28,FUS-FCI,-23.819460650797414,4,10,not_affected
+29,FUS-FCI,-28.883606576648955,4,10,not_affected
+30,FUS-FCI,-18.293830038439452,3,10,not_affected
+31,FUS-FCI,-24.852506663680774,5,10,not_affected
+32,FUS-FCI,-25.75864103590158,9,10,not_affected
+33,FUS-FCI,-21.911050549570028,8,10,not_affected
+34,FUS-FCI,-18.563453065245,2,10,not_affected
+35,FUS-FCI,-18.24633187581103,7,10,not_affected
+36,FUS-FCI,-18.644845040723695,1,10,not_affected
+37,FUS-FCI,-13.951267697233062,6,10,not_affected
+38,FUS-FCI,-11.118953582299074,10,10,affected
+39,FUS-FCI,-28.77219245866294,0,10,not_affected
+40,FUS-FCI,-22.740479856006576,5,10,not_affected
+41,FUS-FCI,-22.948379674756726,8,10,not_affected
+42,FUS-FCI,-19.200599543106712,2,10,not_affected
+43,FUS-FCI,-18.62929107078955,7,10,not_affected
+44,FUS-FCI,-33.67776519432666,4,10,not_affected
+45,FUS-FCI,-19.0802667750327,8,10,not_affected
+46,FUS-FCI,-21.676664308401797,3,10,not_affected
+47,FUS-FCI,-13.313472254466983,6,10,not_affected
+48,FUS-FCI,-29.046725140516514,6,10,not_affected
+49,FUS-FCI,-14.163136490288469,10,10,affected
+50,FUS-FCI,-21.690143774475764,2,10,not_affected
+51,FUS-FCI,-13.287123959569817,0,10,not_affected
+52,FUS-FCI,-7.625784915881143,10,10,affected
+53,FUS-FCI,-17.25040595228508,1,10,not_affected
+54,FUS-FCI,-19.480377630618417,1,10,not_affected
+55,FUS-FCI,-27.62163894095666,5,10,not_affected
+56,FUS-FCI,-5.960029529413568,7,10,not_affected
+57,FUS-FCI,-28.571150269485106,8,10,not_affected
+58,FUS-FCI,-16.278430730754557,4,10,not_affected
+59,FUS-FCI,-23.60414119279871,2,10,not_affected
+60,FUS-FCI,-14.150549696917011,7,10,not_affected
+61,FUS-FCI,-13.609190849482314,4,10,not_affected
+62,FUS-FCI,-27.197786788275202,2,10,not_affected
+63,FUS-FCI,-18.608909699992832,3,10,not_affected
+64,FUS-FCI,-12.5416645414204,10,10,affected
+65,FUS-FCI,-6.027627395219615,10,10,affected
+66,FUS-FCI,-16.068265951762246,6,10,not_affected
+67,FUS-FCI,-13.125411550459317,0,10,not_affected
+68,FUS-FCI,-21.16499977378502,2,10,not_affected
+69,FUS-FCI,-13.365934252976974,0,10,not_affected
+70,FUS-FCI,-11.853030808437213,8,10,not_affected
+71,FUS-FCI,-17.17676593577389,2,10,not_affected
+72,FUS-FCI,-17.373145227802926,5,10,not_affected
+73,FUS-FCI,-15.182392518788376,9,10,not_affected
+74,FUS-FCI,-17.96175734290052,3,10,not_affected
+75,FUS-FCI,-27.81449048013809,9,10,not_affected
+76,FUS-FCI,-28.87118596983668,9,10,not_affected
+77,FUS-FCI,-20.23834130816106,5,10,not_affected
+78,FUS-FCI,-24.736181724059087,2,10,not_affected
+79,FUS-FCI,-22.474890245485145,5,10,not_affected
+80,FUS-FCI,-21.19913918334451,8,10,not_affected
+81,FUS-FCI,-20.107184669108292,0,10,not_affected
+82,FUS-FCI,-10.248350172584647,10,10,affected
+83,FUS-FCI,-7.922881901489802,10,10,affected
+84,FUS-FCI,-12.578916931383255,9,10,not_affected
+85,FUS-FCI,-24.492432789626044,9,10,not_affected
+86,FUS-FCI,-19.119869687408826,9,10,not_affected
+87,FUS-FCI,-23.693729594678484,6,10,not_affected
+88,FUS-FCI,-23.84815286270176,7,10,not_affected
+89,FUS-FCI,-15.530558823225483,4,10,not_affected
+90,FUS-FCI,-20.646707146604637,5,10,not_affected
+91,FUS-FCI,-17.175332495495063,6,10,not_affected
+92,FUS-FCI,-7.408734251864892,10,10,affected
+93,FUS-FCI,-28.025762890888423,1,10,not_affected
+94,FUS-FCI,-19.816337771142155,3,10,not_affected
+95,FUS-FCI,-26.47018585977606,1,10,not_affected
+96,FUS-FCI,-14.569706319818772,3,10,not_affected
+97,FUS-FCI,-10.586535363813493,10,10,affected
+98,FUS-FCI,-22.855981862565667,9,10,not_affected
+99,FUS-FCI,-16.39502637356221,10,10,affected

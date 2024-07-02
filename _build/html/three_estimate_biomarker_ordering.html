@@ -403,7 +403,6 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/participant_data.csv&#39;</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">Biomarker</span> <span class="o">=</span> <span class="p">[</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;Biomarker &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Diseased&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">k_j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
@@ -428,8 +427,8 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Biomarker</th>
       <th>participant</th>
+      <th>biomarker</th>
       <th>measurement</th>
       <th>k_j</th>
       <th>S_n</th>
@@ -439,53 +438,53 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>562</th>
+      <th>9</th>
+      <td>9</td>
+      <td>MMSE</td>
+      <td>25.419103</td>
+      <td>0</td>
       <td>5</td>
-      <td>62</td>
-      <td>0.541972</td>
-      <td>6</td>
-      <td>3</td>
-      <td>affected</td>
-      <td>True</td>
+      <td>not_affected</td>
+      <td>False</td>
     </tr>
     <tr>
-      <th>443</th>
-      <td>4</td>
-      <td>43</td>
-      <td>5.619782</td>
-      <td>10</td>
+      <th>470</th>
+      <td>70</td>
+      <td>HIP-FCI</td>
+      <td>5.414052</td>
       <td>8</td>
-      <td>affected</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>449</th>
-      <td>4</td>
-      <td>49</td>
-      <td>-14.379981</td>
       <td>1</td>
-      <td>8</td>
-      <td>not_affected</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>783</th>
-      <td>7</td>
-      <td>83</td>
-      <td>6.562122</td>
-      <td>4</td>
-      <td>7</td>
-      <td>not_affected</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>778</th>
-      <td>7</td>
-      <td>78</td>
-      <td>8.418247</td>
-      <td>8</td>
-      <td>7</td>
       <td>affected</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>952</th>
+      <td>52</td>
+      <td>FUS-FCI</td>
+      <td>-7.625785</td>
+      <td>10</td>
+      <td>10</td>
+      <td>affected</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>358</th>
+      <td>58</td>
+      <td>P-Tau</td>
+      <td>-24.032721</td>
+      <td>4</td>
+      <td>4</td>
+      <td>affected</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>1</td>
+      <td>AB</td>
+      <td>170.017716</td>
+      <td>1</td>
+      <td>3</td>
+      <td>not_affected</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -501,19 +500,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2, 35, 81, 87, 92]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span> <span class="ow">in</span> <span class="n">non_diseased_participants</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[67, 69, 39, 9, 10, 81, 51, 20, 24, 27]
 </pre></div>
 </div>
 </div>
@@ -544,8 +531,8 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Biomarker</th>
       <th>participant</th>
+      <th>biomarker</th>
       <th>measurement</th>
       <th>Diseased</th>
     </tr>
@@ -554,36 +541,36 @@ document.write(`
     <tr>
       <th>0</th>
       <td>0</td>
-      <td>0</td>
-      <td>28.430422</td>
+      <td>MMSE</td>
+      <td>27.506251</td>
       <td>True</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
       <td>1</td>
-      <td>27.271975</td>
+      <td>MMSE</td>
+      <td>20.177897</td>
       <td>True</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0</td>
       <td>2</td>
-      <td>15.562816</td>
-      <td>False</td>
+      <td>MMSE</td>
+      <td>27.821436</td>
+      <td>True</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0</td>
       <td>3</td>
-      <td>27.592558</td>
+      <td>MMSE</td>
+      <td>27.799397</td>
       <td>True</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
       <td>4</td>
-      <td>28.282987</td>
+      <td>MMSE</td>
+      <td>20.916698</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -626,7 +613,7 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
+      <td>MMSE</td>
       <td>28.0</td>
       <td>0.666667</td>
       <td>22.0</td>
@@ -634,7 +621,7 @@ document.write(`
     </tr>
     <tr>
       <th>1</th>
-      <td>1</td>
+      <td>ADAS</td>
       <td>-6.0</td>
       <td>1.333333</td>
       <td>-20.0</td>
@@ -642,7 +629,7 @@ document.write(`
     </tr>
     <tr>
       <th>2</th>
-      <td>2</td>
+      <td>AB</td>
       <td>250.0</td>
       <td>50.000000</td>
       <td>150.0</td>
@@ -650,7 +637,7 @@ document.write(`
     </tr>
     <tr>
       <th>3</th>
-      <td>3</td>
+      <td>P-Tau</td>
       <td>-25.0</td>
       <td>16.666667</td>
       <td>-50.0</td>
@@ -658,7 +645,7 @@ document.write(`
     </tr>
     <tr>
       <th>4</th>
-      <td>4</td>
+      <td>HIP-FCI</td>
       <td>5.0</td>
       <td>1.666667</td>
       <td>-5.0</td>
@@ -667,18 +654,6 @@ document.write(`
   </tbody>
 </table>
 </div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numpy.int64
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -734,7 +709,7 @@ document.write(`
     <span class="n">data</span> <span class="o">=</span> <span class="n">fill_up_pdata</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">)</span>
     <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-        <span class="n">biomarker</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">])</span>
+        <span class="n">biomarker</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]</span>
         <span class="n">measurement</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;measurement&#39;</span><span class="p">]</span>
         <span class="n">affected</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;affected&#39;</span><span class="p">]</span>
         <span class="n">likelihood</span> <span class="o">*=</span> <span class="n">compute_single_measurement_likelihood</span><span class="p">(</span>
@@ -774,8 +749,8 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Biomarker</th>
       <th>participant</th>
+      <th>biomarker</th>
       <th>measurement</th>
       <th>k_j</th>
       <th>S_n</th>
@@ -786,102 +761,102 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
       <td>15</td>
-      <td>29.480355</td>
-      <td>10</td>
-      <td>1</td>
+      <td>MMSE</td>
+      <td>28.508457</td>
+      <td>9</td>
+      <td>5</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1</td>
       <td>15</td>
-      <td>-5.662743</td>
-      <td>10</td>
-      <td>5</td>
+      <td>ADAS</td>
+      <td>-7.347819</td>
+      <td>9</td>
+      <td>6</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2</td>
       <td>15</td>
-      <td>238.565813</td>
-      <td>10</td>
-      <td>2</td>
+      <td>AB</td>
+      <td>272.420253</td>
+      <td>9</td>
+      <td>3</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3</td>
       <td>15</td>
-      <td>-34.302119</td>
-      <td>10</td>
-      <td>6</td>
+      <td>P-Tau</td>
+      <td>-37.559134</td>
+      <td>9</td>
+      <td>4</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4</td>
       <td>15</td>
-      <td>6.185946</td>
-      <td>10</td>
-      <td>8</td>
+      <td>HIP-FCI</td>
+      <td>4.941480</td>
+      <td>9</td>
+      <td>1</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>5</td>
       <td>15</td>
-      <td>0.392585</td>
-      <td>10</td>
-      <td>3</td>
+      <td>HIP-GMI</td>
+      <td>0.003623</td>
+      <td>9</td>
+      <td>7</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>6</td>
       <td>15</td>
-      <td>50.390961</td>
-      <td>10</td>
+      <td>AVLT-Sum</td>
+      <td>66.625292</td>
       <td>9</td>
+      <td>8</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>7</td>
       <td>15</td>
-      <td>11.766209</td>
-      <td>10</td>
-      <td>7</td>
+      <td>PCC-FCI</td>
+      <td>14.861075</td>
+      <td>9</td>
+      <td>2</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>8</td>
       <td>15</td>
-      <td>0.652524</td>
-      <td>10</td>
-      <td>4</td>
+      <td>FUS-GMI</td>
+      <td>0.643119</td>
+      <td>9</td>
+      <td>9</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>9</td>
       <td>15</td>
-      <td>-7.199526</td>
+      <td>FUS-FCI</td>
+      <td>-25.892480</td>
+      <td>9</td>
       <td>10</td>
-      <td>10</td>
-      <td>affected</td>
+      <td>not_affected</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -893,13 +868,22 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ordering of biomarker affected by the disease</span>
 <span class="c1"># biomarker: disease stage</span>
 <span class="c1"># note that the value &gt;= 1</span>
-<span class="n">real_ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">pdata</span><span class="o">.</span><span class="n">S_n</span><span class="p">))</span>
+<span class="n">real_ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">pdata</span><span class="o">.</span><span class="n">biomarker</span><span class="p">,</span> <span class="n">pdata</span><span class="o">.</span><span class="n">S_n</span><span class="p">))</span>
 <span class="n">real_ordering_dic</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: 1, 1: 5, 2: 2, 3: 6, 4: 8, 5: 3, 6: 9, 7: 7, 8: 4, 9: 10}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;MMSE&#39;: 5,
+ &#39;ADAS&#39;: 6,
+ &#39;AB&#39;: 3,
+ &#39;P-Tau&#39;: 4,
+ &#39;HIP-FCI&#39;: 1,
+ &#39;HIP-GMI&#39;: 7,
+ &#39;AVLT-Sum&#39;: 8,
+ &#39;PCC-FCI&#39;: 2,
+ &#39;FUS-GMI&#39;: 9,
+ &#39;FUS-FCI&#39;: 10}
 </pre></div>
 </div>
 </div>
@@ -909,7 +893,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the participant data without k_j, and affected or not</span>
 <span class="n">pdata</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># obtain real ordering:</span>
-<span class="n">pdata</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdata</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">real_ordering_dic</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">])],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">pdata</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdata</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">real_ordering_dic</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">pdata</span>
 </pre></div>
 </div>
@@ -933,8 +917,8 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Biomarker</th>
       <th>participant</th>
+      <th>biomarker</th>
       <th>measurement</th>
       <th>Diseased</th>
       <th>S_n</th>
@@ -943,81 +927,81 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
       <td>15</td>
-      <td>29.480355</td>
+      <td>MMSE</td>
+      <td>28.508457</td>
       <td>True</td>
-      <td>1</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1</td>
       <td>15</td>
-      <td>-5.662743</td>
+      <td>ADAS</td>
+      <td>-7.347819</td>
       <td>True</td>
-      <td>5</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2</td>
       <td>15</td>
-      <td>238.565813</td>
+      <td>AB</td>
+      <td>272.420253</td>
       <td>True</td>
-      <td>2</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3</td>
       <td>15</td>
-      <td>-34.302119</td>
+      <td>P-Tau</td>
+      <td>-37.559134</td>
       <td>True</td>
-      <td>6</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4</td>
       <td>15</td>
-      <td>6.185946</td>
+      <td>HIP-FCI</td>
+      <td>4.941480</td>
       <td>True</td>
-      <td>8</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>5</td>
       <td>15</td>
-      <td>0.392585</td>
+      <td>HIP-GMI</td>
+      <td>0.003623</td>
       <td>True</td>
-      <td>3</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>6</td>
       <td>15</td>
-      <td>50.390961</td>
+      <td>AVLT-Sum</td>
+      <td>66.625292</td>
       <td>True</td>
-      <td>9</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>7</td>
       <td>15</td>
-      <td>11.766209</td>
+      <td>PCC-FCI</td>
+      <td>14.861075</td>
       <td>True</td>
-      <td>7</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>8</td>
       <td>15</td>
-      <td>0.652524</td>
+      <td>FUS-GMI</td>
+      <td>0.643119</td>
       <td>True</td>
-      <td>4</td>
+      <td>9</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>9</td>
       <td>15</td>
-      <td>-7.199526</td>
+      <td>FUS-FCI</td>
+      <td>-25.892480</td>
       <td>True</td>
       <td>10</td>
     </tr>
@@ -1027,8 +1011,18 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pdata</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># num_biomarkers = len(pdata.biomarker.unique())</span>
+<span class="c1"># for x in range(num_biomarkers):</span>
+<span class="c1">#     print(x)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pdata</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="c1"># calculate likelihood for all possible k_j</span>
+<span class="c1"># note that k_j should be 0-10</span>
 <span class="n">likelihood_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="o">=</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">theta_phi</span><span class="o">=</span><span class="n">theta_phi</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
 <span class="n">kjs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
@@ -1063,59 +1057,59 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>10</th>
-      <td>10</td>
-      <td>5.726705e-10</td>
-    </tr>
-    <tr>
       <th>9</th>
       <td>9</td>
-      <td>4.651241e-11</td>
+      <td>8.546526e-11</td>
     </tr>
     <tr>
       <th>8</th>
       <td>8</td>
-      <td>4.086644e-15</td>
+      <td>1.051643e-11</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>7</td>
-      <td>3.220442e-16</td>
+      <th>10</th>
+      <td>10</td>
+      <td>2.886950e-15</td>
     </tr>
     <tr>
       <th>6</th>
       <td>6</td>
-      <td>4.933073e-17</td>
+      <td>5.456709e-21</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>2.734383e-21</td>
     </tr>
     <tr>
       <th>5</th>
       <td>5</td>
-      <td>2.579711e-17</td>
+      <td>2.037858e-23</td>
     </tr>
     <tr>
       <th>4</th>
       <td>4</td>
-      <td>1.440739e-20</td>
+      <td>3.466624e-25</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3</td>
-      <td>1.434698e-21</td>
+      <td>2.147496e-25</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2</td>
-      <td>9.667752e-22</td>
+      <td>1.371344e-36</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
-      <td>2.197798e-27</td>
+      <td>2.673134e-38</td>
     </tr>
     <tr>
       <th>0</th>
       <td>0</td>
-      <td>1.264585e-28</td>
+      <td>2.199626e-39</td>
     </tr>
   </tbody>
 </table>
@@ -1138,7 +1132,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_ln_likelihood_assuming_ordering</span><span class="p">(</span><span class="n">ordering</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_ln_likelihood_assuming_ordering</span><span class="p">(</span><span class="n">ordering_dic</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the (ln version of) the likelihood of seeing all participants&#39; data,</span>
 <span class="sd">    assuming that we already know the ordering</span>
 <span class="sd">    Inputs:</span>
@@ -1149,12 +1143,10 @@ document.write(`
 <span class="sd">    Outputs:</span>
 <span class="sd">        - ln(likelihood)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># biomarker - order dict</span>
-    <span class="n">ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">),</span> <span class="n">ordering</span><span class="p">))</span>
     <span class="c1"># fill up S_n column using the ordering dict</span>
     <span class="c1"># copy first in order not to change data_we_have</span>
     <span class="n">filled_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">filled_data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filled_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">])],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">filled_data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filled_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ln_likelihood</span> <span class="o">=</span> <span class="mi">0</span> 
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participants</span><span class="p">):</span>
         <span class="n">pdata</span> <span class="o">=</span> <span class="n">filled_data</span><span class="p">[</span><span class="n">filled_data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1191,11 +1183,14 @@ document.write(`
 <span class="sd">        - best_likelihood: a scalar </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">num_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 
     <span class="c1"># initialize an ordering and likelihood</span>
     <span class="c1"># note that it should be a random permutation of numbers 1-10</span>
-    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">biomarker_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+    <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">best_order</span><span class="p">))</span>
+
     <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
     <span class="c1"># best_order = np.array(list(real_ordering_dic.values()))</span>
     <span class="c1"># best_likelihood = compute_likelihood_based_on_ordering(</span>
@@ -1207,13 +1202,14 @@ document.write(`
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="c1"># swapping the order</span>
         <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+        <span class="n">biomarker_new_order_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">new_order</span><span class="p">))</span>
         <span class="n">ln_likelihood</span> <span class="o">=</span> <span class="n">compute_ln_likelihood_assuming_ordering</span><span class="p">(</span>
-            <span class="n">new_order</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">)</span>
+            <span class="n">biomarker_new_order_dic</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">)</span>
         <span class="c1"># if swapping results in higher likelihood, </span>
         <span class="c1"># update the likelihood and accept the new ordering </span>
         <span class="k">if</span> <span class="n">ln_likelihood</span> <span class="o">&gt;</span> <span class="n">best_likelihood</span><span class="p">:</span>
             <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">ln_likelihood</span> 
-            <span class="n">best_order</span> <span class="o">=</span> <span class="n">new_order</span>
+            <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="n">biomarker_new_order_dic</span>
         <span class="k">else</span><span class="p">:</span> 
             <span class="c1"># ratio = likelihood/best_likelihood</span>
             <span class="c1"># np.exp(a - b) = np.exp(a)/np.exp(b)</span>
@@ -1221,9 +1217,9 @@ document.write(`
             <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">acceptance_ratio</span><span class="p">:</span>
                 <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">ln_likelihood</span>
-                <span class="n">best_order</span> <span class="o">=</span> <span class="n">new_order</span>
+                <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="n">biomarker_new_order_dic</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">best_order</span><span class="p">,</span> <span class="n">best_likelihood</span>
+    <span class="k">return</span> <span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">best_likelihood</span>
 </pre></div>
 </div>
 </div>
@@ -1233,15 +1229,71 @@ document.write(`
 <p>When the <code class="docutils literal notranslate"><span class="pre">accepatance_ratio</span></code> is small, then it indicates <code class="docutils literal notranslate"><span class="pre">ln_likelihood</span></code> is small. We do not want to accept this <code class="docutils literal notranslate"><span class="pre">ln_likelihood</span></code> in this case. Because <code class="docutils literal notranslate"><span class="pre">ln_likelihood</span></code> is small, <code class="docutils literal notranslate"><span class="pre">random_number</span> <span class="pre">&lt;</span> <span class="pre">acceptance_ratio</span></code> is less likely than <code class="docutils literal notranslate"><span class="pre">random_number</span> <span class="pre">&gt;</span> <span class="pre">acceptance_ratio</span></code>. That’s why we use <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> rather than <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># best_order, best_likelihood = metropolis_hastings(</span>
-<span class="c1">#     data = data_we_have, iterations = 10, theta_phi = theta_phi)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">metropolis_hastings</span><span class="p">(</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">theta_phi</span> <span class="o">=</span> <span class="n">theta_phi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 1 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 2 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 3 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 4 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 5 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 6 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 7 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 8 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 9 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 10 done
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># best_order, np.array(list(real_ordering_dic.values()))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">real_ordering_dic</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>({&#39;MMSE&#39;: 3,
+  &#39;ADAS&#39;: 2,
+  &#39;AB&#39;: 1,
+  &#39;P-Tau&#39;: 8,
+  &#39;HIP-FCI&#39;: 7,
+  &#39;HIP-GMI&#39;: 10,
+  &#39;AVLT-Sum&#39;: 5,
+  &#39;PCC-FCI&#39;: 4,
+  &#39;FUS-GMI&#39;: 6,
+  &#39;FUS-FCI&#39;: 9},
+ {&#39;MMSE&#39;: 5,
+  &#39;ADAS&#39;: 6,
+  &#39;AB&#39;: 3,
+  &#39;P-Tau&#39;: 4,
+  &#39;HIP-FCI&#39;: 1,
+  &#39;HIP-GMI&#39;: 7,
+  &#39;AVLT-Sum&#39;: 8,
+  &#39;PCC-FCI&#39;: 2,
+  &#39;FUS-GMI&#39;: 9,
+  &#39;FUS-FCI&#39;: 10})
 </pre></div>
 </div>
 </div>
@@ -1275,8 +1327,8 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Biomarker</th>
       <th>participant</th>
+      <th>biomarker</th>
       <th>measurement</th>
       <th>k_j</th>
       <th>S_n</th>
@@ -1288,51 +1340,51 @@ document.write(`
     <tr>
       <th>0</th>
       <td>0</td>
-      <td>0</td>
-      <td>28.430422</td>
+      <td>MMSE</td>
+      <td>27.506251</td>
+      <td>8</td>
       <td>5</td>
-      <td>1</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
       <td>1</td>
-      <td>27.271975</td>
-      <td>4</td>
+      <td>MMSE</td>
+      <td>20.177897</td>
       <td>1</td>
-      <td>affected</td>
+      <td>5</td>
+      <td>not_affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0</td>
       <td>2</td>
-      <td>15.562816</td>
-      <td>0</td>
-      <td>1</td>
-      <td>not_affected</td>
-      <td>False</td>
+      <td>MMSE</td>
+      <td>27.821436</td>
+      <td>10</td>
+      <td>5</td>
+      <td>affected</td>
+      <td>True</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0</td>
       <td>3</td>
-      <td>27.592558</td>
+      <td>MMSE</td>
+      <td>27.799397</td>
+      <td>9</td>
       <td>5</td>
-      <td>1</td>
       <td>affected</td>
       <td>True</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
       <td>4</td>
-      <td>28.282987</td>
-      <td>4</td>
-      <td>1</td>
-      <td>affected</td>
+      <td>MMSE</td>
+      <td>20.916698</td>
+      <td>3</td>
+      <td>5</td>
+      <td>not_affected</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -1348,12 +1400,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 5,  4,  0,  5,  4,  7,  8,  1,  6,  1,  6, 10,  2,  9,  2, 10, 10,
-        4,  7,  8, 10,  6,  9,  3,  7,  1,  4,  4, 10,  8,  4,  6,  5,  1,
-        4,  0,  3, 10,  1,  7,  2,  1,  5, 10,  3,  6,  1,  1,  7,  1,  4,
-        4,  1,  1, 10,  4,  4, 10,  9,  5,  5,  5,  6, 10,  2,  6,  8,  9,
-        6,  7,  6,  5,  7,  8, 10,  1,  8,  6,  8,  5,  4,  0,  9,  4,  7,
-        6,  2,  0,  8,  3,  4,  6,  0,  6,  4,  8,  1,  1,  7,  9])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 8,  1, 10,  9,  3,  5,  4, 10,  1,  0,  0,  4,  6, 10,  8,  9,  8,
+        6,  7,  5,  0,  3,  6,  4,  0,  1,  7,  0,  4,  4,  3,  5,  9,  8,
+        2,  7,  1,  6, 10,  0,  5,  8,  2,  7,  4,  8,  3,  6,  6, 10,  2,
+        0, 10,  1,  1,  5,  7,  8,  4,  2,  7,  4,  2,  3, 10, 10,  6,  0,
+        2,  0,  8,  2,  5,  9,  3,  9,  9,  5,  2,  5,  8,  0, 10, 10,  9,
+        9,  9,  6,  7,  4,  5,  6, 10,  1,  3,  1,  3, 10,  9, 10])
 </pre></div>
 </div>
 </div>
@@ -1383,8 +1435,8 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Biomarker</th>
       <th>participant</th>
+      <th>biomarker</th>
       <th>measurement</th>
       <th>Diseased</th>
     </tr>
@@ -1393,36 +1445,36 @@ document.write(`
     <tr>
       <th>0</th>
       <td>0</td>
-      <td>0</td>
-      <td>28.430422</td>
+      <td>MMSE</td>
+      <td>27.506251</td>
       <td>True</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
       <td>1</td>
-      <td>27.271975</td>
+      <td>MMSE</td>
+      <td>20.177897</td>
       <td>True</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0</td>
       <td>2</td>
-      <td>15.562816</td>
-      <td>False</td>
+      <td>MMSE</td>
+      <td>27.821436</td>
+      <td>True</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0</td>
       <td>3</td>
-      <td>27.592558</td>
+      <td>MMSE</td>
+      <td>27.799397</td>
       <td>True</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
       <td>4</td>
-      <td>28.282987</td>
+      <td>MMSE</td>
+      <td>20.916698</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -1494,23 +1546,22 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_estimated_means_stds_df</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;To get estimated parameters, returns a Pandas DataFrame</span>
 <span class="sd">    Input:</span>
-<span class="sd">    - biomarkers: 0-9</span>
+<span class="sd">    - biomarkers: biomarkers </span>
 <span class="sd">    - data_we_have: participants data filled with initial or updated participant_stages</span>
 
 <span class="sd">    Output: </span>
 <span class="sd">    - estimate_means_std_df, just like means_stds_df, containing the estimated mean and std_dev for </span>
 <span class="sd">      distribution of biomarker values when the biomarker is affected and not affected</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="c1"># empty list of dictionaries to store the estimations</span>
+     <span class="c1"># empty list of dictionaries to store the estimates </span>
     <span class="n">means_stds_estimate_dict_list</span> <span class="o">=</span> <span class="p">[]</span>
+    
     <span class="k">for</span> <span class="n">biomarker</span> <span class="ow">in</span> <span class="n">biomarkers</span><span class="p">:</span> 
         <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;biomarker&#39;</span><span class="p">:</span> <span class="n">biomarker</span><span class="p">}</span>  <span class="c1"># Initialize dictionary outside the inner loop</span>
         <span class="k">for</span> <span class="n">affected</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
-            <span class="n">data_full</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">Biomarker</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">biomarker</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span>
+            <span class="n">data_full</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span> <span class="o">==</span> <span class="n">biomarker</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
             <span class="n">data_we_have</span><span class="o">.</span><span class="n">affected</span> <span class="o">==</span> <span class="n">affected</span><span class="p">)]</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_full</span><span class="o">.</span><span class="n">measurement</span><span class="p">)</span>
-            <span class="c1"># if len(data) == 0:</span>
-            <span class="c1">#     print(data_full)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data_full</span><span class="o">.</span><span class="n">measurement</span>
             <span class="n">mu_estimate</span><span class="p">,</span> <span class="n">std_estimate</span> <span class="o">=</span> <span class="n">estimate_params_exact</span><span class="p">(</span>
                 <span class="n">m0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">s0_sq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">affected</span><span class="p">:</span>
@@ -1519,6 +1570,7 @@ document.write(`
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mu_estimate</span>
                 <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_estimate</span>
+        <span class="c1"># print(f&quot;biomarker {biomarker} done!&quot;)</span>
         <span class="n">means_stds_estimate_dict_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
     <span class="n">estimate_means_stds_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">means_stds_estimate_dict_list</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">estimate_means_stds_df</span> 
@@ -1530,14 +1582,15 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">metropolis_hastings_unknown_theta_phi</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">burn_in</span><span class="p">,</span> <span class="n">thining</span><span class="p">):</span>
     <span class="n">num_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">Biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-    <span class="n">biomarkers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">biomarker_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
 
-    <span class="n">all_ordering</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_dicts</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="c1"># initialize an ordering and likelihood</span>
     <span class="c1"># note that it should be a random permutation of numbers 1-10</span>
     <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+    <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">best_order</span><span class="p">))</span>
     <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
 
     <span class="c1"># initialize participant_stages </span>
@@ -1546,8 +1599,6 @@ document.write(`
     <span class="n">participant_stages</span><span class="p">[</span><span class="n">non_diseased_participants</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
-        <span class="k">if</span> <span class="mi">0</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">participant_stages</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
         <span class="c1"># when we update best_order below,</span>
         <span class="c1"># in each iteration, new_order will also update</span>
         <span class="n">new_order</span> <span class="o">=</span> <span class="n">best_order</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1558,19 +1609,19 @@ document.write(`
 
         <span class="c1"># likelihood of seeing all participants&#39; data </span>
         <span class="c1"># biomarker - order dict</span>
-        <span class="n">ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">),</span> <span class="n">new_order</span><span class="p">))</span>
+        <span class="n">ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">new_order</span><span class="p">))</span>
         <span class="c1"># fill up S_n column using the ordering dict</span>
         <span class="c1"># copy first in order not to change data_we_have</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="c1"># now data_we_have has S_n column</span>
-        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">])],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># add kj and affected based on the initial randomized participant_stages</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">add_kj_and_affected</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">)</span>
         <span class="c1"># print(data.head())</span>
 
         <span class="c1"># get estimated_theta_phi</span>
-        <span class="n">estimated_theta_phi</span> <span class="o">=</span> <span class="n">get_estimated_means_stds_df</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">estimated_theta_phi</span> <span class="o">=</span> <span class="n">get_estimated_means_stds_df</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">data_we_have</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 
         <span class="n">all_participant_ln_likelihood</span> <span class="o">=</span> <span class="mi">0</span> 
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participants</span><span class="p">):</span>
@@ -1596,19 +1647,6 @@ document.write(`
 
                     <span class="c1"># likelihood for this participant to have this specific sequence of biomarker values</span>
                     <span class="n">participant_likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">,</span> <span class="n">estimated_theta_phi</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">participant_likelihood</span><span class="p">):</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="n">pdata</span><span class="p">)</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="n">estimated_theta_phi</span><span class="p">)</span>
-                    
-                    <span class="c1"># pdata_with_this_kj = fill_up_pdata(pdata=pdata, k_j=k_j)</span>
-                    <span class="c1"># # likelihood for this participant to have this sequence of biomarker values</span>
-                    <span class="c1"># participant_likelihood = 1</span>
-                    <span class="c1"># for i, row in pdata_with_this_kj.iterrows():</span>
-                    <span class="c1">#     biomarker = int(row[&#39;Biomarker&#39;])</span>
-                    <span class="c1">#     measurement = row[&#39;measurement&#39;]</span>
-                    <span class="c1">#     affected = row[&#39;affected&#39;]</span>
-                    <span class="c1">#     participant_likelihood *= compute_single_measurement_likelihood(</span>
-                    <span class="c1">#         estimated_theta_phi, biomarker, affected, measurement)</span>
 
                     <span class="c1"># update each stage likelihood for this participant</span>
                     <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">participant_likelihood</span>
@@ -1627,30 +1665,24 @@ document.write(`
                     <span class="n">this_participant_ln_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">this_participant_likelihood</span><span class="p">)</span>
             <span class="n">all_participant_ln_likelihood</span> <span class="o">+=</span> <span class="n">this_participant_ln_likelihood</span>
             
-        <span class="c1"># if all_participant_ln_likelihood &gt; best_likelihood:</span>
-        <span class="c1">#     best_likelihood = all_participant_ln_likelihood </span>
-        <span class="c1">#     best_order = new_order</span>
-        <span class="c1"># else: </span>
-        <span class="c1"># we do not need the above because if if all_participant_ln_likelihood &gt; best_likelihood</span>
-        <span class="c1"># then acceptance_ratio is larger than 1</span>
         <span class="n">acceptance_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">all_participant_ln_likelihood</span> <span class="o">-</span> <span class="n">best_likelihood</span><span class="p">)</span>
         <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">acceptance_ratio</span><span class="p">:</span>
             <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">all_participant_ln_likelihood</span>
-            <span class="n">best_order</span> <span class="o">=</span> <span class="n">new_order</span>
+            <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="n">ordering_dic</span>
         
         <span class="k">if</span> <span class="n">_</span> <span class="o">&gt;=</span> <span class="n">burn_in</span> <span class="ow">and</span> <span class="n">_</span> <span class="o">%</span> <span class="n">thining</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">all_ordering</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_order</span><span class="p">)</span>
+            <span class="n">all_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ordering_dic</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">best_order</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_ordering</span>
+    <span class="k">return</span> <span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_dicts</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_order</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_ordering</span> <span class="o">=</span> <span class="n">metropolis_hastings_unknown_theta_phi</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_dicts</span> <span class="o">=</span> <span class="n">metropolis_hastings_unknown_theta_phi</span><span class="p">(</span>
     <span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">burn_in</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thining</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1690,13 +1722,31 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_order</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">real_ordering_dic</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">real_ordering_dic</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([ 5,  9,  2,  3, 10,  7,  8,  6,  4,  1]),
- array([ 1,  5,  2,  6,  8,  3,  9,  7,  4, 10]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>({&#39;MMSE&#39;: 1,
+  &#39;ADAS&#39;: 3,
+  &#39;AB&#39;: 5,
+  &#39;P-Tau&#39;: 9,
+  &#39;HIP-FCI&#39;: 6,
+  &#39;HIP-GMI&#39;: 10,
+  &#39;AVLT-Sum&#39;: 7,
+  &#39;PCC-FCI&#39;: 2,
+  &#39;FUS-GMI&#39;: 4,
+  &#39;FUS-FCI&#39;: 8},
+ {&#39;MMSE&#39;: 5,
+  &#39;ADAS&#39;: 6,
+  &#39;AB&#39;: 3,
+  &#39;P-Tau&#39;: 4,
+  &#39;HIP-FCI&#39;: 1,
+  &#39;HIP-GMI&#39;: 7,
+  &#39;AVLT-Sum&#39;: 8,
+  &#39;PCC-FCI&#39;: 2,
+  &#39;FUS-GMI&#39;: 9,
+  &#39;FUS-FCI&#39;: 10})
 </pre></div>
 </div>
 </div>
@@ -1708,30 +1758,160 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 7, 10,  0, 10,  9,  3,  8, 10,  6,  9,  8,  5, 10,  4,  5,  0,  6,
-        8,  8,  3,  5,  8,  3, 10,  2,  9,  9,  9,  0,  3,  6, 10,  6,  9,
-       10,  0,  7,  0,  9,  0,  9,  8,  7,  7,  9,  6, 10,  2,  8, 10, 10,
-        3, 10,  4,  4,  6, 10,  2,  4,  5,  6,  1,  6,  3,  9,  2,  3,  5,
-        8,  4,  3,  4,  6,  8,  2,  9,  4,  8,  1,  7, 10,  0,  1, 10,  8,
-        5, 10,  0,  4, 10,  9,  8,  0,  8,  8,  2, 10, 10,  3,  8])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 9,  0, 10,  7,  7, 10,  5, 10,  2,  0,  0,  9, 10, 10,  9,  9,  9,
+        6,  6,  3,  0,  3, 10,  0,  0,  4,  6,  0,  3,  5,  8,  9,  9,  9,
+        3,  6,  0,  9,  7,  0,  6,  9,  8, 10,  6,  6, 10,  6,  9,  5,  3,
+        0,  9, 10,  1,  7,  6,  7,  2,  2,  9,  6,  2,  9,  6,  9,  5,  0,
+        1,  0,  4,  3,  1,  7,  6,  7,  8,  2,  0,  2, 10,  0,  7, 10, 10,
+       10,  8, 10,  5,  2,  2,  6,  9,  0,  2,  0,  5,  9, 10, 10])
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ordering</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_dicts</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([ 5,  9,  1, 10,  3,  7,  6,  2,  4,  8]),
- array([ 5,  9,  8, 10,  3,  7,  2,  6,  4,  1]),
- array([ 5,  9,  8, 10,  3,  7,  2,  6,  4,  1]),
- array([ 5,  9,  2, 10,  3,  7,  8,  6,  4,  1])]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;MMSE&#39;: 10,
+  &#39;ADAS&#39;: 3,
+  &#39;AB&#39;: 5,
+  &#39;P-Tau&#39;: 9,
+  &#39;HIP-FCI&#39;: 6,
+  &#39;HIP-GMI&#39;: 1,
+  &#39;AVLT-Sum&#39;: 7,
+  &#39;PCC-FCI&#39;: 8,
+  &#39;FUS-GMI&#39;: 4,
+  &#39;FUS-FCI&#39;: 2},
+ {&#39;MMSE&#39;: 1,
+  &#39;ADAS&#39;: 3,
+  &#39;AB&#39;: 5,
+  &#39;P-Tau&#39;: 9,
+  &#39;HIP-FCI&#39;: 6,
+  &#39;HIP-GMI&#39;: 8,
+  &#39;AVLT-Sum&#39;: 7,
+  &#39;PCC-FCI&#39;: 10,
+  &#39;FUS-GMI&#39;: 4,
+  &#39;FUS-FCI&#39;: 2},
+ {&#39;MMSE&#39;: 1,
+  &#39;ADAS&#39;: 2,
+  &#39;AB&#39;: 5,
+  &#39;P-Tau&#39;: 9,
+  &#39;HIP-FCI&#39;: 6,
+  &#39;HIP-GMI&#39;: 10,
+  &#39;AVLT-Sum&#39;: 7,
+  &#39;PCC-FCI&#39;: 8,
+  &#39;FUS-GMI&#39;: 4,
+  &#39;FUS-FCI&#39;: 3},
+ {&#39;MMSE&#39;: 10,
+  &#39;ADAS&#39;: 3,
+  &#39;AB&#39;: 5,
+  &#39;P-Tau&#39;: 9,
+  &#39;HIP-FCI&#39;: 6,
+  &#39;HIP-GMI&#39;: 1,
+  &#39;AVLT-Sum&#39;: 7,
+  &#39;PCC-FCI&#39;: 8,
+  &#39;FUS-GMI&#39;: 4,
+  &#39;FUS-FCI&#39;: 2}]
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_dicts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MMSE</th>
+      <th>ADAS</th>
+      <th>AB</th>
+      <th>P-Tau</th>
+      <th>HIP-FCI</th>
+      <th>HIP-GMI</th>
+      <th>AVLT-Sum</th>
+      <th>PCC-FCI</th>
+      <th>FUS-GMI</th>
+      <th>FUS-FCI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+      <td>3</td>
+      <td>5</td>
+      <td>9</td>
+      <td>6</td>
+      <td>1</td>
+      <td>7</td>
+      <td>8</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>3</td>
+      <td>5</td>
+      <td>9</td>
+      <td>6</td>
+      <td>8</td>
+      <td>7</td>
+      <td>10</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>2</td>
+      <td>5</td>
+      <td>9</td>
+      <td>6</td>
+      <td>10</td>
+      <td>7</td>
+      <td>8</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10</td>
+      <td>3</td>
+      <td>5</td>
+      <td>9</td>
+      <td>6</td>
+      <td>1</td>
+      <td>7</td>
+      <td>8</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1759,7 +1939,24 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">all_ordering</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_dicts</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_values([10, 3, 5, 9, 6, 1, 7, 8, 4, 2])
+dict_values([1, 3, 5, 9, 6, 8, 7, 10, 4, 2])
+dict_values([1, 2, 5, 9, 6, 10, 7, 8, 4, 3])
+dict_values([10, 3, 5, 9, 6, 1, 7, 8, 4, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ordering</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_dicts</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">all_ordering</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">stage</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
         <span class="n">data_to_plot</span><span class="p">[</span><span class="n">stage</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 </pre></div>
@@ -1777,16 +1974,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.  , 0.  , 0.25, 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.75],
-       [0.  , 0.  , 0.25, 0.  , 0.  , 0.  , 0.5 , 0.25, 0.  , 0.  ],
-       [0.  , 0.  , 0.  , 0.  , 1.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.5 , 0.  , 0.  , 0.  , 0.  , 0.5 , 0.  , 0.  , 0.  , 0.  ],
+       [0.  , 0.25, 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.75],
+       [0.  , 0.75, 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.25],
        [0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 1.  , 0.  ],
-       [1.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
-       [0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.25, 0.75, 0.  , 0.  ],
-       [0.  , 0.  , 0.  , 0.  , 0.  , 1.  , 0.  , 0.  , 0.  , 0.  ],
-       [0.  , 0.  , 0.5 , 0.  , 0.  , 0.  , 0.25, 0.  , 0.  , 0.25],
-       [0.  , 1.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
-       [0.  , 0.  , 0.  , 1.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ]])
+       [0.  , 0.  , 1.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
+       [0.  , 0.  , 0.  , 0.  , 1.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
+       [0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 1.  , 0.  , 0.  , 0.  ],
+       [0.  , 0.  , 0.  , 0.  , 0.  , 0.25, 0.  , 0.75, 0.  , 0.  ],
+       [0.  , 0.  , 0.  , 1.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ],
+       [0.5 , 0.  , 0.  , 0.  , 0.  , 0.25, 0.  , 0.25, 0.  , 0.  ]])
 </pre></div>
 </div>
 </div>
@@ -1794,7 +1991,9 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_to_plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_to_plot</span><span class="p">)</span>
+<span class="n">biomarker_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
 <span class="n">data_to_plot_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">RangeIndex</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data_to_plot_df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">data_to_plot_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">biomarker_names</span>
 <span class="n">data_to_plot_df</span>
 </pre></div>
 </div>
@@ -1818,80 +2017,80 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
+      <th>MMSE</th>
+      <th>ADAS</th>
+      <th>AB</th>
+      <th>P-Tau</th>
+      <th>HIP-FCI</th>
+      <th>HIP-GMI</th>
+      <th>AVLT-Sum</th>
+      <th>PCC-FCI</th>
+      <th>FUS-GMI</th>
+      <th>FUS-FCI</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>1</th>
+      <td>0.5</td>
+      <td>0.00</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.50</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
       <td>0.0</td>
       <td>0.25</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.00</td>
+      <td>0.0</td>
       <td>0.00</td>
       <td>0.0</td>
       <td>0.75</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.25</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.50</td>
-      <td>0.25</td>
-      <td>0.0</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
       <th>3</th>
       <td>0.0</td>
+      <td>0.75</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.00</td>
       <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.00</td>
       <td>0.00</td>
       <td>0.0</td>
-      <td>0.00</td>
+      <td>0.25</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.00</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.00</td>
+      <td>0.0</td>
       <td>0.00</td>
       <td>1.0</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>5</th>
+      <td>0.0</td>
+      <td>0.00</td>
       <td>1.0</td>
       <td>0.0</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.00</td>
+      <td>0.0</td>
       <td>0.00</td>
       <td>0.0</td>
       <td>0.00</td>
@@ -1899,25 +2098,25 @@ document.write(`
     <tr>
       <th>6</th>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.00</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>0.00</td>
       <td>0.0</td>
-      <td>0.25</td>
-      <td>0.75</td>
+      <td>0.00</td>
       <td>0.0</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>7</th>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.00</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.00</td>
       <td>1.0</td>
-      <td>0.00</td>
       <td>0.00</td>
       <td>0.0</td>
       <td>0.00</td>
@@ -1925,39 +2124,39 @@ document.write(`
     <tr>
       <th>8</th>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.50</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.25</td>
       <td>0.00</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.25</td>
+      <td>0.0</td>
+      <td>0.75</td>
+      <td>0.0</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.0</td>
+      <td>0.00</td>
+      <td>0.0</td>
       <td>1.0</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.00</td>
+      <td>0.0</td>
       <td>0.00</td>
       <td>0.0</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>0.5</td>
       <td>0.00</td>
-      <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>0.0</td>
+      <td>0.25</td>
+      <td>0.0</td>
+      <td>0.25</td>
       <td>0.0</td>
       <td>0.00</td>
     </tr>
@@ -1976,7 +2175,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/05f43c403a8af1d1315c68968ae9ae9b17a6230ecbd36c8bde5a7305edd565a4.png" src="_images/05f43c403a8af1d1315c68968ae9ae9b17a6230ecbd36c8bde5a7305edd565a4.png" />
+<img alt="_images/bb3b70b9c66b14be24f6300890b9c04f4da24c27ec0ff726282a93ff6820e490.png" src="_images/bb3b70b9c66b14be24f6300890b9c04f4da24c27ec0ff726282a93ff6820e490.png" />
 </div>
 </div>
 </section>
