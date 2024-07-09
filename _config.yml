@@ -13,6 +13,8 @@ html:
 
 execute:
   execute_notebooks: force
+  timeout: -1  # Set to -1 to disable timeout
+
 
 repository:
   url: https://github.com/hongtaoh/ebm_book

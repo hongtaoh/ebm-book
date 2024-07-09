@@ -6,4 +6,5 @@ chapters:
   - file: one_estimate_distribution_params
   - file: two_estimate_disease_stages
   - file: three_estimate_biomarker_ordering
+  - file: use_chen_data
   - file: plan

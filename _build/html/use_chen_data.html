@@ -1,0 +1,1534 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Apply Algorithm to Chen’s Data &#8212; Event Based Modeling</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'use_chen_data';</script>
+    <link rel="canonical" href="https://ebm.hongtaoh.com/use_chen_data.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Research Plan" href="plan.html" />
+    <link rel="prev" title="Estimating biomarker ordering" href="three_estimate_biomarker_ordering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Event Based Modeling - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Event Based Modeling - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="distributions.html">Likelihood of observed biomarker data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generative_process.html">Generative process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="one_estimate_distribution_params.html">Estimating distribution parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="two_estimate_disease_stages.html">Estimating participants’ disease stages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="three_estimate_biomarker_ordering.html">Estimating biomarker ordering</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Apply Algorithm to Chen’s Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plan.html">Research Plan</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/hongtaoh/ebm_book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/hongtaoh/ebm_book/edit/master/use_chen_data.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/use_chen_data.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Apply Algorithm to Chen’s Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocess-data">Preprocess data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-theta-and-phi-estimates-using-k-means">Get Theta and Phi Estimates Using k-means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm-implementation-soly-dependent-on-theta-phi-kmeans">Metropolis-Hastings Algorithm Implementation Soly Dependent on Theta_Phi_Kmeans</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-theta-and-phi-based-on-conjugate-priors">Estimate Theta and Phi Based on Conjugate Priors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-average-likelihood-and-without-having-to-estimate-each-participange-stage">Use Average Likelihood and Without Having to Estimate Each Participange Stage</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="apply-algorithm-to-chen-s-data">
+<h1>Apply Algorithm to Chen’s Data<a class="headerlink" href="#apply-algorithm-to-chen-s-data" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mode</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">burn_in</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">thining</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="preprocess-data">
+<h2>Preprocess data<a class="headerlink" href="#preprocess-data" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;data/Chen2016Data.xlsx&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="s1">&#39;participant_category&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="s1">&#39;participant&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;diseased&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">participant_category</span> <span class="o">!=</span> <span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;participant_category&#39;</span><span class="p">,</span> <span class="s2">&quot;participant&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s1">&#39;diseased&#39;</span><span class="p">],</span> 
+                    <span class="n">value_vars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FCI(HIP)&quot;</span><span class="p">,</span> <span class="s2">&quot;GMI(HIP)&quot;</span><span class="p">,</span> <span class="s2">&quot;FCI(Fusi)&quot;</span><span class="p">,</span> <span class="s2">&quot;FCI(PCC)&quot;</span><span class="p">,</span> <span class="s2">&quot;GMI(FUS)&quot;</span><span class="p">],</span> 
+                    <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;biomarker&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;measurement&#39;</span><span class="p">)</span>
+<span class="c1"># convert participant id</span>
+<span class="n">num_participant</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">participant_string_id_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participant</span><span class="p">)]))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;participant&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">participant_string_id_dic</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">participant</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">)</span>
+<span class="n">data_we_have</span> <span class="o">=</span> <span class="n">df</span> 
+<span class="n">data_we_have</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant_category</th>
+      <th>participant</th>
+      <th>timestamp</th>
+      <th>diseased</th>
+      <th>biomarker</th>
+      <th>measurement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>CN</td>
+      <td>0</td>
+      <td>6/2/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-2.544567</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CN</td>
+      <td>1</td>
+      <td>9/2/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-1.603212</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CN</td>
+      <td>2</td>
+      <td>10/11/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-4.716009</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CN</td>
+      <td>3</td>
+      <td>8/8/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-4.232625</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>CN</td>
+      <td>4</td>
+      <td>11/28/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>3.628361</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## These are the healthy participants (Participant ID)</span>
+<span class="n">non_diseased_participants</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">diseased</span> <span class="o">==</span> <span class="kc">False</span><span class="p">]</span><span class="o">.</span><span class="n">participant</span><span class="p">))</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">non_diseased_participants</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(45, 144)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarkers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="p">))</span>
+<span class="n">biomarkers</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;GMI(FUS)&#39;, &#39;FCI(HIP)&#39;, &#39;FCI(Fusi)&#39;, &#39;FCI(PCC)&#39;, &#39;GMI(HIP)&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">)</span>
+<span class="n">num_biomarkers</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-theta-and-phi-estimates-using-k-means">
+<h2>Get Theta and Phi Estimates Using k-means<a class="headerlink" href="#get-theta-and-phi-estimates-using-k-means" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_theta_phi</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">kmeans_setup</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;To get theta and phi parametesr</span>
+<span class="sd">    Input:</span>
+<span class="sd">        - data: data we have right now, without access to S_n and kj</span>
+<span class="sd">        - biomarker: a string of biomarker name</span>
+<span class="sd">    Output:</span>
+<span class="sd">        mean and std of theta and phi</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># two empty clusters to strore measurements</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+    <span class="c1"># dataframe for this biomarker</span>
+    <span class="n">biomarker_df</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">biomarker</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">measurements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">biomarker_df</span><span class="p">[</span><span class="s1">&#39;measurement&#39;</span><span class="p">])</span>
+    <span class="c1"># reshape to satisfy sklearn requirements</span>
+    <span class="n">measurements</span> <span class="o">=</span> <span class="n">measurements</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># dataframe for non-diseased participants</span>
+    <span class="n">healthy_df</span> <span class="o">=</span> <span class="n">biomarker_df</span><span class="p">[</span><span class="n">biomarker_df</span><span class="p">[</span><span class="s1">&#39;diseased&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span><span class="p">]</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">kmeans_setup</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">measurements</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">measurements</span><span class="p">)</span>
+    <span class="c1"># to store measurements into their cluster</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predictions</span><span class="p">):</span>
+        <span class="n">clusters</span><span class="p">[</span><span class="n">prediction</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">measurements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># which cluster are healthy participants in</span>
+    <span class="n">healthy_predictions</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">measurements</span><span class="p">[</span><span class="n">healthy_df</span><span class="o">.</span><span class="n">index</span><span class="p">])</span>
+    <span class="c1"># the mode of the above predictions will be the phi cluster index</span>
+    <span class="n">phi_cluster_idx</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">healthy_predictions</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span>
+    <span class="n">theta_cluster_idx</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">phi_cluster_idx</span>
+    <span class="n">theta_mean</span><span class="p">,</span> <span class="n">theta_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">theta_cluster_idx</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">theta_cluster_idx</span><span class="p">])</span>
+    <span class="n">phi_mean</span><span class="p">,</span> <span class="n">phi_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">phi_cluster_idx</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">phi_cluster_idx</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">theta_mean</span><span class="p">,</span> <span class="n">theta_std</span><span class="p">,</span> <span class="n">phi_mean</span><span class="p">,</span> <span class="n">phi_std</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans_setup</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+<span class="c1"># empty list of dictionaries to store the estimates </span>
+<span class="n">means_stds_estimate_dict_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">biomarker</span> <span class="ow">in</span> <span class="n">biomarkers</span><span class="p">:</span>
+    <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;biomarker&#39;</span><span class="p">:</span> <span class="n">biomarker</span><span class="p">}</span>
+    <span class="n">theta_mean</span><span class="p">,</span> <span class="n">theta_std</span><span class="p">,</span> <span class="n">phi_mean</span><span class="p">,</span> <span class="n">phi_std</span> <span class="o">=</span> <span class="n">get_theta_phi</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">kmeans_setup</span><span class="p">)</span>
+    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;theta_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_mean</span>
+    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;theta_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_std</span>
+    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi_mean</span>
+    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi_std</span>
+    <span class="n">means_stds_estimate_dict_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+<span class="n">theta_phi_kmeans</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">means_stds_estimate_dict_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta_phi_kmeans</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>biomarker</th>
+      <th>theta_mean</th>
+      <th>theta_std</th>
+      <th>phi_mean</th>
+      <th>phi_std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GMI(FUS)</td>
+      <td>0.457107</td>
+      <td>0.044667</td>
+      <td>0.569150</td>
+      <td>0.035734</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>FCI(HIP)</td>
+      <td>2.794918</td>
+      <td>2.983066</td>
+      <td>-5.546734</td>
+      <td>2.887983</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>FCI(Fusi)</td>
+      <td>-19.767018</td>
+      <td>4.183856</td>
+      <td>-10.216922</td>
+      <td>3.021294</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>FCI(PCC)</td>
+      <td>11.583134</td>
+      <td>3.358987</td>
+      <td>1.781998</td>
+      <td>3.292063</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>GMI(HIP)</td>
+      <td>0.341778</td>
+      <td>0.054571</td>
+      <td>0.482245</td>
+      <td>0.037704</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="metropolis-hastings-algorithm-implementation-soly-dependent-on-theta-phi-kmeans">
+<h2>Metropolis-Hastings Algorithm Implementation Soly Dependent on Theta_Phi_Kmeans<a class="headerlink" href="#metropolis-hastings-algorithm-implementation-soly-dependent-on-theta-phi-kmeans" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fill_up_pdata</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Fill up a single participant&#39;s data using k_j; basically add two columns: </span>
+<span class="sd">    k_j and affected</span>
+<span class="sd">    Note that this function assumes that pdata already has the S_n column</span>
+<span class="sd">    </span>
+<span class="sd">    Input:</span>
+<span class="sd">    - pdata: a dataframe of ten biomarker values for a specific participant </span>
+<span class="sd">    - k_j: a scalar</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pdata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;k_j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k_j</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;affected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">k_j</span> <span class="o">&gt;=</span> <span class="n">row</span><span class="o">.</span><span class="n">S_n</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_single_measurement_likelihood</span><span class="p">(</span><span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Computes the likelihood of the measurement value of a single biomarker</span>
+<span class="sd">    We know the normal distribution defined by either theta or phi</span>
+<span class="sd">    and we know the measurement. This will give us the probability</span>
+<span class="sd">    of this given measurement value. </span>
+
+<span class="sd">    input:</span>
+<span class="sd">    - theta_phi: the dataframe containing theta and phi values for each biomarker</span>
+<span class="sd">    - biomarker: an integer between 0 and 9 </span>
+<span class="sd">    - affected: boolean </span>
+<span class="sd">    - measurement: the observed value for a biomarker in a specific participant</span>
+
+<span class="sd">    output: a scalar</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">biomarker_params</span> <span class="o">=</span> <span class="n">theta_phi</span><span class="p">[</span><span class="n">theta_phi</span><span class="o">.</span><span class="n">biomarker</span> <span class="o">==</span> <span class="n">biomarker</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;theta_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">affected</span> <span class="k">else</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;theta_std&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">affected</span> <span class="k">else</span> <span class="n">biomarker_params</span><span class="p">[</span><span class="s1">&#39;phi_std&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">std</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">measurement</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">var</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">var</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">likelihood</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This implementes the formula of https://ebm-book2.vercel.app/distributions.html#known-k-j</span>
+<span class="sd">    This function computes the likelihood of seeing this sequence of biomarker values for a specific participant</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">fill_up_pdata</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">)</span>
+    <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">biomarker</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]</span>
+        <span class="n">measurement</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;measurement&#39;</span><span class="p">]</span>
+        <span class="n">affected</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;affected&#39;</span><span class="p">]</span>
+        <span class="n">likelihood</span> <span class="o">*=</span> <span class="n">compute_single_measurement_likelihood</span><span class="p">(</span>
+            <span class="n">theta_phi</span><span class="p">,</span> <span class="n">biomarker</span><span class="p">,</span> <span class="n">affected</span><span class="p">,</span> <span class="n">measurement</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">likelihood</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">metropolis_hastings_with_theta_phi_kmeans</span><span class="p">(</span>
+        <span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">,</span> <span class="n">non_diseased_participants</span><span class="p">,</span>
+        <span class="n">burn_in</span><span class="p">,</span> <span class="n">thining</span><span class="p">,</span> 
+        <span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Implement the metropolis-hastings algorithm</span>
+<span class="sd">    Inputs: </span>
+<span class="sd">        - data: data_we_have</span>
+<span class="sd">        - iterations: number of iterations</span>
+
+<span class="sd">    Outputs:</span>
+<span class="sd">        - best_order: a numpy array</span>
+<span class="sd">        - best_likelihood: a scalar </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">num_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">num_stages</span> <span class="o">=</span> <span class="n">num_biomarkers</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">all_dicts</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># initialize an ordering and likelihood</span>
+    <span class="c1"># note that it should be a random permutation of numbers 1-10</span>
+    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_stages</span><span class="p">))</span>
+    <span class="n">biomarker_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+    <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">best_order</span><span class="p">))</span>
+
+    <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="c1"># initialize participant_stages </span>
+    <span class="c1"># note that high should be num_stages; otherwise, no participants will be in the stage of 10</span>
+    <span class="n">participant_stages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">num_stages</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">num_participants</span><span class="p">)</span>
+    <span class="n">participant_stages</span><span class="p">[</span><span class="n">non_diseased_participants</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">new_order</span> <span class="o">=</span> <span class="n">best_order</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># randomly select two indices</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># swapping the order</span>
+        <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+        <span class="c1"># biomarker - order dict</span>
+        <span class="n">ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">new_order</span><span class="p">))</span>
+        <span class="c1"># fill up S_n column using the ordering dict</span>
+        <span class="c1"># copy first in order not to change data_we_have</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># now data_we_have has S_n column</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">all_participant_ln_likelihood</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participants</span><span class="p">):</span>
+            <span class="c1"># copy participant_stages </span>
+            <span class="n">participant_stages_copy</span> <span class="o">=</span> <span class="n">participant_stages</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="c1"># this participant data</span>
+            <span class="n">pdata</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;If this participant is not diseased (i.e., if we know k_j is equal to 0)</span>
+<span class="sd">            We still need to compute the likelihood of this participant seeing this sequence of biomarker data</span>
+<span class="sd">            but we do not need to estimate k_j like below</span>
+
+<span class="sd">            We still need to compute the likelihood because we need to add it to all_participant_ln_likelihood</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">non_diseased_participants</span><span class="p">:</span>
+                <span class="c1"># the following will update pdata&#39;s kj and affect columns</span>
+                <span class="n">this_participant_likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span>
+                    <span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theta_phi</span> <span class="o">=</span> <span class="n">theta_phi</span><span class="p">)</span>
+                <span class="n">this_participant_ln_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">this_participant_likelihood</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># initiaze stage_likelihood</span>
+                <span class="n">stage_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_stages</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k_j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stages</span><span class="p">):</span>
+                    <span class="c1"># even though data above has everything, it is filled up by random stages</span>
+                    <span class="c1"># we don&#39;t like it and want to know the true k_j. All the following is to update participant_stages</span>
+
+                    <span class="c1"># likelihood for this participant to have this specific sequence of biomarker values</span>
+                    <span class="n">participant_likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">)</span>
+
+                    <span class="c1"># update each stage likelihood for this participant</span>
+                    <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">participant_likelihood</span>
+                <span class="n">likelihood_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span>
+                <span class="n">normalized_stage_likelihood</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">/</span><span class="n">likelihood_sum</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">stage_likelihood</span><span class="p">]</span>
+                <span class="n">sampled_stage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_stages</span><span class="p">),</span> <span class="n">p</span> <span class="o">=</span> <span class="n">normalized_stage_likelihood</span><span class="p">)</span>
+                <span class="n">participant_stages_copy</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled_stage</span>   
+
+                <span class="c1"># if participant is at sample_stage, </span>
+                <span class="c1"># what is the likelihood of this participant having this sequence of biomarker data:</span>
+                <span class="n">this_participant_likelihood</span> <span class="o">=</span>  <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">sampled_stage</span><span class="p">]</span>
+
+                <span class="c1"># then, update all_participant_likelihood</span>
+                <span class="k">if</span> <span class="n">this_participant_likelihood</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">this_participant_ln_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">this_participant_likelihood</span> <span class="o">+</span> <span class="mf">1e20</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">this_participant_ln_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">this_participant_likelihood</span><span class="p">)</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            All the codes in between are calculating this_participant_ln_likelihood. If we already know kj=0, then</span>
+<span class="sd">            it&#39;s very simple. If kj is unknown, we need to calculate the likelihood of seeing this sequence of biomarker</span>
+<span class="sd">            data at different stages, and get the relative likelihood before we get a sampled stage. Then we calculate</span>
+<span class="sd">            this_participant_ln_likelihood again. </span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">all_participant_ln_likelihood</span> <span class="o">+=</span> <span class="n">this_participant_ln_likelihood</span>
+<span class="w">            </span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The key to both `metropolis_hastings_with_theta_phi_kmeans` and `metropolis_hastings` is to </span>
+<span class="sd">        compare best_likelihood and the likelihood of all participants having specific sequences of measurements</span>
+<span class="sd">        based on the assumed S_n. </span>
+
+<span class="sd">        The difference lies in how to calculate all_participant_ln_likelihood. </span>
+
+<span class="sd">        `metropolis_hastings_with_theta_phi_kmeans` tries to obtain k_j and calculate each likelihood exactly </span>
+<span class="sd">        whereas `metropolis_hastings` did not obtain exact k_j and calculate the average likelihood instead</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">acceptance_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">all_participant_ln_likelihood</span> <span class="o">-</span> <span class="n">best_likelihood</span><span class="p">)</span>
+        <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">acceptance_ratio</span><span class="p">:</span>
+            <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">all_participant_ln_likelihood</span>
+            <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="n">ordering_dic</span>
+            <span class="n">participant_stages</span> <span class="o">=</span> <span class="n">participant_stages_copy</span>
+        
+        <span class="k">if</span> <span class="n">_</span> <span class="o">&gt;=</span> <span class="n">burn_in</span> <span class="ow">and</span> <span class="n">_</span> <span class="o">%</span> <span class="n">thining</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">all_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ordering_dic</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">_</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_dicts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_dicts</span> <span class="o">=</span> <span class="n">metropolis_hastings_with_theta_phi_kmeans</span><span class="p">(</span>
+    <span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">theta_phi</span> <span class="o">=</span> <span class="n">theta_phi_kmeans</span><span class="p">,</span> 
+    <span class="n">non_diseased_participants</span> <span class="o">=</span> <span class="n">non_diseased_participants</span><span class="p">,</span>
+    <span class="n">burn_in</span> <span class="o">=</span> <span class="n">burn_in</span><span class="p">,</span> <span class="n">thining</span> <span class="o">=</span> <span class="n">thining</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 10 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 20 done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_biomarker_stage_probability</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">):</span>
+    <span class="c1"># Create an empty list to hold dictionaries</span>
+    <span class="n">dict_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># for each biomarker</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;biomarker&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">}</span>
+        <span class="c1"># get the frequency of biomarkers</span>
+        <span class="n">stage_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+        <span class="c1"># for each stage</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_biomarkers</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># get stage:prabability</span>
+            <span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">stage_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">dict_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dict_list</span><span class="p">)</span>
+    <span class="n">dff</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">dff</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dff</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_dicts</span><span class="p">)</span>
+<span class="n">biomarker_stage_probability_df</span> <span class="o">=</span> <span class="n">get_biomarker_stage_probability</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">biomarker_stage_probability_df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;Probability&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Stage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Heatmap of Biomarkers Involvement in Stages&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/013cf6692ea639819362c1eb6494d40be91af456b601065353f9a93a974887a9.png" src="_images/013cf6692ea639819362c1eb6494d40be91af456b601065353f9a93a974887a9.png" />
+</div>
+</div>
+</section>
+<section id="estimate-theta-and-phi-based-on-conjugate-priors">
+<h2>Estimate Theta and Phi Based on Conjugate Priors<a class="headerlink" href="#estimate-theta-and-phi-based-on-conjugate-priors" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">estimate_params_exact</span><span class="p">(</span><span class="n">m0</span><span class="p">,</span> <span class="n">n0</span><span class="p">,</span> <span class="n">s0_sq</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This is to estimate means and vars based on conjugate priors</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        - data: a vector of measurements </span>
+<span class="sd">        - m0: prior estimate of $\mu$.</span>
+<span class="sd">        - n0: how strongly is the prior belief in $m_0$ is held.</span>
+<span class="sd">        - s0_sq: prior estimate of $\sigma^2$.</span>
+<span class="sd">        - v0: prior degress of freedome, influencing the certainty of $s_0^2$.</span>
+<span class="sd">    </span>
+<span class="sd">    Outputs:</span>
+<span class="sd">        - mu estiate, std estimate</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># Data summary</span>
+    <span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sample_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sample_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># ddof=1 for unbiased estimator</span>
+
+    <span class="c1"># Update hyperparameters for the Normal-Inverse Gamma posterior</span>
+    <span class="n">updated_m0</span> <span class="o">=</span> <span class="p">(</span><span class="n">n0</span> <span class="o">*</span> <span class="n">m0</span> <span class="o">+</span> <span class="n">sample_size</span> <span class="o">*</span> <span class="n">sample_mean</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n0</span> <span class="o">+</span> <span class="n">sample_size</span><span class="p">)</span>
+    <span class="n">updated_n0</span> <span class="o">=</span> <span class="n">n0</span> <span class="o">+</span> <span class="n">sample_size</span>
+    <span class="n">updated_v0</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">+</span> <span class="n">sample_size</span> 
+    <span class="n">updated_s0_sq</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">updated_v0</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">sample_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sample_var</span> <span class="o">+</span> <span class="n">v0</span> <span class="o">*</span> <span class="n">s0_sq</span> <span class="o">+</span> 
+                    <span class="p">(</span><span class="n">n0</span> <span class="o">*</span> <span class="n">sample_size</span> <span class="o">/</span> <span class="n">updated_n0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">sample_mean</span> <span class="o">-</span> <span class="n">m0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">updated_alpha</span> <span class="o">=</span> <span class="n">updated_v0</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">updated_beta</span> <span class="o">=</span> <span class="n">updated_v0</span><span class="o">*</span><span class="n">updated_s0_sq</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="c1"># Posterior estimates</span>
+    <span class="n">mu_posterior_mean</span> <span class="o">=</span> <span class="n">updated_m0</span>
+    <span class="n">sigma_squared_posterior_mean</span> <span class="o">=</span> <span class="n">updated_beta</span><span class="o">/</span><span class="n">updated_alpha</span>
+
+    <span class="n">mu_estimation</span> <span class="o">=</span> <span class="n">mu_posterior_mean</span>
+    <span class="n">std_estimation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_squared_posterior_mean</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">mu_estimation</span><span class="p">,</span> <span class="n">std_estimation</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_estimated_means_stds_df</span><span class="p">(</span><span class="n">biomarkers</span><span class="p">,</span> <span class="n">data_we_have</span><span class="p">,</span> <span class="n">theta_phi_kmeans</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;To get estimated parameters, returns a Pandas DataFrame</span>
+<span class="sd">    Input:</span>
+<span class="sd">    - biomarkers: biomarkers </span>
+<span class="sd">    - data_we_have: participants data filled with initial or updated participant_stages</span>
+
+<span class="sd">    Output: </span>
+<span class="sd">    - estimate_means_std_df, just like means_stds_df, containing the estimated mean and std_dev for </span>
+<span class="sd">      distribution of biomarker values when the biomarker is affected and not affected</span>
+
+<span class="sd">    Note that, there is one bug we need to fix: Sometimes, data_full might have only one observation or no ob</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+     <span class="c1"># empty list of dictionaries to store the estimates </span>
+    <span class="n">means_stds_estimate_dict_list</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">biomarker</span> <span class="ow">in</span> <span class="n">biomarkers</span><span class="p">:</span> 
+        <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;biomarker&#39;</span><span class="p">:</span> <span class="n">biomarker</span><span class="p">}</span>  <span class="c1"># Initialize dictionary outside the inner loop</span>
+        <span class="k">for</span> <span class="n">affected</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+            <span class="n">data_full</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="p">[(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span> <span class="o">==</span> <span class="n">biomarker</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+            <span class="n">data_we_have</span><span class="o">.</span><span class="n">affected</span> <span class="o">==</span> <span class="n">affected</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_full</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">measurements</span> <span class="o">=</span> <span class="n">data_full</span><span class="o">.</span><span class="n">measurement</span>
+                <span class="n">mu_estimate</span><span class="p">,</span> <span class="n">std_estimate</span> <span class="o">=</span> <span class="n">estimate_params_exact</span><span class="p">(</span>
+                    <span class="n">m0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">s0_sq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">measurements</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">affected</span><span class="p">:</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;theta_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mu_estimate</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;theta_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_estimate</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mu_estimate</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_estimate</span>
+            <span class="c1"># If there is only one observation or not observation at all, resort to theta_phi_kmeans</span>
+            <span class="c1"># YES, IT IS POSSIBLE THAT DATA_FULL HERE IS NULL</span>
+            <span class="c1"># For example, if a biomarker indicates stage of (num_biomarkers), but all participants&#39; stages</span>
+            <span class="c1"># are smaller than that stage; so that for all participants, this biomarker is not affected</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># DONT FORGTE RESET_INDEX; this because you are acessing [0]</span>
+                <span class="n">theta_phi_kmeans_biomarker_row</span> <span class="o">=</span> <span class="n">theta_phi_kmeans</span><span class="p">[</span>
+                    <span class="n">theta_phi_kmeans</span><span class="o">.</span><span class="n">biomarker</span> <span class="o">==</span> <span class="n">biomarker</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">affected</span><span class="p">:</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;theta_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_phi_kmeans_biomarker_row</span><span class="p">[</span><span class="s1">&#39;theta_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;theta_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_phi_kmeans_biomarker_row</span><span class="p">[</span><span class="s1">&#39;theta_std&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_phi_kmeans_biomarker_row</span><span class="p">[</span><span class="s1">&#39;phi_mean&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;phi_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_phi_kmeans_biomarker_row</span><span class="p">[</span><span class="s1">&#39;phi_std&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># print(f&quot;biomarker {biomarker} done!&quot;)</span>
+        <span class="n">means_stds_estimate_dict_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+    <span class="n">estimate_means_stds_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">means_stds_estimate_dict_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">estimate_means_stds_df</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_kj_and_affected</span><span class="p">(</span><span class="n">data_we_have</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This is to fill up data_we_have. </span>
+<span class="sd">    Basically, add two columns: k_j, and affected, based on the initial or updated participant_stages</span>
+<span class="sd">    Note that we assume here we&#39;ve already got S_n</span>
+
+<span class="sd">    Inputs:</span>
+<span class="sd">        - data_we_have</span>
+<span class="sd">        - participant_stages: np array </span>
+<span class="sd">        - participants: 0-99</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">participant_stage_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">),</span> <span class="n">participant_stages</span><span class="p">))</span>
+    <span class="n">data_we_have</span><span class="p">[</span><span class="s1">&#39;k_j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">participant_stage_dic</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">participant</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">data_we_have</span><span class="p">[</span><span class="s1">&#39;affected&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">k_j</span> <span class="o">&gt;=</span> <span class="n">row</span><span class="o">.</span><span class="n">S_n</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data_we_have</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">metropolis_hastings_unknown_theta_phi</span><span class="p">(</span>
+        <span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">non_diseased_participants</span><span class="p">,</span> <span class="n">burn_in</span><span class="p">,</span> <span class="n">thining</span><span class="p">,</span> <span class="n">theta_phi_kmeans</span><span class="p">):</span>
+    <span class="n">num_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">biomarker_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data_we_have</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+
+    <span class="n">all_dicts</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># initialize an ordering and likelihood</span>
+    <span class="c1"># note that it should be a random permutation of numbers 1-10</span>
+    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">best_order</span><span class="p">))</span>
+    <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
+
+    <span class="c1"># initialize participant_stages </span>
+    <span class="c1"># note that high should be num_biomarkers + 1; otherwise, no participants will be in the stage of 10</span>
+    <span class="n">participant_stages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">num_biomarkers</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">num_participants</span><span class="p">)</span>
+    <span class="n">participant_stages</span><span class="p">[</span><span class="n">non_diseased_participants</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">participant_stages_copy</span> <span class="o">=</span> <span class="n">participant_stages</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># when we update best_order below,</span>
+        <span class="c1"># in each iteration, new_order will also update</span>
+        <span class="n">new_order</span> <span class="o">=</span> <span class="n">best_order</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># randomly select two indices</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># swaping the order</span>
+        <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+
+        <span class="c1"># likelihood of seeing all participants&#39; data </span>
+        <span class="c1"># biomarker - order dict</span>
+        <span class="n">ordering_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">new_order</span><span class="p">))</span>
+        <span class="c1"># fill up S_n column using the ordering dict</span>
+        <span class="c1"># copy first in order not to change data_we_have</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data_we_have</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># now data_we_have has S_n column</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># add kj and affected based on the initial randomized participant_stages</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">add_kj_and_affected</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">participant_stages_copy</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">)</span>
+        <span class="c1"># print(data.head())</span>
+
+        <span class="c1"># get estimated_theta_phi</span>
+        <span class="n">estimated_theta_phi</span> <span class="o">=</span> <span class="n">get_estimated_means_stds_df</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">data_we_have</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">theta_phi_kmeans</span><span class="o">=</span><span class="n">theta_phi_kmeans</span><span class="p">)</span>
+
+        <span class="n">all_participant_ln_likelihood</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participants</span><span class="p">):</span>
+            <span class="c1"># this participant data</span>
+            <span class="n">pdata</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;If this participant is not diseased (i.e., if we know k_j is equal to 0)</span>
+<span class="sd">            We still need to compute the likelihood of this participant seeing this sequence of biomarker data</span>
+<span class="sd">            but we do not need to estimate k_j like below</span>
+
+<span class="sd">            We still need to compute the likelihood because we need to add it to all_participant_ln_likelihood</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">non_diseased_participants</span><span class="p">:</span>
+                <span class="n">this_participant_likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span>
+                    <span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theta_phi</span> <span class="o">=</span> <span class="n">estimated_theta_phi</span><span class="p">)</span>
+                <span class="n">this_participant_ln_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">this_participant_likelihood</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># initiaze stage_likelihood</span>
+                <span class="n">stage_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_biomarkers</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k_j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_biomarkers</span> <span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="c1"># even though data above has everything, it is filled up by random stages</span>
+                    <span class="c1"># we don&#39;t like it and want to know the true k_j. All the following is to update participant_stages</span>
+
+                    <span class="c1"># likelihood for this participant to have this specific sequence of biomarker values</span>
+                    <span class="n">participant_likelihood</span> <span class="o">=</span> <span class="n">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="p">,</span> <span class="n">estimated_theta_phi</span><span class="p">)</span>
+
+                    <span class="c1"># update each stage likelihood for this participant</span>
+                    <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">k_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">participant_likelihood</span>
+                <span class="n">likelihood_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">stage_likelihood</span><span class="p">)</span>
+                <span class="n">normalized_stage_likelihood</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">/</span><span class="n">likelihood_sum</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">stage_likelihood</span><span class="p">]</span>
+                <span class="n">sampled_stage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_biomarkers</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">p</span> <span class="o">=</span> <span class="n">normalized_stage_likelihood</span><span class="p">)</span>
+                <span class="n">participant_stages_copy</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled_stage</span>   
+
+                <span class="c1"># if participant is in sampled_stage, what is the likelihood of seeing this sequence of biomarker data:</span>
+                <span class="n">this_participant_likelihood</span> <span class="o">=</span>  <span class="n">stage_likelihood</span><span class="p">[</span><span class="n">sampled_stage</span><span class="p">]</span>
+
+                <span class="c1"># then, update all_participant_likelihood</span>
+                <span class="k">if</span> <span class="n">this_participant_likelihood</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">this_participant_ln_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">this_participant_likelihood</span> <span class="o">+</span> <span class="mf">1e20</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">this_participant_ln_likelihood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">this_participant_likelihood</span><span class="p">)</span>
+            <span class="n">all_participant_ln_likelihood</span> <span class="o">+=</span> <span class="n">this_participant_ln_likelihood</span>
+            
+        <span class="n">acceptance_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">all_participant_ln_likelihood</span> <span class="o">-</span> <span class="n">best_likelihood</span><span class="p">)</span>
+        <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">acceptance_ratio</span><span class="p">:</span>
+            <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">all_participant_ln_likelihood</span>
+            <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="n">ordering_dic</span>
+            <span class="n">participant_stages</span> <span class="o">=</span> <span class="n">participant_stages_copy</span>
+        
+        <span class="k">if</span> <span class="n">_</span> <span class="o">&gt;=</span> <span class="n">burn_in</span> <span class="ow">and</span> <span class="n">_</span> <span class="o">%</span> <span class="n">thining</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">all_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ordering_dic</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">_</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_dicts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_we_have</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant_category</th>
+      <th>participant</th>
+      <th>timestamp</th>
+      <th>diseased</th>
+      <th>biomarker</th>
+      <th>measurement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>CN</td>
+      <td>0</td>
+      <td>6/2/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-2.544567</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CN</td>
+      <td>1</td>
+      <td>9/2/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-1.603212</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CN</td>
+      <td>2</td>
+      <td>10/11/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-4.716009</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CN</td>
+      <td>3</td>
+      <td>8/8/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>-4.232625</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>CN</td>
+      <td>4</td>
+      <td>11/28/2011</td>
+      <td>False</td>
+      <td>FCI(HIP)</td>
+      <td>3.628361</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">participant_stages</span><span class="p">,</span> <span class="n">all_dicts</span> <span class="o">=</span> <span class="n">metropolis_hastings_unknown_theta_phi</span><span class="p">(</span>
+    <span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">non_diseased_participants</span><span class="p">,</span> 
+    <span class="n">burn_in</span><span class="p">,</span> <span class="n">thining</span><span class="p">,</span> <span class="n">theta_phi_kmeans</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 10 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 20 done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_dicts</span><span class="p">)</span>
+<span class="n">biomarker_stage_probability_df</span> <span class="o">=</span> <span class="n">get_biomarker_stage_probability</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">biomarker_stage_probability_df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;Probability&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Stage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Heatmap of Biomarkers Involvement in Stages&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b7eac8e7d66e09d0fa3c247e4559706609dae64611dcd4d28b5f5e6934cb4a2f.png" src="_images/b7eac8e7d66e09d0fa3c247e4559706609dae64611dcd4d28b5f5e6934cb4a2f.png" />
+</div>
+</div>
+</section>
+<section id="use-average-likelihood-and-without-having-to-estimate-each-participange-stage">
+<h2>Use Average Likelihood and Without Having to Estimate Each Participange Stage<a class="headerlink" href="#use-average-likelihood-and-without-having-to-estimate-each-participange-stage" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">average_all_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This is to compute https://ebm-book2.vercel.app/distributions.html#unknown-k-j</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">compute_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="o">=</span><span class="n">pdata</span><span class="p">,</span> <span class="n">k_j</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">theta_phi</span><span class="o">=</span><span class="n">theta_phi</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_ln_likelihood_assuming_ordering</span><span class="p">(</span><span class="n">ordering_dic</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the (ln version of) the likelihood of seeing all participants&#39; data,</span>
+<span class="sd">    assuming that we already know the ordering</span>
+<span class="sd">    Inputs:</span>
+<span class="sd">        - ordering: an array of ordering for biomarker 0-9</span>
+<span class="sd">        - data: data_we_have</span>
+<span class="sd">        - num_participants</span>
+<span class="sd">        - num_biomarkers </span>
+<span class="sd">    Outputs:</span>
+<span class="sd">        - ln(likelihood)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># fill up S_n column using the ordering dict</span>
+    <span class="c1"># copy first in order not to change data_we_have</span>
+    <span class="n">filled_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">filled_data</span><span class="p">[</span><span class="s1">&#39;S_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filled_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">ordering_dic</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomarker&#39;</span><span class="p">]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">ln_likelihood</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_participants</span><span class="p">):</span>
+        <span class="n">pdata</span> <span class="o">=</span> <span class="n">filled_data</span><span class="p">[</span><span class="n">filled_data</span><span class="o">.</span><span class="n">participant</span> <span class="o">==</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">average_likelihood</span> <span class="o">=</span> <span class="n">average_all_likelihood</span><span class="p">(</span><span class="n">pdata</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">)</span>
+        <span class="n">p_ln_likelihood</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="c1"># natural logarithm</span>
+           <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">average_likelihood</span><span class="p">)</span> 
+           <span class="k">if</span> <span class="n">average_likelihood</span> <span class="o">&gt;</span> <span class="mi">0</span>
+           <span class="c1"># this is to avoid np.log(0)</span>
+           <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">average_likelihood</span> <span class="o">+</span> <span class="mf">1e-20</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">ln_likelihood</span> <span class="o">+=</span> <span class="n">p_ln_likelihood</span>
+    <span class="k">return</span> <span class="n">ln_likelihood</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A brush up on log:</p>
+<p><span class="math notranslate nohighlight">\(L = P1 \cdot P2 \cdot P3\)</span></p>
+<p><span class="math notranslate nohighlight">\(\ln(L) = \ln (P1 \cdot P2 \cdot P3) = \ln(P1) + \ln(P2) + \ln(P3)\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">metropolis_hastings_average_likelihood</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">burn_in</span><span class="p">,</span> <span class="n">thining</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Implement the metropolis-hastings algorithm</span>
+<span class="sd">    Inputs: </span>
+<span class="sd">        - data: data_we_have</span>
+<span class="sd">        - iterations: number of iterations</span>
+
+<span class="sd">    Outputs:</span>
+<span class="sd">        - best_order: a numpy array</span>
+<span class="sd">        - best_likelihood: a scalar </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">num_participants</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">participant</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="n">num_biomarkers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+
+    <span class="n">all_dicts</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># initialize an ordering and likelihood</span>
+    <span class="c1"># note that it should be a random permutation of numbers 1-10</span>
+    <span class="n">best_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">biomarker_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">biomarker</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+    <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">best_order</span><span class="p">))</span>
+
+    <span class="n">best_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
+    <span class="c1"># best_order = np.array(list(real_ordering_dic.values()))</span>
+    <span class="c1"># best_likelihood = compute_likelihood_based_on_ordering(</span>
+    <span class="c1">#     best_order, data, num_participants, num_biomarkers, theta_phi</span>
+    <span class="c1"># )</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">new_order</span> <span class="o">=</span> <span class="n">best_order</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># randomly select two indices</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_biomarkers</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># swapping the order</span>
+        <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_order</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">new_order</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+        <span class="n">biomarker_new_order_dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">biomarker_names</span><span class="p">,</span> <span class="n">new_order</span><span class="p">))</span>
+        <span class="n">ln_likelihood</span> <span class="o">=</span> <span class="n">compute_ln_likelihood_assuming_ordering</span><span class="p">(</span>
+            <span class="n">biomarker_new_order_dic</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">num_participants</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">,</span> <span class="n">theta_phi</span><span class="p">)</span>
+        <span class="c1"># if swapping results in higher likelihood, </span>
+        <span class="c1"># update the likelihood and accept the new ordering </span>
+        <span class="k">if</span> <span class="n">ln_likelihood</span> <span class="o">&gt;</span> <span class="n">best_likelihood</span><span class="p">:</span>
+            <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">ln_likelihood</span> 
+            <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="n">biomarker_new_order_dic</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="c1"># ratio = likelihood/best_likelihood</span>
+            <span class="c1"># np.exp(a - b) = np.exp(a)/np.exp(b)</span>
+            <span class="n">acceptance_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">ln_likelihood</span> <span class="o">-</span> <span class="n">best_likelihood</span><span class="p">)</span>
+            <span class="n">random_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">acceptance_ratio</span><span class="p">:</span>
+                <span class="n">best_likelihood</span> <span class="o">=</span> <span class="n">ln_likelihood</span>
+                <span class="n">biomarker_best_order_dic</span> <span class="o">=</span> <span class="n">biomarker_new_order_dic</span>
+
+        <span class="k">if</span> <span class="n">_</span> <span class="o">&gt;=</span> <span class="n">burn_in</span> <span class="ow">and</span> <span class="n">_</span> <span class="o">%</span> <span class="n">thining</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">all_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">biomarker_new_order_dic</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">_</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> done&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">best_likelihood</span><span class="p">,</span> <span class="n">all_dicts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biomarker_best_order_dic</span><span class="p">,</span> <span class="n">best_likelihood</span><span class="p">,</span> <span class="n">all_dicts</span> <span class="o">=</span> <span class="n">metropolis_hastings_average_likelihood</span><span class="p">(</span>
+    <span class="n">data_we_have</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">burn_in</span><span class="p">,</span> <span class="n">thining</span><span class="p">,</span> <span class="n">theta_phi</span> <span class="o">=</span> <span class="n">theta_phi_kmeans</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 10 done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iteration 20 done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_dicts</span><span class="p">)</span>
+<span class="n">biomarker_stage_probability_df</span> <span class="o">=</span> <span class="n">get_biomarker_stage_probability</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num_biomarkers</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">biomarker_stage_probability_df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;Probability&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Stage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Biomarker&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Heatmap of Biomarkers Involvement in Stages&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6360db7a73ee669c18c167d5de352e6205bc99b2baca06e55603448d9984c18d.png" src="_images/6360db7a73ee669c18c167d5de352e6205bc99b2baca06e55603448d9984c18d.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="three_estimate_biomarker_ordering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Estimating biomarker ordering</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="plan.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Research Plan</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocess-data">Preprocess data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-theta-and-phi-estimates-using-k-means">Get Theta and Phi Estimates Using k-means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hastings-algorithm-implementation-soly-dependent-on-theta-phi-kmeans">Metropolis-Hastings Algorithm Implementation Soly Dependent on Theta_Phi_Kmeans</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-theta-and-phi-based-on-conjugate-priors">Estimate Theta and Phi Based on Conjugate Priors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-average-likelihood-and-without-having-to-estimate-each-participange-stage">Use Average Likelihood and Without Having to Estimate Each Participange Stage</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hongtao Hao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
