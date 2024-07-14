@@ -104,128 +104,19 @@ def compute_likelihood(pdata, k_j, theta_phi):
             theta_phi, biomarker, affected, measurement)
     return likelihood
 
-def metropolis_hastings_with_theta_phi_kmeans_and_participant_stages(
-        data_we_have, iterations,burn_in, thining, theta_phi,):
-    '''Implement the metropolis-hastings algorithm
-    Inputs: 
-        - data: data_we_have
-        - iterations: number of iterations
+def get_biomarker_stage_probability(df, burn_in, thining):
+    """filter through all_dicts using burn_in and thining 
+    and for each biomarker, get probability of being in each possible stage
 
-    Outputs:
-        - best_order: a numpy array
-        - best_likelihood: a scalar 
-    '''
-    num_participants = len(data_we_have.participant.unique())
-    num_biomarkers = len(data_we_have.biomarker.unique())
-    n_stages = num_biomarkers + 1
-    non_diseased_participants = list(set(data_we_have.loc[data_we_have.diseased == False].participant))
-
-    all_dicts = []
-
-    # initialize an ordering and likelihood
-    # note that it should be a random permutation of numbers 1-10
-    best_order = np.random.permutation(np.arange(1, n_stages))
-    biomarkers = np.array(list(data_we_have.biomarker.unique()))
-    biomarker_best_order_dic = dict(zip(biomarkers, best_order))
-
-    best_likelihood = -np.inf
-
-    # initialize participant_stages 
-    # note that high should be num_stages; otherwise, no participants will be in the stage of 10
-    participant_stages = np.random.randint(low = 0, high = n_stages, size = num_participants)
-    participant_stages[non_diseased_participants] = 0
-
-    for _ in range(iterations):
-        new_order = best_order.copy()
-        # randomly select two indices
-        a, b = np.random.choice(num_biomarkers, 2, replace=False)
-        # swapping the order
-        new_order[a], new_order[b] = new_order[b], new_order[a]
-        # biomarker - order dict
-        ordering_dic = dict(zip(biomarkers, new_order))
-        # fill up S_n column using the ordering dict
-        # copy first in order not to change data_we_have
-        data = data_we_have.copy()
-        # now data_we_have has S_n column
-        data['S_n'] = data.apply(lambda row: ordering_dic[row['biomarker']], axis = 1)
-
-        all_participant_ln_likelihood = 0 
-        for p in range(num_participants):
-            # copy participant_stages 
-            participant_stages_copy = participant_stages.copy()
-            # this participant data
-            pdata = data[data.participant == p].reset_index(drop=True)
-
-            """If this participant is not diseased (i.e., if we know k_j is equal to 0)
-            We still need to compute the likelihood of this participant seeing this sequence of biomarker data
-            but we do not need to estimate k_j like below
-
-            We still need to compute the likelihood because we need to add it to all_participant_ln_likelihood
-            """
-            if p in non_diseased_participants:
-                # the following will update pdata's kj and affect columns
-                this_participant_likelihood = compute_likelihood(
-                    pdata, k_j = 0, theta_phi = theta_phi)
-                this_participant_ln_likelihood = np.log(this_participant_likelihood)
-            else:
-                # initiaze stage_likelihood
-                stage_likelihood = np.zeros(n_stages)
-                for k_j in range(n_stages):
-                    # even though data above has everything, it is filled up by random stages
-                    # we don't like it and want to know the true k_j. All the following is to update participant_stages
-
-                    # likelihood for this participant to have this specific sequence of biomarker values
-                    participant_likelihood = compute_likelihood(pdata, k_j, theta_phi)
-
-                    # update each stage likelihood for this participant
-                    stage_likelihood[k_j] = participant_likelihood
-                likelihood_sum = np.sum(stage_likelihood)
-                normalized_stage_likelihood = [l/likelihood_sum for l in stage_likelihood]
-                sampled_stage = np.random.choice(np.arange(n_stages), p = normalized_stage_likelihood)
-                participant_stages_copy[p] = sampled_stage   
-
-                # if participant is at sample_stage, 
-                # what is the likelihood of this participant having this sequence of biomarker data:
-                this_participant_likelihood =  stage_likelihood[sampled_stage]
-
-                # then, update all_participant_likelihood
-                if this_participant_likelihood == 0:
-                    this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e20)
-                else:
-                    this_participant_ln_likelihood = np.log(this_participant_likelihood)
-            """
-            All the codes in between are calculating this_participant_ln_likelihood. If we already know kj=0, then
-            it's very simple. If kj is unknown, we need to calculate the likelihood of seeing this sequence of biomarker
-            data at different stages, and get the relative likelihood before we get a sampled stage. Then we calculate
-            this_participant_ln_likelihood again. 
-            """
-            all_participant_ln_likelihood += this_participant_ln_likelihood
-            
-        """
-        The key to both `metropolis_hastings_with_theta_phi_kmeans` and `metropolis_hastings` is to 
-        compare best_likelihood and the likelihood of all participants having specific sequences of measurements
-        based on the assumed S_n. 
-
-        The difference lies in how to calculate all_participant_ln_likelihood. 
-
-        `metropolis_hastings_with_theta_phi_kmeans` tries to obtain k_j and calculate each likelihood exactly 
-        whereas `metropolis_hastings` did not obtain exact k_j and calculate the average likelihood instead
-        """
-        acceptance_ratio = np.exp(all_participant_ln_likelihood - best_likelihood)
-        random_number = np.random.rand()
-        if random_number < acceptance_ratio:
-            best_likelihood = all_participant_ln_likelihood
-            biomarker_best_order_dic = ordering_dic
-            participant_stages = participant_stages_copy
-        
-        if _ >= burn_in and _ % thining == 0:
-            all_dicts.append(ordering_dic)
-
-        if (_+1) % 10 == 0:
-            print(f"iteration {_ + 1} done")
-    return biomarker_best_order_dic, participant_stages, all_dicts
-
-def get_biomarker_stage_probability(df, num_biomarkers):
+    Input:
+        - df: all_ordering.csv
+        - burn_in
+        - thinning
+    Output:
+        - dff: a pandas dataframe where index is biomarker name, each col is each stage
+        and each cell is the probability of that biomarker indicating that stage
+    """
+    df = df[(df.index > burn_in) & (df.index % thining == 0)]
     # Create an empty list to hold dictionaries
     dict_list = []
 
@@ -233,9 +124,12 @@ def get_biomarker_stage_probability(df, num_biomarkers):
     for col in df.columns:
         dic = {"biomarker": col}
         # get the frequency of biomarkers
+        # value_counts will generate a Series where index is each cell's value
+        # and the value is the frequency of that value
         stage_counts = df[col].value_counts()
         # for each stage
-        for i in range(1, num_biomarkers + 1):
+        # not that df.shape[1] should be equal to num_biomarkers
+        for i in range(1, df.shape[1] + 1):
             # get stage:prabability
             dic[i] = stage_counts.get(i, 0)/len(df)
         dict_list.append(dic)
@@ -244,19 +138,19 @@ def get_biomarker_stage_probability(df, num_biomarkers):
     dff.set_index(dff.columns[0], inplace=True)
     return dff 
 
-def save_plot(all_dicts, num_biomarkers, file_name):
+def save_heatmap(all_dicts, burn_in, thining, file_name):
     df = pd.DataFrame(all_dicts)
-    biomarker_stage_probability_df = get_biomarker_stage_probability(df, num_biomarkers)
+    biomarker_stage_probability_df = get_biomarker_stage_probability(df, burn_in, thining)
     sns.heatmap(biomarker_stage_probability_df, 
                 annot=True, cmap="Greys", linewidths=.5, 
                 cbar_kws={'label': 'Probability'},
                 fmt=".1f",
-                vmin=0, vmax=1,
+                # vmin=0, vmax=1,
                 )
     plt.xlabel('Stage')
     plt.ylabel('Biomarker')
     plt.title('Heatmap of Biomarkers Involvement in Stages')
-    plt.savefig(f'{file_name}.png')
+    plt.savefig(f'img/{file_name}.png')
     # plt.savefig(f'{file_name}.pdf')
     plt.close() 
 
@@ -295,7 +189,7 @@ def compute_ln_likelihood_assuming_ordering(ordering_dic, data, num_biomarkers, 
         ln_likelihood += p_ln_likelihood
     return ln_likelihood
 
-def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, iterations, burn_in, thining, theta_phi):
+def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, iterations, theta_phi_kmeans, log_folder_name):
     '''Implement the metropolis-hastings algorithm
     Inputs: 
         - data: data_we_have
@@ -305,47 +199,79 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
         - best_order: a numpy array
         - best_likelihood: a scalar 
     '''
-    biomarkers = np.array(list(data_we_have.biomarker.unique()))
+    biomarkers = data_we_have.biomarker.unique()
     num_biomarkers = len(biomarkers)
     n_stages = num_biomarkers + 1
 
     all_dicts = []
+    all_current_best_likelihoods = []
+    acceptance_count = 0
+    all_current_acceptance_ratios = []
+    all_current_best_order_dicts = []
+    terminal_output_strings = []
 
     # initialize an ordering and likelihood
     # note that it should be a random permutation of numbers 1-10
-    best_order = np.random.permutation(np.arange(1, n_stages))
+    current_best_order = np.random.permutation(np.arange(1, n_stages))
+    biomarker_current_best_order_dic = dict(zip(biomarkers, current_best_order))
+    current_best_likelihood = -np.inf 
 
-    biomarker_best_order_dic = dict(zip(biomarkers, best_order))
-
-    best_likelihood = -np.inf 
-    # best_order = np.array(list(real_ordering_dic.values()))
-    # best_likelihood = compute_likelihood_based_on_ordering(
-    #     best_order, data, num_participants, num_biomarkers, theta_phi
-    # )
     for _ in range(iterations):
-        new_order = best_order.copy()
-        # randomly select two indices
-        a, b = np.random.choice(num_biomarkers, 2, replace=False)
-        # swapping the order
-        new_order[a], new_order[b] = new_order[b], new_order[a]
+        new_order = np.random.permutation(np.arange(1, n_stages))
         biomarker_new_order_dic = dict(zip(biomarkers, new_order))
         ln_likelihood = compute_ln_likelihood_assuming_ordering(
-            biomarker_new_order_dic, data_we_have, num_biomarkers, theta_phi)
-        # if swapping results in higher likelihood, 
-        # update the likelihood and accept the new ordering 
-        acceptance_ratio = np.exp(ln_likelihood - best_likelihood)
+            biomarker_new_order_dic, data_we_have, num_biomarkers, theta_phi_kmeans)
+        # if the new order results in a higher likelihood, then update:
+        prob_of_accepting_new_order = np.exp(
+            ln_likelihood - current_best_likelihood)
         random_number = np.random.rand()
-        if random_number < acceptance_ratio:
-            best_likelihood = ln_likelihood
-            biomarker_best_order_dic = biomarker_new_order_dic
+        if random_number < prob_of_accepting_new_order:
+            acceptance_count += 1
+            current_best_likelihood = ln_likelihood
+            biomarker_current_best_order_dic = biomarker_new_order_dic
 
-        if _ >= burn_in and _ % thining == 0:
-            all_dicts.append(biomarker_new_order_dic)
+        all_current_best_likelihoods.append(current_best_likelihood)
+        current_acceptance_ratio = acceptance_count*100/(_+1)
+        all_current_acceptance_ratios.append(current_acceptance_ratio)
+        all_dicts.append(biomarker_new_order_dic)
+        all_current_best_order_dicts.append(biomarker_current_best_order_dic)
         
-        if (_+1) % 10 == 0:
-            print(f"iteration {_ + 1} done")
+        # if _ >= burn_in and _ % thining == 0:
+        #     all_dicts.append(biomarker_new_order_dic)
 
-    return biomarker_best_order_dic, best_likelihood, all_dicts
+        if (_+1) % 10 == 0:
+            formatted_string = (
+                f"iteration {_ + 1} done, "
+                f"current best likelihood: {current_best_likelihood}, "
+                f"current acceptance ratio is {current_acceptance_ratio:.2f} %, "
+                f"current best order is {biomarker_current_best_order_dic}"
+            )
+            terminal_output_strings.append(formatted_string)
+            print(formatted_string)
+
+    final_acceptance_ratio = acceptance_count/iterations
+
+    terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
+    with open(terminal_output_filename, 'w') as file:
+        for result in terminal_output_strings:
+            file.write(result + '\n')
+
+    save_all_dicts(all_dicts, log_folder_name, "all_ordering")
+    save_all_dicts(
+        all_current_best_order_dicts, log_folder_name, "all_current_best_order_dicts")
+    save_all_current_best(
+        all_current_best_likelihoods, "all_current_best_likelihoods", log_folder_name)
+    save_all_current_best(
+        all_current_acceptance_ratios, "all_current_acceptance_ratios", log_folder_name)
+    print("done!")
+    return (
+        biomarker_current_best_order_dic, 
+        all_dicts, 
+        all_current_best_order_dicts, 
+        all_current_best_likelihoods, 
+        all_current_acceptance_ratios, 
+        final_acceptance_ratio
+    )
 
 def estimate_params_exact(m0, n0, s0_sq, v0, data):
     '''This is to estimate means and vars based on conjugate priors
@@ -447,16 +373,19 @@ def add_kj_and_affected(data_we_have, participant_stages, num_participants):
     return data_we_have 
 
 def metropolis_hastings_with_conjugate_priors(
-        data_we_have, iterations, burn_in, thining, theta_phi_kmeans):
+        data_we_have, iterations, theta_phi_kmeans, log_folder_name):
     num_participants = len(data_we_have.participant.unique())
     num_biomarkers = len(data_we_have.biomarker.unique())
     n_stages = num_biomarkers + 1
-    biomarkers = np.array(list(data_we_have.biomarker.unique()))
-    non_diseased_participants = list(set(data_we_have.loc[data_we_have.diseased == False].participant))
+    biomarkers = data_we_have.biomarker.unique()
+    non_diseased_participants = data_we_have.loc[data_we_have.diseased == False].participant.unique()
 
     all_dicts = []
     all_current_best_likelihoods = []
     acceptance_count = 0
+    all_current_acceptance_ratios = []
+    all_current_best_order_dicts = []
+    terminal_output_strings = []
 
     # initialize an ordering and likelihood
     # note that it should be a random permutation of numbers 1-10
@@ -474,11 +403,6 @@ def metropolis_hastings_with_conjugate_priors(
         # when we update best_order below,
         # in each iteration, new_order will also update
         new_order = np.random.permutation(np.arange(1, n_stages))
-        # new_order = best_order.copy()
-        # # randomly select two indices
-        # a, b = np.random.choice(num_biomarkers, 2, replace=False)
-        # # swaping the order
-        # new_order[a], new_order[b] = new_order[b], new_order[a]
 
         # likelihood of seeing all participants' data 
         # biomarker:order dict
@@ -540,11 +464,22 @@ def metropolis_hastings_with_conjugate_priors(
                     this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e20)
                 else:
                     this_participant_ln_likelihood = np.log(this_participant_likelihood)
+            """
+            All the codes in between are calculating this_participant_ln_likelihood. If we already know kj=0, then
+            it's very simple. If kj is unknown, we need to calculate the likelihood of seeing this sequence of biomarker
+            data at different stages, and get the relative likelihood before we get a sampled stage (this is for estimating theta and phi). 
+            Then we calculate this_participant_ln_likelihood using average likelihood. 
+            """
             all_participant_ln_likelihood += this_participant_ln_likelihood
-            
+        
+        # ratio = likelihood/best_likelihood
+        # because we are using np.log(likelihood) and np.log(best_likelihood)
+        # np.exp(a)/np.exp(b) = np.exp(a - b)
+        # if a > b, then np.exp(a - b) > 1
         prob_of_accepting_new_order = np.exp(
             all_participant_ln_likelihood - current_best_likelihood)
         random_number = np.random.rand()
+        # it will definitly update at the first iteration
         if random_number < prob_of_accepting_new_order:
             acceptance_count += 1
             current_best_likelihood = all_participant_ln_likelihood
@@ -552,22 +487,71 @@ def metropolis_hastings_with_conjugate_priors(
             participant_stages = participant_stages_copy
 
         all_current_best_likelihoods.append(current_best_likelihood)
-        
-        if _ >= burn_in and _ % thining == 0:
-            all_dicts.append(ordering_dic)
+        current_acceptance_ratio = acceptance_count*100/(_+1)
+        all_current_acceptance_ratios.append(current_acceptance_ratio)
+        all_dicts.append(ordering_dic)
+        all_current_best_order_dicts.append(biomarker_current_best_order_dic)
 
+
+        # if _ >= burn_in and _ % thining == 0:
         if (_+1) % 10 == 0:
-            # print(ordering_dic)
-            print(f"iteration {_ + 1} done, current best likelihood: {current_best_likelihood}, current acceptance ratio is {acceptance_count*100/(_+1)} %, current best order is {biomarker_current_best_order_dic}")
+            formatted_string = (
+                f"iteration {_ + 1} done, "
+                f"current best likelihood: {current_best_likelihood}, "
+                f"current acceptance ratio is {current_acceptance_ratio:.2f} %, "
+                f"current best order is {biomarker_current_best_order_dic}"
+            )
+            terminal_output_strings.append(formatted_string)
+            print(formatted_string)
 
-    acceptance_ratio = acceptance_count/iterations
-    return biomarker_current_best_order_dic, participant_stages, all_dicts, all_current_best_likelihoods, acceptance_ratio
+    final_acceptance_ratio = acceptance_count/iterations
 
-def save_trace_plot(all_current_best_likelihoods, iterations, file_name):
-    x = np.arange(start = 1, stop = iterations + 1, step = 1)
+    terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
+    with open(terminal_output_filename, 'w') as file:
+        for result in terminal_output_strings:
+            file.write(result + '\n')
+
+    save_all_dicts(all_dicts, log_folder_name, "all_ordering")
+    save_all_dicts(
+        all_current_best_order_dicts, log_folder_name, "all_current_best_order_dicts")
+    save_all_current_best(
+        all_current_best_likelihoods, "all_current_best_likelihoods", log_folder_name)
+    save_all_current_best(
+        all_current_acceptance_ratios, "all_current_acceptance_ratios", log_folder_name)
+    print("done!")
+    return (
+        biomarker_current_best_order_dic,
+        participant_stages,
+        all_dicts,
+        all_current_best_order_dicts,
+        all_current_best_likelihoods,
+        all_current_acceptance_ratios,
+        final_acceptance_ratio
+    )
+
+def save_all_dicts(all_dicts, log_folder_name, file_name):
+    """save all_dicts into a dataframe
+    """
+    df = pd.DataFrame(all_dicts)
+    df['iteration'] = np.arange(start = 1, stop = len(df) + 1, step = 1)
+    df.set_index("iteration", inplace=True)
+    df.to_csv(f"{log_folder_name}/{file_name}.csv", index=True)
+
+def save_all_current_best(var, var_name, log_folder_name):
+    """save all_current_best_order_dicts, all_current_best_likelihoods, 
+    and all_current_acceptance_ratios
+    """
+    x = np.arange(start = 1, stop = len(var) + 1, step = 1)
+    df = pd.DataFrame({"iteration": x, var_name: var})
+    df = df.set_index('iteration')
+    df.to_csv(f"{log_folder_name}/{var_name}.csv", index=True)
+
+def save_trace_plot(all_current_best_likelihoods, folder_name, file_name):
+    x = np.arange(
+        start = 1, stop = len(all_current_best_likelihoods) + 1, step = 1)
     plt.scatter(x, all_current_best_likelihoods, alpha=0.5)
     plt.xlabel('Iteration #')
     plt.ylabel('Current Best Likelihood')
     plt.title('Trace Plot')
-    plt.savefig(f'{file_name}.png')
+    plt.savefig(f'{folder_name}/{file_name}.png')
     plt.close() 
