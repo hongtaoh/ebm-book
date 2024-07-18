@@ -92,7 +92,8 @@ def compute_single_measurement_likelihood(theta_phi, biomarker, affected, measur
 
 def compute_likelihood(pdata, k_j, theta_phi):
     '''This implementes the formula of https://ebm-book2.vercel.app/distributions.html#known-k-j
-    This function computes the likelihood of seeing this sequence of biomarker values for a specific participant
+    This function computes the likelihood of seeing this sequence of biomarker values 
+    for a specific participant, assuming that this participant is at stage k_j
     '''
     data = fill_up_pdata(pdata, k_j)
     likelihood = 1
@@ -107,7 +108,23 @@ def compute_likelihood(pdata, k_j, theta_phi):
 def average_all_likelihood(pdata, num_biomarkers, theta_phi):
     '''This is to compute https://ebm-book2.vercel.app/distributions.html#unknown-k-j
     '''
-    return np.mean([compute_likelihood(pdata=pdata, k_j=x, theta_phi=theta_phi) for x in range(num_biomarkers+1)])
+    return np.mean([compute_likelihood(
+        pdata=pdata, k_j=x, theta_phi=theta_phi) for x in range(
+            num_biomarkers+1)])
+
+def weighted_average_likelihood(pdata, n_stages, normalized_stage_likelihood, theta_phi):
+    """using weighted average likelihood
+    https://ebm-book2.vercel.app/distributions.html#unknown-k-j
+    just that we do not assume each stage having exactly the same likelihood
+    """
+    weighted_average = 0
+    for x in range(n_stages):
+        # likelihood: the product of the likelihood of this participant being at this stage
+        # and the likelihood of this participant having this sequence of biomarker measurements
+        # assuming this participant is at this stage. 
+        ll = normalized_stage_likelihood[x] * compute_likelihood(pdata, x, theta_phi)
+        weighted_average += ll 
+    return weighted_average
 
 def compute_ln_likelihood_assuming_ordering(ordering_dic, data, num_biomarkers, theta_phi):
     """Compute the (ln version of) the likelihood of seeing all participants' data,
@@ -182,6 +199,7 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
         random_number = np.random.rand()
         if random_number < prob_of_accepting_new_order:
             acceptance_count += 1
+            current_best_order = new_order
             current_best_likelihood = ln_likelihood
             biomarker_current_best_order_dic = biomarker_new_order_dic
 
@@ -356,7 +374,14 @@ def metropolis_hastings_with_conjugate_priors(
     participant_stages = np.random.randint(low = 0, high = n_stages, size = num_participants)
     participant_stages[non_diseased_participants] = 0
 
+    # max_likelihood = - np.inf
+    # max_likelihood_ordering_stages_tuple = ()
+    # likelihood_ordering_dict = {}
+    # likelihood_stages_dict = {}
+
     for _ in range(iterations):
+        # participant_stages_copy = participant_stages.copy()
+
         # when we update best_order below,
         # in each iteration, new_order will also update
         new_order = current_best_order.copy()
@@ -399,8 +424,8 @@ def metropolis_hastings_with_conjugate_priors(
                 this_participant_ln_likelihood = np.log(this_participant_likelihood)
             else:
                 # initiaze stage_likelihood
-                stage_likelihood = np.zeros(num_biomarkers + 1)
-                for k_j in range(num_biomarkers +1):
+                stage_likelihood = np.zeros(n_stages)
+                for k_j in range(n_stages):
                     # even though data above has everything, it is filled up by random stages
                     # we don't like it and want to know the true k_j. All the following is to update participant_stages
 
@@ -415,22 +440,29 @@ def metropolis_hastings_with_conjugate_priors(
                     np.arange(num_biomarkers + 1), p = normalized_stage_likelihood)
                 participant_stages[p] = sampled_stage   
 
-                # if participant is in sampled_stage, what is the likelihood of seeing this sequence of biomarker data:
+                # if participant is in sampled_stage, what is the likelihood of 
+                # seeing this sequence of biomarker data:
                 # this_participant_likelihood = stage_likelihood[sampled_stage]
 
-                # use average likelihood because we didn't know the exact participant stage
-                # all above to calculate participant_stage is only for the purpous of calculate theta_phi
-                this_participant_likelihood = average_all_likelihood(pdata, num_biomarkers, estimated_theta_phi)
+                # this_participant_likelihood = average_all_likelihood(pdata, num_biomarkers, estimated_theta_phi)
 
+                # use weighted average likelihood because we didn't know the exact participant stage
+                # all above to calculate participant_stage is only for the purpous of calculate theta_phi
+                this_participant_likelihood = weighted_average_likelihood(
+                    pdata, n_stages, normalized_stage_likelihood, estimated_theta_phi)
+                
                 # then, update all_participant_likelihood
                 if this_participant_likelihood == 0:
                     this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e20)
                 else:
                     this_participant_ln_likelihood = np.log(this_participant_likelihood)
             """
-            All the codes in between are calculating this_participant_ln_likelihood. If we already know kj=0, then
-            it's very simple. If kj is unknown, we need to calculate the likelihood of seeing this sequence of biomarker
-            data at different stages, and get the relative likelihood before we get a sampled stage (this is for estimating theta and phi). 
+            All the codes in between are calculating this_participant_ln_likelihood. 
+            If we already know kj=0, then
+            it's very simple. If kj is unknown, we need to calculate the likelihood of seeing 
+            this sequence of biomarker
+            data at different stages, and get the relative likelihood before 
+            we get a sampled stage (this is for estimating theta and phi). 
             Then we calculate this_participant_ln_likelihood using average likelihood. 
             """
             all_participant_ln_likelihood += this_participant_ln_likelihood
@@ -445,8 +477,20 @@ def metropolis_hastings_with_conjugate_priors(
         # it will definitly update at the first iteration
         if random_number < prob_of_accepting_new_order:
             acceptance_count += 1
+            current_best_order = new_order
             current_best_likelihood = all_participant_ln_likelihood
             biomarker_current_best_order_dic = ordering_dic
+            # participant_stages = participant_stages_copy
+
+            # likelihood_ordering_dict[current_best_likelihood] = biomarker_current_best_order_dic
+            # likelihood_stages_dict[current_best_likelihood] = participant_stages
+
+        # if current_best_likelihood > max_likelihood:
+        #     max_likelihood = current_best_likelihood
+        #     max_likelihood_ordering_stages_tuple += (
+        #         likelihood_ordering_dict[max_likelihood],
+        #         likelihood_stages_dict[max_likelihood]
+        #     )
 
         all_current_participant_stages.append(participant_stages)
         all_current_best_likelihoods.append(current_best_likelihood)
@@ -455,6 +499,8 @@ def metropolis_hastings_with_conjugate_priors(
         all_dicts.append(ordering_dic)
         all_current_best_order_dicts.append(biomarker_current_best_order_dic)
 
+        # if np.random.rand() >= 0.9:
+            
         # if (_+1) % (iterations/10) == 0:
         #     participant_stages_sampled = sampled_row_based_on_column_frequencies(
         #         np.array(all_current_participant_stages)
