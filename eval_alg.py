@@ -19,7 +19,7 @@ def process_chen_data(file):
                  'participant_category', df.columns[1]: 
                  'participant'}, 
                  inplace=True)
-    df = df[df.participant_category.isin(['CN', 'AD '])]
+    # df = df[df.participant_category.isin(['CN', 'AD '])]
     df['diseased'] = df.apply(lambda row: row.participant_category != 'CN', axis = 1)
     df = pd.melt(df, id_vars=['participant_category', "participant", "timestamp", 'diseased'], 
                         value_vars=["FCI(HIP)", "GMI(HIP)", "FCI(Fusi)", "FCI(PCC)", "GMI(FUS)"], 
@@ -131,33 +131,33 @@ def run_kmeans_only(
 
 if __name__ == '__main__':
      
-    iterations = 1500
+    iterations = 1000
     burn_in = 500
     thining = 50
 
-    """Simulated Data
-    """
-    # Simulated data with conjugate priors
-    run_conjugate_priors(
-         data_source = "Simulated Data",
-         log_folder_name = "logs/simulated_data_conjugate_priors",
-         img_folder_name = "img/simulated_data_conjugate_priors"
-    )
-    # Simulated data with kmeans only
-    run_kmeans_only(
-        data_source = "Simulated Data",
-        log_folder_name = "logs/simulated_data_kmeans_only", 
-        img_folder_name = "img/simulated_data_kmeans_only"
-    )
+    # """Simulated Data
+    # """
+    # # Simulated data with conjugate priors
+    # run_conjugate_priors(
+    #      data_source = "Simulated Data",
+    #      log_folder_name = "logs/simulated_data_conjugate_priors",
+    #      img_folder_name = "img/simulated_data_conjugate_priors"
+    # )
+    # # Simulated data with kmeans only
+    # run_kmeans_only(
+    #     data_source = "Simulated Data",
+    #     log_folder_name = "logs/simulated_data_kmeans_only", 
+    #     img_folder_name = "img/simulated_data_kmeans_only"
+    # )
 
-    """Chen Data
-    """
-    # Chen data with conjugate priors
-    run_conjugate_priors(
-         data_source = "Chen Data",
-         log_folder_name = "logs/chen_data_conjugate_priors", 
-         img_folder_name = "img/chen_data_conjugate_priors"
-    )
+    # """Chen Data
+    # """
+    # # Chen data with conjugate priors
+    # run_conjugate_priors(
+    #      data_source = "Chen Data",
+    #      log_folder_name = "logs/chen_data_conjugate_priors", 
+    #      img_folder_name = "img/chen_data_conjugate_priors"
+    # )
     # Chen data with kmeans only
     run_kmeans_only(
          data_source = "Chen Data",

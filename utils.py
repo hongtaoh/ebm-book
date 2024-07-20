@@ -112,6 +112,9 @@ def average_all_likelihood(pdata, num_biomarkers, theta_phi):
         pdata=pdata, k_j=x, theta_phi=theta_phi) for x in range(
             num_biomarkers+1)])
 
+# def margnalized_likelihood
+# cllapse versus non-collaps gibbs sampling in topic modeling
+
 def weighted_average_likelihood(pdata, n_stages, normalized_stage_likelihood, theta_phi):
     """using weighted average likelihood
     https://ebm-book2.vercel.app/distributions.html#unknown-k-j
@@ -183,6 +186,9 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
     biomarker_current_best_order_dic = dict(zip(biomarkers, current_best_order))
     current_best_likelihood = -np.inf 
 
+    max_likelihood = - np.inf
+    max_likelihood_ordering_dict = {}
+
     for _ in range(iterations):
         new_order = current_best_order.copy()
         # randomly select two indices
@@ -202,6 +208,7 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
             current_best_order = new_order
             current_best_likelihood = ln_likelihood
             biomarker_current_best_order_dic = biomarker_new_order_dic
+            max_likelihood_ordering_dict[current_best_likelihood] = current_best_order
 
         all_current_best_likelihoods.append(current_best_likelihood)
         current_acceptance_ratio = acceptance_count*100/(_+1)
@@ -211,6 +218,14 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
         
         # if _ >= burn_in and _ % thining == 0:
         #     all_dicts.append(biomarker_new_order_dic)
+
+        if current_best_likelihood > max_likelihood:
+            max_likelihood = current_best_likelihood
+
+        if np.random.rand() >= 0.9:
+            print("reverting to max_likelihood and associated biomarker ordering now~")
+            current_best_order = max_likelihood_ordering_dict[max_likelihood]
+            print(current_best_order)
 
         if (_+1) % 10 == 0:
             formatted_string = (
@@ -353,7 +368,8 @@ def metropolis_hastings_with_conjugate_priors(
     num_biomarkers = len(data_we_have.biomarker.unique())
     n_stages = num_biomarkers + 1
     biomarkers = data_we_have.biomarker.unique()
-    non_diseased_participants = data_we_have.loc[data_we_have.diseased == False].participant.unique()
+    non_diseased_participants = data_we_have.loc[
+        data_we_have.diseased == False].participant.unique()
 
     all_dicts = []
     all_current_best_likelihoods = []
@@ -374,9 +390,9 @@ def metropolis_hastings_with_conjugate_priors(
     participant_stages = np.random.randint(low = 0, high = n_stages, size = num_participants)
     participant_stages[non_diseased_participants] = 0
 
-    # max_likelihood = - np.inf
+    max_likelihood = - np.inf
     # max_likelihood_ordering_stages_tuple = ()
-    # likelihood_ordering_dict = {}
+    likelihood_ordering_dict = {}
     # likelihood_stages_dict = {}
 
     for _ in range(iterations):
@@ -482,15 +498,8 @@ def metropolis_hastings_with_conjugate_priors(
             biomarker_current_best_order_dic = ordering_dic
             # participant_stages = participant_stages_copy
 
-            # likelihood_ordering_dict[current_best_likelihood] = biomarker_current_best_order_dic
+            likelihood_ordering_dict[current_best_likelihood] = current_best_order
             # likelihood_stages_dict[current_best_likelihood] = participant_stages
-
-        # if current_best_likelihood > max_likelihood:
-        #     max_likelihood = current_best_likelihood
-        #     max_likelihood_ordering_stages_tuple += (
-        #         likelihood_ordering_dict[max_likelihood],
-        #         likelihood_stages_dict[max_likelihood]
-        #     )
 
         all_current_participant_stages.append(participant_stages)
         all_current_best_likelihoods.append(current_best_likelihood)
@@ -499,7 +508,17 @@ def metropolis_hastings_with_conjugate_priors(
         all_dicts.append(ordering_dic)
         all_current_best_order_dicts.append(biomarker_current_best_order_dic)
 
-        # if np.random.rand() >= 0.9:
+        if current_best_likelihood > max_likelihood:
+            max_likelihood = current_best_likelihood
+            # max_likelihood_ordering_stages_tuple += (
+            #     likelihood_ordering_dict[max_likelihood],
+            #     likelihood_stages_dict[max_likelihood]
+            # )
+
+        if np.random.rand() >= 0.9:
+            print("reverting to max_likelihood and associated biomarker ordering now~")
+            current_best_order = likelihood_ordering_dict[max_likelihood]
+            print(current_best_order)
             
         # if (_+1) % (iterations/10) == 0:
         #     participant_stages_sampled = sampled_row_based_on_column_frequencies(
