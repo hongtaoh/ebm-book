@@ -1,100 +1,150 @@
-iteration 10 done, current best likelihood: -1149.8628469190999, current acceptance ratio is 40.00 %, current best order is {'FCI(HIP)': 2, 'GMI(HIP)': 1, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 20 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 25.00 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 30 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 16.67 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 40 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 12.50 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 50 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 10.00 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 60 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 8.33 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 70 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 7.14 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 80 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 6.25 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 90 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 5.56 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 100 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 5.00 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 110 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 4.55 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 120 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 4.17 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 130 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 3.85 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 140 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 3.57 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 150 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 3.33 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 160 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 3.12 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 170 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.94 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 180 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.78 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 190 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.63 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 200 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.50 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 210 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.38 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 220 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.27 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 230 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.17 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 240 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.08 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 250 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 2.00 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 260 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.92 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 270 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.85 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 280 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.79 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 290 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.72 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 300 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.67 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 310 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.61 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 320 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.56 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 330 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.52 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 340 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.47 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 350 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.43 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 360 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.39 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 370 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.35 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 380 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.32 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 390 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.28 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 400 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.25 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 410 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.22 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 420 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.19 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 430 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.16 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 440 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.14 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 450 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.11 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 460 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.09 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 470 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.06 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 480 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.04 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 490 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.02 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 500 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 1.00 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 510 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.98 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 520 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.96 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 530 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.94 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 540 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.93 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 550 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.91 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 560 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.89 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 570 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.88 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 580 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.86 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 590 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.85 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 600 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.83 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 610 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.82 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 620 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.81 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 630 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.79 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 640 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.78 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 650 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.77 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 660 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.76 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 670 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.75 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 680 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.74 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 690 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.72 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 700 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.71 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 710 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.70 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 720 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.69 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 730 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.68 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 740 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.68 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 750 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.67 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 760 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.66 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 770 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.65 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 780 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.64 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 790 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.63 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 800 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.62 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 810 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.62 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 820 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.61 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 830 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.60 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 840 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.60 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 850 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.59 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 860 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.58 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 870 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.57 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 880 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.57 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 890 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.56 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 900 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.56 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 910 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.55 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 920 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.54 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 930 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.54 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 940 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.53 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 950 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.53 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 960 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.52 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 970 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.52 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 980 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.51 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 990 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.51 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
-iteration 1000 done, current best likelihood: -1110.2630661684486, current acceptance ratio is 0.50 %, current best order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 10 done, current likelihood: -1110.2630661684486, current acceptance ratio is 10.00 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 20 done, current likelihood: -1110.2630661684486, current acceptance ratio is 5.00 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 30 done, current likelihood: -1110.2630661684486, current acceptance ratio is 3.33 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 40 done, current likelihood: -1110.2630661684486, current acceptance ratio is 2.50 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 50 done, current likelihood: -1110.2630661684486, current acceptance ratio is 2.00 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 60 done, current likelihood: -1110.2630661684486, current acceptance ratio is 1.67 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 70 done, current likelihood: -1110.2630661684486, current acceptance ratio is 1.43 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 80 done, current likelihood: -1110.2630661684486, current acceptance ratio is 1.25 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 90 done, current likelihood: -1110.2630661684486, current acceptance ratio is 1.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 100 done, current likelihood: -1110.2630661684486, current acceptance ratio is 1.00 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 110 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.91 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 120 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.83 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 130 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.77 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 140 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.71 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 150 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.67 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 160 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.62 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 170 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.59 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 180 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.56 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 190 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.53 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 200 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.50 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 210 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.48 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 220 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.45 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 230 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.43 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 240 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.42 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 250 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.40 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 260 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.38 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 270 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.37 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 280 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.36 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 290 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.34 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 300 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.33 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 310 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.32 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 320 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.31 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 330 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.30 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 340 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.29 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 350 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.29 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 360 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.28 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 370 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.27 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 380 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.26 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 390 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.26 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 400 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.25 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 410 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.24 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 420 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.24 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 430 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.23 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 440 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.23 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 450 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.22 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 460 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.22 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 470 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.21 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 480 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.21 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 490 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.20 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 500 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.20 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 510 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.20 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 520 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.19 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 530 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.19 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 540 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.19 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 550 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.18 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 560 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.18 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 570 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.18 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 580 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.17 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 590 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.17 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 600 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.17 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 610 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.16 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 620 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.16 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 630 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.16 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 640 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.16 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 650 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.15 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 660 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.15 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 670 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.15 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 680 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.15 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 690 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.14 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 700 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.14 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 710 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.14 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 720 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.14 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 730 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.14 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 740 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.14 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 750 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.13 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 760 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.13 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 770 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.13 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 780 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.13 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 790 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.13 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 800 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.12 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 810 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.12 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 820 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.12 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 830 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.12 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 840 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.12 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 850 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.12 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 860 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.12 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 870 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 880 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 890 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 900 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 910 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 920 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 930 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 940 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 950 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.11 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 960 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 970 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 980 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 990 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1000 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1010 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1020 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1030 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1040 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1050 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.10 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1060 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1070 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1080 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1090 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1100 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1110 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1120 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1130 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1140 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1150 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1160 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1170 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.09 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1180 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1190 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1200 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1210 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1220 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1230 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1240 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1250 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1260 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1270 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1280 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1290 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1300 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1310 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1320 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1330 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.08 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1340 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1350 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1360 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1370 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1380 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1390 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1400 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1410 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1420 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1430 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1440 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1450 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1460 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1470 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1480 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1490 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}
+iteration 1500 done, current likelihood: -1110.2630661684486, current acceptance ratio is 0.07 %, current order is {'FCI(HIP)': 1, 'GMI(HIP)': 2, 'FCI(Fusi)': 4, 'FCI(PCC)': 5, 'GMI(FUS)': 3}

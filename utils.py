@@ -174,23 +174,28 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
     n_stages = num_biomarkers + 1
 
     all_dicts = []
-    all_current_best_likelihoods = []
+    all_current_likelihoods = []
     acceptance_count = 0
     all_current_acceptance_ratios = []
-    all_current_best_order_dicts = []
+    all_current_order_dicts = []
     terminal_output_strings = []
 
     # initialize an ordering and likelihood
     # note that it should be a random permutation of numbers 1-10
-    current_best_order = np.random.permutation(np.arange(1, n_stages))
-    biomarker_current_best_order_dic = dict(zip(biomarkers, current_best_order))
-    current_best_likelihood = -np.inf 
+    current_order = np.random.permutation(np.arange(1, n_stages))
+    biomarker_current_order_dic = dict(zip(biomarkers, current_order))
+    current_likelihood = -np.inf 
 
     max_likelihood = - np.inf
     max_likelihood_ordering_dict = {}
 
     for _ in range(iterations):
-        new_order = current_best_order.copy()
+        ro_revert_to_max_likelihood_ordering = max_likelihood > current_likelihood
+        if np.random.rand() >= 0.9 and ro_revert_to_max_likelihood_ordering:
+            new_order = max_likelihood_ordering_dict[max_likelihood]
+            print(f"reverting to max_likelihood ({max_likelihood}) and associated biomarker ordering now: {new_order}")
+        else:
+            new_order = current_order.copy()
         # randomly select two indices
         a, b = np.random.choice(num_biomarkers, 2, replace=False)
         # swapping the order
@@ -199,40 +204,36 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
         biomarker_new_order_dic = dict(zip(biomarkers, new_order))
         ln_likelihood = compute_ln_likelihood_assuming_ordering(
             biomarker_new_order_dic, data_we_have, num_biomarkers, theta_phi_kmeans)
+        
+        if ln_likelihood > max_likelihood:
+            max_likelihood = ln_likelihood
+            max_likelihood_ordering_dict[max_likelihood] = new_order
+
         # if the new order results in a higher likelihood, then update:
         prob_of_accepting_new_order = np.exp(
-            ln_likelihood - current_best_likelihood)
+            ln_likelihood - current_likelihood)
         random_number = np.random.rand()
         if random_number < prob_of_accepting_new_order:
             acceptance_count += 1
-            current_best_order = new_order
-            current_best_likelihood = ln_likelihood
-            biomarker_current_best_order_dic = biomarker_new_order_dic
-            max_likelihood_ordering_dict[current_best_likelihood] = current_best_order
-
-        all_current_best_likelihoods.append(current_best_likelihood)
+            current_order = new_order
+            current_likelihood = ln_likelihood
+            biomarker_current_order_dic = biomarker_new_order_dic
+ 
+        all_current_likelihoods.append(current_likelihood)
         current_acceptance_ratio = acceptance_count*100/(_+1)
         all_current_acceptance_ratios.append(current_acceptance_ratio)
         all_dicts.append(biomarker_new_order_dic)
-        all_current_best_order_dicts.append(biomarker_current_best_order_dic)
+        all_current_order_dicts.append(biomarker_current_order_dic)
         
         # if _ >= burn_in and _ % thining == 0:
         #     all_dicts.append(biomarker_new_order_dic)
 
-        if current_best_likelihood > max_likelihood:
-            max_likelihood = current_best_likelihood
-
-        if np.random.rand() >= 0.9:
-            print("reverting to max_likelihood and associated biomarker ordering now~")
-            current_best_order = max_likelihood_ordering_dict[max_likelihood]
-            print(current_best_order)
-
         if (_+1) % 10 == 0:
             formatted_string = (
                 f"iteration {_ + 1} done, "
-                f"current best likelihood: {current_best_likelihood}, "
+                f"current likelihood: {current_likelihood}, "
                 f"current acceptance ratio is {current_acceptance_ratio:.2f} %, "
-                f"current best order is {biomarker_current_best_order_dic}"
+                f"current order is {biomarker_current_order_dic}"
             )
             terminal_output_strings.append(formatted_string)
             print(formatted_string)
@@ -246,17 +247,17 @@ def metropolis_hastings_theta_phi_kmeans_and_average_likelihood(data_we_have, it
 
     save_all_dicts(all_dicts, log_folder_name, "all_ordering")
     save_all_dicts(
-        all_current_best_order_dicts, log_folder_name, "all_current_best_order_dicts")
-    save_all_current_best(
-        all_current_best_likelihoods, "all_current_best_likelihoods", log_folder_name)
-    save_all_current_best(
+        all_current_order_dicts, log_folder_name, "all_current_order_dicts")
+    save_all_current(
+        all_current_likelihoods, "all_current_likelihoods", log_folder_name)
+    save_all_current(
         all_current_acceptance_ratios, "all_current_acceptance_ratios", log_folder_name)
     print("done!")
     return (
-        biomarker_current_best_order_dic, 
+        biomarker_current_order_dic, 
         all_dicts, 
-        all_current_best_order_dicts, 
-        all_current_best_likelihoods, 
+        all_current_order_dicts, 
+        all_current_likelihoods, 
         all_current_acceptance_ratios, 
         final_acceptance_ratio
     )
@@ -372,18 +373,18 @@ def metropolis_hastings_with_conjugate_priors(
         data_we_have.diseased == False].participant.unique()
 
     all_dicts = []
-    all_current_best_likelihoods = []
+    all_current_likelihoods = []
     acceptance_count = 0
     all_current_acceptance_ratios = []
-    all_current_best_order_dicts = []
+    all_current_order_dicts = []
     terminal_output_strings = []
     all_current_participant_stages = []
 
     # initialize an ordering and likelihood
     # note that it should be a random permutation of numbers 1-10
-    current_best_order = np.random.permutation(np.arange(1, n_stages))
-    biomarker_current_best_order_dic = dict(zip(biomarkers, current_best_order))
-    current_best_likelihood = -np.inf 
+    current_order = np.random.permutation(np.arange(1, n_stages))
+    biomarker_current_order_dic = dict(zip(biomarkers, current_order))
+    current_likelihood = -np.inf 
 
     # initialize participant_stages 
     # note that high should be num_biomarkers + 1; otherwise, no participants will be in the stage of 10
@@ -392,15 +393,20 @@ def metropolis_hastings_with_conjugate_priors(
 
     max_likelihood = - np.inf
     # max_likelihood_ordering_stages_tuple = ()
-    likelihood_ordering_dict = {}
+    max_likelihood_ordering_dict = {}
     # likelihood_stages_dict = {}
 
     for _ in range(iterations):
+        ro_revert_to_max_likelihood_ordering = max_likelihood > current_likelihood
+        if np.random.rand() >= 0.9 and ro_revert_to_max_likelihood_ordering:
+            new_order = max_likelihood_ordering_dict[max_likelihood]
+            print(f"reverting to max_likelihood ({max_likelihood}) and the associated biomarker ordering now: {new_order}")
+        else:
+            # when we update best_order below,
+            # in each iteration, new_order will also update
+            new_order = current_order.copy()
         # participant_stages_copy = participant_stages.copy()
 
-        # when we update best_order below,
-        # in each iteration, new_order will also update
-        new_order = current_best_order.copy()
         # randomly select two indices
         a, b = np.random.choice(num_biomarkers, 2, replace=False)
         # swapping the order
@@ -483,43 +489,40 @@ def metropolis_hastings_with_conjugate_priors(
             """
             all_participant_ln_likelihood += this_participant_ln_likelihood
         
+        if all_participant_ln_likelihood > max_likelihood:
+            max_likelihood = all_participant_ln_likelihood
+            max_likelihood_ordering_dict[max_likelihood] = new_order
+
         # ratio = likelihood/best_likelihood
         # because we are using np.log(likelihood) and np.log(best_likelihood)
         # np.exp(a)/np.exp(b) = np.exp(a - b)
         # if a > b, then np.exp(a - b) > 1
         prob_of_accepting_new_order = np.exp(
-            all_participant_ln_likelihood - current_best_likelihood)
-        random_number = np.random.rand()
+            all_participant_ln_likelihood - current_likelihood)
+        
         # it will definitly update at the first iteration
-        if random_number < prob_of_accepting_new_order:
+        if np.random.rand() < prob_of_accepting_new_order:
             acceptance_count += 1
-            current_best_order = new_order
-            current_best_likelihood = all_participant_ln_likelihood
-            biomarker_current_best_order_dic = ordering_dic
+            current_order = new_order
+            current_likelihood = all_participant_ln_likelihood
+            biomarker_current_order_dic = ordering_dic
             # participant_stages = participant_stages_copy
 
-            likelihood_ordering_dict[current_best_likelihood] = current_best_order
-            # likelihood_stages_dict[current_best_likelihood] = participant_stages
+            # """likelihood_ordering_dict will always keep all_participant_ln_likelihood if
+            # all_participant_ln_likelihood is larger than current_likelihood
+
+            # smaller all_participant_ln_likelihood will proportionally kept but that's okay. 
+            # """
+            # likelihood_ordering_dict[current_likelihood] = current_order
+            # # likelihood_stages_dict[current_likelihood] = participant_stages
 
         all_current_participant_stages.append(participant_stages)
-        all_current_best_likelihoods.append(current_best_likelihood)
+        all_current_likelihoods.append(current_likelihood)
         current_acceptance_ratio = acceptance_count*100/(_+1)
         all_current_acceptance_ratios.append(current_acceptance_ratio)
         all_dicts.append(ordering_dic)
-        all_current_best_order_dicts.append(biomarker_current_best_order_dic)
+        all_current_order_dicts.append(biomarker_current_order_dic)
 
-        if current_best_likelihood > max_likelihood:
-            max_likelihood = current_best_likelihood
-            # max_likelihood_ordering_stages_tuple += (
-            #     likelihood_ordering_dict[max_likelihood],
-            #     likelihood_stages_dict[max_likelihood]
-            # )
-
-        if np.random.rand() >= 0.9:
-            print("reverting to max_likelihood and associated biomarker ordering now~")
-            current_best_order = likelihood_ordering_dict[max_likelihood]
-            print(current_best_order)
-            
         # if (_+1) % (iterations/10) == 0:
         #     participant_stages_sampled = sampled_row_based_on_column_frequencies(
         #         np.array(all_current_participant_stages)
@@ -529,9 +532,9 @@ def metropolis_hastings_with_conjugate_priors(
         if (_+1) % 10 == 0:
             formatted_string = (
                 f"iteration {_ + 1} done, "
-                f"current best likelihood: {current_best_likelihood}, "
+                f"current likelihood: {current_likelihood}, "
                 f"current acceptance ratio is {current_acceptance_ratio:.2f} %, "
-                f"current best order is {biomarker_current_best_order_dic}"
+                f"current order is {biomarker_current_order_dic}"
             )
             terminal_output_strings.append(formatted_string)
             print(formatted_string)
@@ -545,21 +548,21 @@ def metropolis_hastings_with_conjugate_priors(
 
     save_all_dicts(all_dicts, log_folder_name, "all_ordering")
     save_all_dicts(
-        all_current_best_order_dicts, log_folder_name, "all_current_best_order_dicts")
-    save_all_current_best(
-        all_current_best_likelihoods, "all_current_best_likelihoods", log_folder_name)
-    save_all_current_best(
+        all_current_order_dicts, log_folder_name, "all_current_order_dicts")
+    save_all_current(
+        all_current_likelihoods, "all_current_likelihoods", log_folder_name)
+    save_all_current(
         all_current_acceptance_ratios, "all_current_acceptance_ratios", log_folder_name)
     save_all_current_participant_stages(
         all_current_participant_stages, "all_current_participant_stages", log_folder_name)
     print("done!")
     return (
-        biomarker_current_best_order_dic,
+        biomarker_current_order_dic,
         participant_stages,
         all_dicts,
         all_current_participant_stages,
-        all_current_best_order_dicts,
-        all_current_best_likelihoods,
+        all_current_order_dicts,
+        all_current_likelihoods,
         all_current_acceptance_ratios,
         final_acceptance_ratio
     )
@@ -638,8 +641,8 @@ def save_all_dicts(all_dicts, log_folder_name, file_name):
     df.set_index("iteration", inplace=True)
     df.to_csv(f"{log_folder_name}/{file_name}.csv", index=True)
 
-def save_all_current_best(var, var_name, log_folder_name):
-    """save all_current_best_order_dicts, all_current_best_likelihoods, 
+def save_all_current(var, var_name, log_folder_name):
+    """save all_current_order_dicts, all_current_ikelihoods, 
     and all_current_acceptance_ratios
     """
     x = np.arange(start = 1, stop = len(var) + 1, step = 1)
@@ -652,12 +655,13 @@ def save_all_current_participant_stages(var, var_name, log_folder_name):
     df.index.name = 'iteration'
     df.to_csv(f"{log_folder_name}/{var_name}.csv", index=True)
 
-def save_trace_plot(all_current_best_likelihoods, folder_name, file_name, title):
+def save_trace_plot(burn_in, all_current_likelihoods, folder_name, file_name, title):
+    current_likelihoods_to_plot = all_current_likelihoods[burn_in:]
     x = np.arange(
-        start = 1, stop = len(all_current_best_likelihoods) + 1, step = 1)
-    plt.scatter(x, all_current_best_likelihoods, alpha=0.5)
+        start = burn_in + 1, stop = len(all_current_likelihoods) + 1, step = 1)
+    plt.scatter(x, current_likelihoods_to_plot, alpha=0.5)
     plt.xlabel('Iteration #')
-    plt.ylabel('Current Best Likelihood')
+    plt.ylabel('Current Likelihood')
     plt.title(title)
     plt.savefig(f'{folder_name}/{file_name}.png')
     plt.close() 

@@ -55,8 +55,8 @@ def run_conjugate_priors(
     participant_stages, \
     all_dicts, \
     all_current_participant_stages,\
-    all_current_best_order_dicts, \
-    all_current_best_likelihoods, \
+    all_current_order_dicts, \
+    all_current_likelihoods, \
     all_current_acceptance_ratios, \
     final_acceptance_ratio = utils.metropolis_hastings_with_conjugate_priors(
         data_we_have, iterations, theta_phi_kmeans, log_folder_name
@@ -68,14 +68,15 @@ def run_conjugate_priors(
         title = f"{data_source} with Conjugate Priors, All Orderings"
     )
     utils.save_heatmap(
-        all_current_best_order_dicts, 
+        all_current_order_dicts, 
         burn_in=0, thining=1, 
         folder_name=img_folder_name,
-        file_name = "heatmap_all_current_best",
+        file_name = "heatmap_all_current",
         title = f"{data_source} with Conjugate Priors, All Current Best Orderings"
     )
     utils.save_trace_plot(
-        all_current_best_likelihoods, 
+        burn_in,
+        all_current_likelihoods, 
         folder_name=img_folder_name,
         file_name="trace_plot",
         title = f"Trace Plot, {data_source} with Conjugate Priors"
@@ -96,10 +97,10 @@ def run_kmeans_only(
 
     print(f"Now begins with {data_source} with kmeans only")
     start_time = time.time()
-    biomarker_best_order_dic, \
+    biomarker_current_order_dic, \
     all_dicts, \
-    all_current_best_order_dicts, \
-    all_current_best_likelihoods, \
+    all_current_order_dicts, \
+    all_current_likelihoods, \
     all_current_acceptance_ratios, \
     final_acceptance_ratio = utils.metropolis_hastings_theta_phi_kmeans_and_average_likelihood(
         data_we_have, iterations, theta_phi_kmeans, log_folder_name
@@ -112,14 +113,15 @@ def run_kmeans_only(
         title = f"{data_source} with KMeans Only, All Orderings"
     )
     utils.save_heatmap(
-        all_current_best_order_dicts, 
+        all_current_order_dicts, 
         burn_in=0, thining=1, 
         folder_name=img_folder_name,
-        file_name = "heatmap_all_current_best",
+        file_name = "heatmap_all_current",
         title = f"{data_source} with KMeans Only, All Current Best Orderings"
     )
     utils.save_trace_plot(
-        all_current_best_likelihoods, 
+        burn_in,
+        all_current_likelihoods, 
         folder_name=img_folder_name, 
         file_name="trace_plot",
         title = f"Trace Plot, {data_source} with KMeans Only"
@@ -131,7 +133,7 @@ def run_kmeans_only(
 
 if __name__ == '__main__':
      
-    iterations = 1000
+    iterations = 1500
     burn_in = 500
     thining = 50
 
@@ -150,18 +152,18 @@ if __name__ == '__main__':
     #     img_folder_name = "img/simulated_data_kmeans_only"
     # )
 
-    # """Chen Data
-    # """
-    # # Chen data with conjugate priors
-    # run_conjugate_priors(
-    #      data_source = "Chen Data",
-    #      log_folder_name = "logs/chen_data_conjugate_priors", 
-    #      img_folder_name = "img/chen_data_conjugate_priors"
-    # )
+    """Chen Data
+    """
+    # Chen data with conjugate priors
+    run_conjugate_priors(
+        data_source = "Chen Data",
+        log_folder_name = "logs/chen_data_conjugate_priors", 
+        img_folder_name = "img/chen_data_conjugate_priors"
+    )
     # Chen data with kmeans only
     run_kmeans_only(
-         data_source = "Chen Data",
-         log_folder_name = "logs/chen_data_kmeans_only", 
+        data_source = "Chen Data",
+        log_folder_name = "logs/chen_data_kmeans_only", 
         img_folder_name = "img/chen_data_kmeans_only"
     )
     
