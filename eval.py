@@ -7,7 +7,7 @@ from scipy.stats import mode
 from sklearn.cluster import KMeans
 from matplotlib.animation import FuncAnimation
 import time
-
+import random
 import utils
 
 def process_chen_data(file):
@@ -25,8 +25,9 @@ def process_chen_data(file):
                         value_vars=["FCI(HIP)", "GMI(HIP)", "FCI(Fusi)", "FCI(PCC)", "GMI(FUS)"], 
                         var_name='biomarker', value_name='measurement')
     # convert participant id
-    num_participant = len(df.participant.unique())
-    participant_string_id_dic = dict(zip(df.participant.unique(), [_ for _ in range(num_participant)]))
+    n_participant = len(df.participant.unique())
+    participant_ids = [_ for _ in range(n_participant)]
+    participant_string_id_dic = dict(zip(df.participant.unique(), participant_ids))
     df['participant'] = df.apply(lambda row: participant_string_id_dic[row.participant], axis = 1 )
     return df 
 
@@ -47,7 +48,6 @@ def run_conjugate_priors(
         
     data_we_have = get_data_we_have(data_source)
     biomarkers = data_we_have.biomarker.unique()
-    theta_phi_kmeans = utils.get_theta_phi_kmeans(data_we_have, biomarkers, n_clusters = 2)
 
     print(f"Now begins with {data_source} with conjugate priors")
     start_time = time.time()
@@ -59,7 +59,7 @@ def run_conjugate_priors(
     all_current_likelihoods, \
     all_current_acceptance_ratios, \
     final_acceptance_ratio = utils.metropolis_hastings_with_conjugate_priors(
-        data_we_have, iterations, theta_phi_kmeans, log_folder_name
+        data_we_have, iterations, log_folder_name
     )
     utils.save_heatmap(
         all_dicts, burn_in, thining, 
@@ -133,18 +133,18 @@ def run_kmeans_only(
 
 if __name__ == '__main__':
      
-    iterations = 1500
+    iterations = 1000
     burn_in = 500
     thining = 50
 
-    # """Simulated Data
-    # """
-    # # Simulated data with conjugate priors
-    # run_conjugate_priors(
-    #      data_source = "Simulated Data",
-    #      log_folder_name = "logs/simulated_data_conjugate_priors",
-    #      img_folder_name = "img/simulated_data_conjugate_priors"
-    # )
+    """Simulated Data
+    """
+    # Simulated data with conjugate priors
+    run_conjugate_priors(
+         data_source = "Simulated Data",
+         log_folder_name = "logs/simulated_data_conjugate_priors",
+         img_folder_name = "img/simulated_data_conjugate_priors"
+    )
     # # Simulated data with kmeans only
     # run_kmeans_only(
     #     data_source = "Simulated Data",
@@ -160,12 +160,12 @@ if __name__ == '__main__':
         log_folder_name = "logs/chen_data_conjugate_priors", 
         img_folder_name = "img/chen_data_conjugate_priors"
     )
-    # Chen data with kmeans only
-    run_kmeans_only(
-        data_source = "Chen Data",
-        log_folder_name = "logs/chen_data_kmeans_only", 
-        img_folder_name = "img/chen_data_kmeans_only"
-    )
+    # # Chen data with kmeans only
+    # run_kmeans_only(
+    #     data_source = "Chen Data",
+    #     log_folder_name = "logs/chen_data_kmeans_only", 
+    #     img_folder_name = "img/chen_data_kmeans_only"
+    # )
     
     
    

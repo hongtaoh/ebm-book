@@ -7,6 +7,8 @@ from scipy.stats import mode
 from sklearn.cluster import KMeans
 from matplotlib.animation import FuncAnimation
 import time
+import random 
+import copy
 
 def get_theta_phi_using_kmeans(data, biomarker, kmeans_setup):
     """To get theta and phi parametesr for a single biomarker using Kmeans algorithm 
@@ -115,19 +117,18 @@ def average_all_likelihood(pdata, num_biomarkers, theta_phi):
 # def margnalized_likelihood
 # cllapse versus non-collaps gibbs sampling in topic modeling
 
-def weighted_average_likelihood(pdata, n_stages, normalized_stage_likelihood, theta_phi):
+def weighted_average_likelihood(pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi):
     """using weighted average likelihood
     https://ebm-book2.vercel.app/distributions.html#unknown-k-j
     just that we do not assume each stage having exactly the same likelihood
     """
-    weighted_average = 0
-    for x in range(n_stages):
-        # likelihood: the product of the likelihood of this participant being at this stage
+    weighted_average_ll = 0
+    for x in diseased_stages:
+        # likelihood: the product of the normalized likelihood of this participant being at this stage
         # and the likelihood of this participant having this sequence of biomarker measurements
         # assuming this participant is at this stage. 
-        ll = normalized_stage_likelihood[x] * compute_likelihood(pdata, x, theta_phi)
-        weighted_average += ll 
-    return weighted_average
+        weighted_average_ll += normalized_stage_likelihood_dict[x] * compute_likelihood(pdata, x, theta_phi)
+    return weighted_average_ll
 
 def compute_ln_likelihood_assuming_ordering(ordering_dic, data, num_biomarkers, theta_phi):
     """Compute the (ln version of) the likelihood of seeing all participants' data,
@@ -348,9 +349,10 @@ def get_theta_phi_conjugate_priors(biomarkers, data_we_have, theta_phi_kmeans):
     estimate_means_stds_df = pd.DataFrame(means_stds_estimate_dict_list)
     return estimate_means_stds_df 
 
-def add_kj_and_affected(data_we_have, participant_stages, num_participants):
+def add_kj_and_affected_and_modify_diseased(data, participant_stages, n_participants):
     '''This is to fill up data_we_have. 
-    Basically, add two columns: k_j, and affected, based on the initial or updated participant_stages
+    Basically, add two columns: k_j, affected, and modify diseased column
+    based on the initial or updated participant_stages
     Note that we assume here we've already got S_n
 
     Inputs:
@@ -358,186 +360,229 @@ def add_kj_and_affected(data_we_have, participant_stages, num_participants):
         - participant_stages: np array 
         - participants: 0-99
     '''
-    participant_stage_dic = dict(zip(np.arange(0, num_participants), participant_stages))
-    data_we_have['k_j'] = data_we_have.apply(lambda row: participant_stage_dic[row.participant], axis = 1)
-    data_we_have['affected'] = data_we_have.apply(lambda row: row.k_j >= row.S_n, axis = 1)
-    return data_we_have 
+    participant_stage_dic = dict(zip(np.arange(0, n_participants), participant_stages))
+    data['k_j'] = data.apply(lambda row: participant_stage_dic[row.participant], axis = 1)
+    data['diseased'] = data.apply(lambda row: row.k_j > 0, axis = 1)
+    data['affected'] = data.apply(lambda row: row.k_j >= row.S_n, axis = 1)
+    return data
+
+# def add_kj_and_affected(data_we_have, participant_stages, num_participants):
+#     '''This is to fill up data_we_have. 
+#     Basically, add two columns: k_j, affected, and modify diseased column
+#     based on the initial or updated participant_stages
+#     Note that we assume here we've already got S_n
+
+#     Inputs:
+#         - data_we_have
+#         - participant_stages: np array 
+#         - participants: 0-99
+#     '''
+#     participant_stage_dic = dict(zip(np.arange(0, num_participants), participant_stages))
+#     data_we_have['k_j'] = data_we_have.apply(lambda row: participant_stage_dic[row.participant], axis = 1)
+#     # data_we_have['diseased'] = data_we_have.apply(lambda row: row.k_j!= 0, axis = 1)
+#     data_we_have['affected'] = data_we_have.apply(lambda row: row.k_j >= row.S_n, axis = 1)
+#     return data_we_have 
+
+def shuffle_order(arr, n_shuffle):
+    # randomly choose three indices
+    indices = random.sample(range(len(arr)), n_shuffle)
+    # obtain the elements represented by these three random indices and shuffle these elements
+    selected_elements = [arr[i] for i in indices]
+    random.shuffle(selected_elements)
+    # shuffle the original arr
+    for i, index in enumerate(indices):
+        arr[index] = selected_elements[i]
+
+def compute_all_participant_ln_likelihood_and_update_participant_stages(
+        n_participants,
+        data,
+        non_diseased_participant_ids,
+        estimated_theta_phi,
+        diseased_stages,
+        participant_stages
+):
+    all_participant_ln_likelihood = 0 
+    for p in range(n_participants):
+        # this participant data
+        pdata = data[data.participant == p].reset_index(drop=True)
+
+        """If this participant is not diseased (i.e., if we know k_j is equal to 0)
+        We still need to compute the likelihood of this participant seeing this sequence of biomarker data
+        but we do not need to estimate k_j like below
+
+        We still need to compute the likelihood because we need to add it to all_participant_ln_likelihood
+        """
+        if p in non_diseased_participant_ids:
+            this_participant_likelihood = compute_likelihood(
+                pdata, k_j=0, theta_phi = estimated_theta_phi)
+            this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
+        else:
+            # initiaze stage_likelihood
+            stage_likelihood_dict = dict(zip(diseased_stages, [0]*len(diseased_stages)))
+            for k_j in diseased_stages:
+                # even though data above has everything, it is filled up by random stages
+                # we don't like it and want to know the true k_j. All the following is to update participant_stages
+                participant_likelihood = compute_likelihood(pdata, k_j, estimated_theta_phi)
+                # update each stage likelihood for this participant
+                stage_likelihood_dict[k_j] = participant_likelihood
+            likelihood_sum = sum(stage_likelihood_dict.values())
+            normalized_stage_likelihood = [l/likelihood_sum for l in stage_likelihood_dict.values()]
+            normalized_stage_likelihood_dict = dict(zip(diseased_stages, normalized_stage_likelihood))
+            # print(normalized_stage_likelihood)
+            sampled_stage = np.random.choice(diseased_stages, p = normalized_stage_likelihood)
+            participant_stages[p] = sampled_stage   
+
+            # use weighted average likelihood because we didn't know the exact participant stage
+            # all above to calculate participant_stage is only for the purpous of calculate theta_phi
+            # this_participant_likelihood = average_all_likelihood(pdata, n_biomarkers, estimated_theta_phi)
+            this_participant_likelihood = weighted_average_likelihood(
+                pdata, diseased_stages, normalized_stage_likelihood_dict, estimated_theta_phi)
+            this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
+        """
+        All the codes in between are calculating this_participant_ln_likelihood. 
+        If we already know kj=0, then
+        it's very simple. If kj is unknown, we need to calculate the likelihood of seeing 
+        this sequence of biomarker
+        data at different stages, and get the relative likelihood before 
+        we get a sampled stage (this is for estimating theta and phi). 
+        Then we calculate this_participant_ln_likelihood using average likelihood. 
+        """
+        all_participant_ln_likelihood += this_participant_ln_likelihood
+    return all_participant_ln_likelihood
 
 def metropolis_hastings_with_conjugate_priors(
-        data_we_have, iterations, theta_phi_kmeans, log_folder_name):
-    num_participants = len(data_we_have.participant.unique())
-    num_biomarkers = len(data_we_have.biomarker.unique())
-    n_stages = num_biomarkers + 1
+        data_we_have, iterations, log_folder_name):
+    n_participants = len(data_we_have.participant.unique())
     biomarkers = data_we_have.biomarker.unique()
-    non_diseased_participants = data_we_have.loc[
+    n_biomarkers = len(biomarkers)
+    n_stages = n_biomarkers + 1
+    diseased_stages = np.arange(start = 1, stop = n_stages, step = 1)
+    
+    non_diseased_participant_ids = data_we_have.loc[
         data_we_have.diseased == False].participant.unique()
+    diseased_participant_ids = data_we_have.loc[data_we_have.diseased == True].participant.unique()
 
-    all_dicts = []
-    all_current_likelihoods = []
+    all_order_dicts = []
+    all_current_accepted_likelihoods = []
     acceptance_count = 0
     all_current_acceptance_ratios = []
-    all_current_order_dicts = []
+    all_current_accepted_order_dicts = []
     terminal_output_strings = []
-    all_current_participant_stages = []
+    all_participant_stages_at_the_end_of_each_iteration = []
 
     # initialize an ordering and likelihood
     # note that it should be a random permutation of numbers 1-10
-    current_order = np.random.permutation(np.arange(1, n_stages))
-    biomarker_current_order_dic = dict(zip(biomarkers, current_order))
-    current_likelihood = -np.inf 
+    current_accepted_order = np.random.permutation(np.arange(1, n_stages))
+    current_accepted_order_dict = dict(zip(biomarkers, current_accepted_order))
+    current_accepted_likelihood = -np.inf 
 
-    # initialize participant_stages 
-    # note that high should be num_biomarkers + 1; otherwise, no participants will be in the stage of 10
-    participant_stages = np.random.randint(low = 0, high = n_stages, size = num_participants)
-    participant_stages[non_diseased_participants] = 0
+    participant_stages = np.zeros(n_participants)
+    for idx in range(n_participants):
+        if idx in diseased_participant_ids:
+            participant_stages[idx] = random.randint(1, len(diseased_stages))
 
     max_likelihood = - np.inf
-    # max_likelihood_ordering_stages_tuple = ()
-    max_likelihood_ordering_dict = {}
-    # likelihood_stages_dict = {}
+    max_dict = {'max_ll': max_likelihood}
+
+    info_dict_list = []
 
     for _ in range(iterations):
-        ro_revert_to_max_likelihood_ordering = max_likelihood > current_likelihood
-        if np.random.rand() >= 0.9 and ro_revert_to_max_likelihood_ordering:
-            new_order = max_likelihood_ordering_dict[max_likelihood]
-            print(f"reverting to max_likelihood ({max_likelihood}) and the associated biomarker ordering now: {new_order}")
+        info_dict = {}
+        info_dict['iteration'] = _ + 1
+        info_dict['participant_stages_at_the_start_of_this_round'] = participant_stages.copy()
+        should_revert_to_max_likelihood_order = max_dict['max_ll'] > current_accepted_likelihood
+        info_dict['should_revert_to_max_likelihood_order'] = should_revert_to_max_likelihood_order
+        if np.random.rand() >= 0.9 and should_revert_to_max_likelihood_order:
+            # shallow copy first.
+            new_order = copy.deepcopy(max_dict["max_ll_order"])
+            info_dict['actualy_reverted'] = True
+            print(f"reverting to max_likelihood ({max_dict['max_ll']}) and the associated biomarker order now: {new_order}")
         else:
-            # when we update best_order below,
-            # in each iteration, new_order will also update
-            new_order = current_order.copy()
-        # participant_stages_copy = participant_stages.copy()
-
-        # randomly select two indices
-        a, b = np.random.choice(num_biomarkers, 2, replace=False)
-        # swapping the order
-        new_order[a], new_order[b] = new_order[b], new_order[a]
-
-        # likelihood of seeing all participants' data 
-        # biomarker:order dict
-        ordering_dic = dict(zip(biomarkers, new_order))
-        # fill up S_n column using the ordering dict
-        # copy first in order not to change data_we_have
-        data = data_we_have.copy()
-        # now data_we_have has S_n column
-        data['S_n'] = data.apply(lambda row: ordering_dic[row['biomarker']], axis = 1)
-
-        # add kj and affected for the whole dataset based on the initial randomized participant_stages
-        data = add_kj_and_affected(data, participant_stages, num_participants)
-        # print(data.head())
-
-        # get estimated_theta_phi
-        estimated_theta_phi = get_theta_phi_conjugate_priors(
-            biomarkers, data, theta_phi_kmeans=theta_phi_kmeans)
-
-        all_participant_ln_likelihood = 0 
-        for p in range(num_participants):
-            # this participant data
-            pdata = data[data.participant == p].reset_index(drop=True)
-
-            """If this participant is not diseased (i.e., if we know k_j is equal to 0)
-            We still need to compute the likelihood of this participant seeing this sequence of biomarker data
-            but we do not need to estimate k_j like below
-
-            We still need to compute the likelihood because we need to add it to all_participant_ln_likelihood
-            """
-            if p in non_diseased_participants:
-                this_participant_likelihood = compute_likelihood(
-                    pdata, k_j = 0, theta_phi = estimated_theta_phi)
-                this_participant_ln_likelihood = np.log(this_participant_likelihood)
-            else:
-                # initiaze stage_likelihood
-                stage_likelihood = np.zeros(n_stages)
-                for k_j in range(n_stages):
-                    # even though data above has everything, it is filled up by random stages
-                    # we don't like it and want to know the true k_j. All the following is to update participant_stages
-
-                    # likelihood for this participant to have this specific sequence of biomarker values
-                    participant_likelihood = compute_likelihood(pdata, k_j, estimated_theta_phi)
-
-                    # update each stage likelihood for this participant
-                    stage_likelihood[k_j] = participant_likelihood
-                likelihood_sum = np.sum(stage_likelihood)
-                normalized_stage_likelihood = [l/likelihood_sum for l in stage_likelihood]
-                sampled_stage = np.random.choice(
-                    np.arange(num_biomarkers + 1), p = normalized_stage_likelihood)
-                participant_stages[p] = sampled_stage   
-
-                # if participant is in sampled_stage, what is the likelihood of 
-                # seeing this sequence of biomarker data:
-                # this_participant_likelihood = stage_likelihood[sampled_stage]
-
-                # this_participant_likelihood = average_all_likelihood(pdata, num_biomarkers, estimated_theta_phi)
-
-                # use weighted average likelihood because we didn't know the exact participant stage
-                # all above to calculate participant_stage is only for the purpous of calculate theta_phi
-                this_participant_likelihood = weighted_average_likelihood(
-                    pdata, n_stages, normalized_stage_likelihood, estimated_theta_phi)
-                
-                # then, update all_participant_likelihood
-                if this_participant_likelihood == 0:
-                    this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e20)
-                else:
-                    this_participant_ln_likelihood = np.log(this_participant_likelihood)
-            """
-            All the codes in between are calculating this_participant_ln_likelihood. 
-            If we already know kj=0, then
-            it's very simple. If kj is unknown, we need to calculate the likelihood of seeing 
-            this sequence of biomarker
-            data at different stages, and get the relative likelihood before 
-            we get a sampled stage (this is for estimating theta and phi). 
-            Then we calculate this_participant_ln_likelihood using average likelihood. 
-            """
-            all_participant_ln_likelihood += this_participant_ln_likelihood
+            # print(f"should revert: {should_revert_to_max_likelihood_order}")
+            # we are going to shuffle new_order below. So it's better to copy first. 
+            new_order = current_accepted_order.copy()
+            # random.shuffle(new_order)
+            shuffle_order(new_order, n_shuffle=3)
         
-        if all_participant_ln_likelihood > max_likelihood:
-            max_likelihood = all_participant_ln_likelihood
-            max_likelihood_ordering_dict[max_likelihood] = new_order
+        current_order_dict = dict(zip(biomarkers, new_order))
+        info_dict['new_order_to_test'] = current_order_dict
+
+        # copy the data to avoid modifying the original
+        data = data_we_have.copy()
+        data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
+        # add kj and affected for the whole dataset based on participant_stages
+        # also modify diseased col (because it will be useful for the new theta_phi_kmeans)
+        data = add_kj_and_affected_and_modify_diseased(data, participant_stages, n_participants)
+        theta_phi_kmeans = get_theta_phi_kmeans(data.copy(), biomarkers, n_clusters = 2)
+        estimated_theta_phi = get_theta_phi_conjugate_priors(biomarkers, data.copy(), theta_phi_kmeans)
+
+        all_participant_ln_likelihood = compute_all_participant_ln_likelihood_and_update_participant_stages(
+            n_participants,
+            data,
+            non_diseased_participant_ids,
+            estimated_theta_phi,
+            diseased_stages,
+            participant_stages,
+        )
+
+        info_dict['new_order_likelihood'] = all_participant_ln_likelihood
+
+        if all_participant_ln_likelihood == max_dict['max_ll']:
+            print(f"Same max likelihood found with order: {new_order} and likelihood: {all_participant_ln_likelihood}")
+
+        if all_participant_ln_likelihood > max_dict['max_ll']:
+            max_dict['iteration'] = _+1
+            max_dict["max_ll"] = all_participant_ln_likelihood.copy()
+            max_dict["max_ll_order"] = copy.deepcopy(new_order)
+
+        info_dict['max_likelihood_up_until_now'] = max_dict["max_ll"]
 
         # ratio = likelihood/best_likelihood
         # because we are using np.log(likelihood) and np.log(best_likelihood)
         # np.exp(a)/np.exp(b) = np.exp(a - b)
         # if a > b, then np.exp(a - b) > 1
         prob_of_accepting_new_order = np.exp(
-            all_participant_ln_likelihood - current_likelihood)
+            all_participant_ln_likelihood - current_accepted_likelihood)
+        
+        info_dict['all_participant_ln_likelihood_is_larger'] = prob_of_accepting_new_order > 1
         
         # it will definitly update at the first iteration
         if np.random.rand() < prob_of_accepting_new_order:
             acceptance_count += 1
-            current_order = new_order
-            current_likelihood = all_participant_ln_likelihood
-            biomarker_current_order_dic = ordering_dic
-            # participant_stages = participant_stages_copy
+            current_accepted_order = new_order
+            current_accepted_likelihood = all_participant_ln_likelihood
+            current_accepted_order_dict = current_order_dict
 
-            # """likelihood_ordering_dict will always keep all_participant_ln_likelihood if
-            # all_participant_ln_likelihood is larger than current_likelihood
+        info_dict['accepted_order'] = current_accepted_order_dict
+        info_dict['accepted_likelihood'] = current_accepted_likelihood
 
-            # smaller all_participant_ln_likelihood will proportionally kept but that's okay. 
-            # """
-            # likelihood_ordering_dict[current_likelihood] = current_order
-            # # likelihood_stages_dict[current_likelihood] = participant_stages
-
-        all_current_participant_stages.append(participant_stages)
-        all_current_likelihoods.append(current_likelihood)
-        current_acceptance_ratio = acceptance_count*100/(_+1)
-        all_current_acceptance_ratios.append(current_acceptance_ratio)
-        all_dicts.append(ordering_dic)
-        all_current_order_dicts.append(biomarker_current_order_dic)
+        all_participant_stages_at_the_end_of_each_iteration.append(participant_stages.copy())
+        all_current_accepted_likelihoods.append(current_accepted_likelihood)
+        acceptance_ratio = acceptance_count*100/(_+1)
+        all_current_acceptance_ratios.append(acceptance_ratio)
+        all_order_dicts.append(current_order_dict)
+        all_current_accepted_order_dicts.append(current_accepted_order_dict)
 
         # if (_+1) % (iterations/10) == 0:
         #     participant_stages_sampled = sampled_row_based_on_column_frequencies(
-        #         np.array(all_current_participant_stages)
+        #         np.array(all_current_accepted_participant_stages)
         #     )
 
         # if _ >= burn_in and _ % thining == 0:
         if (_+1) % 10 == 0:
             formatted_string = (
                 f"iteration {_ + 1} done, "
-                f"current likelihood: {current_likelihood}, "
-                f"current acceptance ratio is {current_acceptance_ratio:.2f} %, "
-                f"current order is {biomarker_current_order_dic}"
+                f"current accepted likelihood: {current_accepted_likelihood}, "
+                f"current acceptance ratio is {acceptance_ratio:.2f} %, "
+                f"current accepted order is {current_accepted_order_dict}, "
+                f"current max likelihood is {max_dict['max_ll']}"
             )
             terminal_output_strings.append(formatted_string)
             print(formatted_string)
+
+        info_dict['participant_stages_at_the_end_of_iteration'] = participant_stages.copy()
+        info_dict['acceptance_ratio'] = acceptance_ratio
+        info_dict_list.append(info_dict)
 
     final_acceptance_ratio = acceptance_count/iterations
 
@@ -546,23 +591,33 @@ def metropolis_hastings_with_conjugate_priors(
         for result in terminal_output_strings:
             file.write(result + '\n')
 
-    save_all_dicts(all_dicts, log_folder_name, "all_ordering")
+    save_all_dicts(all_order_dicts, log_folder_name, "all_order")
     save_all_dicts(
-        all_current_order_dicts, log_folder_name, "all_current_order_dicts")
-    save_all_current(
-        all_current_likelihoods, "all_current_likelihoods", log_folder_name)
-    save_all_current(
-        all_current_acceptance_ratios, "all_current_acceptance_ratios", log_folder_name)
+        all_current_accepted_order_dicts, 
+        log_folder_name, 
+        "all_current_accepted_order_dicts")
+    save_all_current_accepted(
+        all_current_accepted_likelihoods, 
+        "all_current_accepted_likelihoods", 
+        log_folder_name)
+    save_all_current_accepted(
+        all_current_acceptance_ratios, 
+        "all_current_acceptance_ratios", 
+        log_folder_name)
     save_all_current_participant_stages(
-        all_current_participant_stages, "all_current_participant_stages", log_folder_name)
+        all_participant_stages_at_the_end_of_each_iteration, 
+        "participant_stages_at_the_end_of_each_iteartion", 
+        log_folder_name)
+    pd.DataFrame(info_dict_list).to_csv(f"{log_folder_name}/info.csv", index = False)
+    pd.DataFrame([max_dict]).to_csv(f"{log_folder_name}/max_info.csv", index = False)
     print("done!")
     return (
-        biomarker_current_order_dic,
+        current_accepted_order_dict,
         participant_stages,
-        all_dicts,
-        all_current_participant_stages,
-        all_current_order_dicts,
-        all_current_likelihoods,
+        all_order_dicts,
+        all_participant_stages_at_the_end_of_each_iteration,
+        all_current_accepted_order_dicts,
+        all_current_accepted_likelihoods,
         all_current_acceptance_ratios,
         final_acceptance_ratio
     )
@@ -641,7 +696,7 @@ def save_all_dicts(all_dicts, log_folder_name, file_name):
     df.set_index("iteration", inplace=True)
     df.to_csv(f"{log_folder_name}/{file_name}.csv", index=True)
 
-def save_all_current(var, var_name, log_folder_name):
+def save_all_current_accepted(var, var_name, log_folder_name):
     """save all_current_order_dicts, all_current_ikelihoods, 
     and all_current_acceptance_ratios
     """
@@ -653,7 +708,8 @@ def save_all_current(var, var_name, log_folder_name):
 def save_all_current_participant_stages(var, var_name, log_folder_name):
     df = pd.DataFrame(var)
     df.index.name = 'iteration'
-    df.to_csv(f"{log_folder_name}/{var_name}.csv", index=True)
+    df.index = df.index + 1
+    df.to_csv(f"{log_folder_name}/{var_name}.csv", index=False)
 
 def save_trace_plot(burn_in, all_current_likelihoods, folder_name, file_name, title):
     current_likelihoods_to_plot = all_current_likelihoods[burn_in:]
