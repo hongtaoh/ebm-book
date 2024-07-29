@@ -40,95 +40,94 @@ def get_data_we_have(data_source):
         data_we_have = original_data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
     return data_we_have
 
-def run_conjugate_priors(
+# def run_conjugate_priors(
+#         data_source,
+#         log_folder_name, 
+#         img_folder_name
+#     ):
+        
+#     data_we_have = get_data_we_have(data_source)
+#     biomarkers = data_we_have.biomarker.unique()
+
+#     print(f"Now begins with {data_source} with conjugate priors")
+#     start_time = time.time()
+#     biomarker_best_order_dic, \
+#     participant_stages, \
+#     all_dicts, \
+#     all_current_participant_stages,\
+#     all_current_order_dicts, \
+#     all_current_likelihoods, \
+#     all_current_acceptance_ratios, \
+#     final_acceptance_ratio = utils.metropolis_hastings_with_conjugate_priors(
+#         data_we_have, iterations, log_folder_name
+#     )
+#     utils.save_heatmap(
+#         all_dicts, burn_in, thining, 
+#         folder_name=img_folder_name,
+#         file_name="heatmap_all_orderings",
+#         title = f"{data_source} with Conjugate Priors, All Orderings"
+#     )
+#     utils.save_heatmap(
+#         all_current_order_dicts, 
+#         burn_in=0, thining=1, 
+#         folder_name=img_folder_name,
+#         file_name = "heatmap_all_current",
+#         title = f"{data_source} with Conjugate Priors, All Current Best Orderings"
+#     )
+#     utils.save_trace_plot(
+#         burn_in,
+#         all_current_likelihoods, 
+#         folder_name=img_folder_name,
+#         file_name="trace_plot",
+#         title = f"Trace Plot, {data_source} with Conjugate Priors"
+#     )
+#     end_time = time.time()
+#     execution_time = (end_time - start_time)/60
+#     print(f"Execution time: {execution_time} min for {data_source} using conjugate priors.")
+#     print("---------------------------------------------")
+
+def run_soft_kmeans(
         data_source,
         log_folder_name, 
         img_folder_name
     ):
-        
     data_we_have = get_data_we_have(data_source)
-    biomarkers = data_we_have.biomarker.unique()
+    # theta_phi_estimates = pd.read_csv('data/means_stds.csv')
 
-    print(f"Now begins with {data_source} with conjugate priors")
+    print(f"Now begins with {data_source} with soft kmeans")
     start_time = time.time()
-    biomarker_best_order_dic, \
-    participant_stages, \
-    all_dicts, \
-    all_current_participant_stages,\
-    all_current_order_dicts, \
-    all_current_likelihoods, \
+    current_accepted_order_dict, \
+    all_order_dicts, \
+    all_current_accepted_order_dicts, \
+    all_current_accepted_likelihoods,\
     all_current_acceptance_ratios, \
-    final_acceptance_ratio = utils.metropolis_hastings_with_conjugate_priors(
+    final_acceptance_ratio = utils.metropolis_hastings_soft_kmeans(
         data_we_have, iterations, log_folder_name
     )
-    utils.save_heatmap(
-        all_dicts, burn_in, thining, 
-        folder_name=img_folder_name,
-        file_name="heatmap_all_orderings",
-        title = f"{data_source} with Conjugate Priors, All Orderings"
-    )
-    utils.save_heatmap(
-        all_current_order_dicts, 
-        burn_in=0, thining=1, 
-        folder_name=img_folder_name,
-        file_name = "heatmap_all_current",
-        title = f"{data_source} with Conjugate Priors, All Current Best Orderings"
-    )
-    utils.save_trace_plot(
-        burn_in,
-        all_current_likelihoods, 
-        folder_name=img_folder_name,
-        file_name="trace_plot",
-        title = f"Trace Plot, {data_source} with Conjugate Priors"
-    )
-    end_time = time.time()
-    execution_time = (end_time - start_time)/60
-    print(f"Execution time: {execution_time} min for {data_source} using conjugate priors.")
-    print("---------------------------------------------")
-
-def run_kmeans_only(
-        data_source,
-        log_folder_name, 
-        img_folder_name
-    ):
-    data_we_have = get_data_we_have(data_source)
-    biomarkers = data_we_have.biomarker.unique()
-    theta_phi_kmeans = utils.get_theta_phi_kmeans(data_we_have, biomarkers, n_clusters = 2)
-
-    print(f"Now begins with {data_source} with kmeans only")
-    start_time = time.time()
-    biomarker_current_order_dic, \
-    all_dicts, \
-    all_current_order_dicts, \
-    all_current_likelihoods, \
-    all_current_acceptance_ratios, \
-    final_acceptance_ratio = utils.metropolis_hastings_theta_phi_kmeans_and_average_likelihood(
-        data_we_have, iterations, theta_phi_kmeans, log_folder_name
-    )
 
     utils.save_heatmap(
-        all_dicts, burn_in, thining, 
+        all_order_dicts, burn_in, thining, 
         folder_name=img_folder_name,
         file_name = "heatmap_all_orderings",
-        title = f"{data_source} with KMeans Only, All Orderings"
+        title = f"{data_source} with Soft KMeans, All Orderings"
     )
     utils.save_heatmap(
-        all_current_order_dicts, 
+        all_current_accepted_order_dicts, 
         burn_in=0, thining=1, 
         folder_name=img_folder_name,
-        file_name = "heatmap_all_current",
-        title = f"{data_source} with KMeans Only, All Current Best Orderings"
+        file_name = "heatmap_all_current_accepted",
+        title = f"{data_source} with Soft KMeans, All Current Accepted Orderings"
     )
     utils.save_trace_plot(
         burn_in,
-        all_current_likelihoods, 
+        all_current_accepted_likelihoods, 
         folder_name=img_folder_name, 
         file_name="trace_plot",
-        title = f"Trace Plot, {data_source} with KMeans Only"
+        title = f"Trace Plot, {data_source} with Soft KMeans"
     )
     end_time = time.time()
     execution_time = (end_time - start_time)/60
-    print(f"Execution time: {execution_time} mins for {data_source} using kmeans only.")
+    print(f"Execution time: {execution_time} mins for {data_source} using soft kmeans.")
     print("---------------------------------------------")
 
 if __name__ == '__main__':
@@ -137,35 +136,35 @@ if __name__ == '__main__':
     burn_in = 500
     thining = 50
 
-    """Simulated Data
-    """
-    # Simulated data with conjugate priors
-    run_conjugate_priors(
-         data_source = "Simulated Data",
-         log_folder_name = "logs/simulated_data_conjugate_priors",
-         img_folder_name = "img/simulated_data_conjugate_priors"
-    )
-    # # Simulated data with kmeans only
-    # run_kmeans_only(
+    # """Simulated Data
+    # """
+    # # Simulated data with conjugate priors
+    # run_conjugate_priors(
+    #      data_source = "Simulated Data",
+    #      log_folder_name = "logs/simulated_data_conjugate_priors",
+    #      img_folder_name = "img/simulated_data_conjugate_priors"
+    # )
+    # Simulated data with kmeans
+    # run_soft_kmeans(
     #     data_source = "Simulated Data",
-    #     log_folder_name = "logs/simulated_data_kmeans_only", 
-    #     img_folder_name = "img/simulated_data_kmeans_only"
+    #     log_folder_name = "logs/simulated_data_kmeans", 
+    #     img_folder_name = "img/simulated_data_kmeans"
     # )
 
-    """Chen Data
-    """
-    # Chen data with conjugate priors
-    run_conjugate_priors(
-        data_source = "Chen Data",
-        log_folder_name = "logs/chen_data_conjugate_priors", 
-        img_folder_name = "img/chen_data_conjugate_priors"
-    )
-    # # Chen data with kmeans only
-    # run_kmeans_only(
+    # """Chen Data
+    # """
+    # # Chen data with conjugate priors
+    # run_conjugate_priors(
     #     data_source = "Chen Data",
-    #     log_folder_name = "logs/chen_data_kmeans_only", 
-    #     img_folder_name = "img/chen_data_kmeans_only"
+    #     log_folder_name = "logs/chen_data_conjugate_priors", 
+    #     img_folder_name = "img/chen_data_conjugate_priors"
     # )
+    # Chen data with kmeans
+    run_soft_kmeans(
+        data_source = "Chen Data",
+        log_folder_name = "logs/chen_data_kmeans", 
+        img_folder_name = "img/chen_data_kmeans"
+    )
     
     
    
