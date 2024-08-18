@@ -6,9 +6,10 @@ from scipy.stats import mode
 from sklearn.cluster import KMeans
 from sklearn.cluster import AgglomerativeClustering
 import random 
-import copy
 import math
 import json
+import time 
+import os 
 
 def get_theta_phi_for_single_biomarker(data, biomarker, clustering_setup):
     """To get theta and phi parametesr for a single biomarker 
@@ -1054,6 +1055,10 @@ def get_biomarker_stage_probability(df, burn_in, thining):
     return dff 
 
 def save_heatmap(all_dicts, burn_in, thining, folder_name, file_name, title):
+     # Check if the directory exists
+    if not os.path.exists(folder_name):
+        # Create the directory if it does not exist
+        os.makedirs(folder_name)
     df = pd.DataFrame(all_dicts)
     biomarker_stage_probability_df = get_biomarker_stage_probability(df, burn_in, thining)
     sns.heatmap(biomarker_stage_probability_df, 
@@ -1087,29 +1092,55 @@ def sampled_row_based_on_column_frequencies(a):
     return np.array(sampled_row)
 
 def save_all_dicts(all_dicts, log_folder_name, file_name):
-    """save all_dicts into a dataframe
+    """Save all_dicts into a CSV file within a specified directory.
+    
+    If the directory does not exist, it will be created.
     """
+    # Check if the directory exists
+    if not os.path.exists(log_folder_name):
+        # Create the directory if it does not exist
+        os.makedirs(log_folder_name)
+    
+    # Convert the list of dictionaries to a DataFrame
     df = pd.DataFrame(all_dicts)
-    df['iteration'] = np.arange(start = 1, stop = len(df) + 1, step = 1)
+    
+    # Add an 'iteration' column
+    df['iteration'] = np.arange(start=1, stop=len(df) + 1, step=1)
+    
+    # Set 'iteration' as the index
     df.set_index("iteration", inplace=True)
+    
+    # Save the DataFrame to a CSV file
     df.to_csv(f"{log_folder_name}/{file_name}.csv", index=True)
 
 def save_all_current_accepted(var, var_name, log_folder_name):
     """save all_current_order_dicts, all_current_ikelihoods, 
     and all_current_acceptance_ratios
     """
+     # Check if the directory exists
+    if not os.path.exists(log_folder_name):
+        # Create the directory if it does not exist
+        os.makedirs(log_folder_name)
     x = np.arange(start = 1, stop = len(var) + 1, step = 1)
     df = pd.DataFrame({"iteration": x, var_name: var})
     df = df.set_index('iteration')
     df.to_csv(f"{log_folder_name}/{var_name}.csv", index=True)
 
 def save_all_current_participant_stages(var, var_name, log_folder_name):
+     # Check if the directory exists
+    if not os.path.exists(log_folder_name):
+        # Create the directory if it does not exist
+        os.makedirs(log_folder_name)
     df = pd.DataFrame(var)
     df.index.name = 'iteration'
     df.index = df.index + 1
     df.to_csv(f"{log_folder_name}/{var_name}.csv", index=False)
 
 def save_trace_plot(burn_in, all_current_likelihoods, folder_name, file_name, title):
+     # Check if the directory exists
+    if not os.path.exists(folder_name):
+        # Create the directory if it does not exist
+        os.makedirs(folder_name)
     current_likelihoods_to_plot = all_current_likelihoods[burn_in:]
     x = np.arange(
         start = burn_in + 1, stop = len(all_current_likelihoods) + 1, step = 1)
@@ -1118,304 +1149,186 @@ def save_trace_plot(burn_in, all_current_likelihoods, folder_name, file_name, ti
     plt.ylabel('Current Likelihood')
     plt.title(title)
     plt.savefig(f'{folder_name}/{file_name}.png')
-    plt.close() 
+    plt.close()
 
-# This utilizes the "reverting to max" method. 
+def process_chen_data(file):
+    """Prepare data for analysis below
+    """
+    df = pd.read_excel(file)
+    biomarker_name_change_dic = dict(zip(['FCI(HIP)', 'GMI(HIP)', 'FCI(Fusi)', 'FCI(PCC)', 'GMI(FUS)'],
+                                         [1, 3, 5, 2, 4]))
+    df.rename(
+        columns={df.columns[0]: 
+                 'participant_category', df.columns[1]: 
+                 'participant'}, 
+                 inplace=True)
+    # df = df[df.participant_category.isin(['CN', 'AD '])]
+    df['diseased'] = df.apply(lambda row: row.participant_category != 'CN', axis = 1)
+    df = pd.melt(df, id_vars=['participant_category', "participant", "timestamp", 'diseased'], 
+                        value_vars=["FCI(HIP)", "GMI(HIP)", "FCI(Fusi)", "FCI(PCC)", "GMI(FUS)"], 
+                        var_name='biomarker', value_name='measurement')
+    # convert participant id
+    n_participant = len(df.participant.unique())
+    participant_ids = [_ for _ in range(n_participant)]
+    participant_string_id_dic = dict(zip(df.participant.unique(), participant_ids))
+    df['participant'] = df.apply(lambda row: participant_string_id_dic[row.participant], axis = 1 )
+    df['biomarker'] = df.apply(lambda row: f"{row.biomarker}-{biomarker_name_change_dic[row.biomarker]}", 
+                               axis = 1)
+    return df 
 
-# def metropolis_hastings_with_conjugate_priors(
-#         data_we_have, iterations, log_folder_name, n_shuffle):
-#     n_participants = len(data_we_have.participant.unique())
-#     biomarkers = data_we_have.biomarker.unique()
-#     n_biomarkers = len(biomarkers)
-#     n_stages = n_biomarkers + 1
-#     diseased_stages = np.arange(start = 1, stop = n_stages, step = 1)
+def get_data_we_have(data_source):
+    if data_source == "Chen Data":
+         data_we_have = process_chen_data("data/Chen2016Data.xlsx")
+    else:
+        biomarker_name_change_dic = dict(zip(['HIP-FCI', 'HIP-GMI', 'FUS-FCI', 'PCC-FCI', 'FUS-GMI'],
+                                         [1, 3, 5, 2, 4]))
+        original_data = pd.read_csv('data/participant_data.csv')
+        original_data['diseased'] = original_data.apply(lambda row: row.k_j > 0, axis = 1)
+        data_we_have = original_data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
+        data_we_have['biomarker'] = data_we_have.apply(
+            lambda row: f"{row.biomarker} ({biomarker_name_change_dic[row.biomarker]})", axis = 1)
+    return data_we_have
 
-#     non_diseased_participant_ids = data_we_have.loc[
-#         data_we_have.diseased == False].participant.unique()
-#     # diseased_participant_ids = data_we_have.loc[
-#     #     data_we_have.diseased == True].participant.unique()
-
-#     all_order_dicts = []
-#     all_current_accepted_likelihoods = []
-#     acceptance_count = 0
-#     all_current_acceptance_ratios = []
-#     all_current_accepted_order_dicts = []
-#     terminal_output_strings = []
-#     all_participant_stages_at_the_end_of_each_iteration = []
-
-#     # initialize an ordering and likelihood
-#     # note that it should be a random permutation of numbers 1-10
-#     current_accepted_order = np.random.permutation(np.arange(1, n_stages))
-#     current_accepted_order_dict = dict(zip(biomarkers, current_accepted_order))
-#     current_accepted_likelihood = -np.inf 
-
-#     participant_stages = np.zeros(n_participants)
-#     for idx in range(n_participants):
-#         if idx not in non_diseased_participant_ids:
-#             # 1-len(diseased_stages), inclusive on both ends
-#             participant_stages[idx] = random.randint(1, len(diseased_stages))
-
-#     max_likelihood = - np.inf
-#     max_dict = {'max_ll': max_likelihood}
-
-#     info_dict_list = []
-
-#     for _ in range(iterations):
-#         info_dict = {}
-#         info_dict['iteration'] = _ + 1
-#         info_dict['participant_stages_at_the_start_of_this_round'] = participant_stages.copy()
-#         should_revert_to_max_likelihood_order = max_dict['max_ll'] > current_accepted_likelihood
-#         info_dict['should_revert_to_max_likelihood_order'] = should_revert_to_max_likelihood_order
-#         if np.random.rand() >= 0.9 and should_revert_to_max_likelihood_order:
-#             # shallow copy first.
-#             new_order = copy.deepcopy(max_dict["max_ll_order"])
-#             info_dict['actualy_reverted'] = True
-#             print(f"reverting to max_likelihood ({max_dict['max_ll']}) and the associated biomarker order now: {new_order}")
-#         else:
-#             # print(f"should revert: {should_revert_to_max_likelihood_order}")
-#             # we are going to shuffle new_order below. So it's better to copy first. 
-#             new_order = current_accepted_order.copy()
-#             # random.shuffle(new_order)
-#             shuffle_order(new_order, n_shuffle=3)
+def run_conjugate_priors(
+        data_source,
+        iterations,
+        log_folder_name, 
+        img_folder_name,
+        n_shuffle,
+        burn_in,
+        thining,
+    ):
         
-#         current_order_dict = dict(zip(biomarkers, new_order))
-#         info_dict['new_order_to_test'] = current_order_dict
+    data_we_have = get_data_we_have(data_source)
 
-#         # copy the data to avoid modifying the original
-#         data = data_we_have.copy()
-#         data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
-#         # add kj and affected for the whole dataset based on participant_stages
-#         # also modify diseased col (because it will be useful for the new theta_phi_kmeans)
-#         data = add_kj_and_affected_and_modify_diseased(data, participant_stages, n_participants)
-#         theta_phi_kmeans = get_theta_phi_estimates(data.copy(), biomarkers, n_clusters = 2)
-#         estimated_theta_phi = get_theta_phi_conjugate_priors(biomarkers, data.copy(), theta_phi_kmeans)
+    print(f"Now begins with {data_source} with conjugate priors")
+    start_time = time.time()
+    biomarker_best_order_dic, \
+    participant_stages, \
+    all_dicts, \
+    all_current_participant_stages,\
+    all_current_order_dicts, \
+    all_current_likelihoods, \
+    all_current_acceptance_ratios, \
+    final_acceptance_ratio = metropolis_hastings_with_conjugate_priors(
+        data_we_have, iterations, log_folder_name, n_shuffle
+    )
+    save_heatmap(
+        all_dicts, burn_in, thining, 
+        folder_name=img_folder_name,
+        file_name="heatmap_all_orderings",
+        title = f"{data_source} with Conjugate Priors, All Orderings"
+    )
+    save_heatmap(
+        all_current_order_dicts, 
+        burn_in=0, thining=1, 
+        folder_name=img_folder_name,
+        file_name = "heatmap_all_current",
+        title = f"{data_source} with Conjugate Priors, All Current Best Orderings"
+    )
+    save_trace_plot(
+        burn_in,
+        all_current_likelihoods, 
+        folder_name=img_folder_name,
+        file_name="trace_plot",
+        title = f"Trace Plot, {data_source} with Conjugate Priors"
+    )
+    end_time = time.time()
+    execution_time = (end_time - start_time)/60
+    print(f"Execution time: {execution_time} min for {data_source} using conjugate priors.")
+    print("---------------------------------------------")
 
-#         all_participant_ln_likelihood = compute_all_participant_ln_likelihood_and_update_participant_stages(
-#             n_participants,
-#             data,
-#             non_diseased_participant_ids,
-#             estimated_theta_phi,
-#             diseased_stages,
-#             participant_stages,
-#         )
+def run_soft_kmeans(
+        data_source,
+        iterations,
+        log_folder_name, 
+        img_folder_name,
+        burn_in,
+        thining,
+    ):
+    data_we_have = get_data_we_have(data_source)
+    # theta_phi_estimates = pd.read_csv('data/means_stds.csv')
 
-#         info_dict['new_order_likelihood'] = all_participant_ln_likelihood
+    print(f"Now begins with {data_source} with soft kmeans")
+    start_time = time.time()
+    current_accepted_order_dict, \
+    all_order_dicts, \
+    all_current_accepted_order_dicts, \
+    all_current_accepted_likelihoods,\
+    all_current_acceptance_ratios, \
+    final_acceptance_ratio = metropolis_hastings_soft_kmeans(
+        data_we_have, iterations, log_folder_name
+    )
 
-#         if all_participant_ln_likelihood == max_dict['max_ll']:
-#             print(f"Same max likelihood found with order: {new_order} and likelihood: {all_participant_ln_likelihood}")
+    save_heatmap(
+        all_order_dicts, burn_in, thining, 
+        folder_name=img_folder_name,
+        file_name = "heatmap_all_orderings",
+        title = f"{data_source} with Soft KMeans, All Orderings"
+    )
+    save_heatmap(
+        all_current_accepted_order_dicts, 
+        burn_in=0, thining=1, 
+        folder_name=img_folder_name,
+        file_name = "heatmap_all_current_accepted",
+        title = f"{data_source} with Soft KMeans, All Current Accepted Orderings"
+    )
+    save_trace_plot(
+        burn_in,
+        all_current_accepted_likelihoods, 
+        folder_name=img_folder_name, 
+        file_name="trace_plot",
+        title = f"Trace Plot, {data_source} with Soft KMeans"
+    )
+    end_time = time.time()
+    execution_time = (end_time - start_time)/60
+    print(f"Execution time: {execution_time} mins for {data_source} using soft kmeans.")
+    print("---------------------------------------------")
 
-#         if all_participant_ln_likelihood > max_dict['max_ll']:
-#             max_dict['iteration'] = _+1
-#             max_dict["max_ll"] = all_participant_ln_likelihood.copy()
-#             max_dict["max_ll_order"] = copy.deepcopy(new_order)
+def run_kmeans(
+        data_source,
+        iterations,
+        log_folder_name, 
+        img_folder_name,
+        real_order,
+        burn_in, 
+        thining
+    ):
+    data_we_have = get_data_we_have(data_source)
+    # theta_phi_estimates = pd.read_csv('data/means_stds.csv')
 
-#         info_dict['max_likelihood_up_until_now'] = max_dict["max_ll"]
+    print(f"Now begins with {data_source} with kmeans")
+    start_time = time.time()
+    current_accepted_order_dict, \
+    all_order_dicts, \
+    all_current_accepted_order_dicts, \
+    all_current_accepted_likelihoods,\
+    all_current_acceptance_ratios, \
+    final_acceptance_ratio = metropolis_hastings_kmeans(
+        data_we_have, iterations, log_folder_name, real_order, burn_in, thining
+    )
 
-#         # ratio = likelihood/best_likelihood
-#         # because we are using np.log(likelihood) and np.log(best_likelihood)
-#         # np.exp(a)/np.exp(b) = np.exp(a - b)
-#         # if a > b, then np.exp(a - b) > 1
-#         prob_of_accepting_new_order = np.exp(
-#             all_participant_ln_likelihood - current_accepted_likelihood)
-        
-#         info_dict['all_participant_ln_likelihood_is_larger'] = prob_of_accepting_new_order > 1
-        
-#         # it will definitly update at the first iteration
-#         if np.random.rand() < prob_of_accepting_new_order:
-#             acceptance_count += 1
-#             current_accepted_order = new_order
-#             current_accepted_likelihood = all_participant_ln_likelihood
-#             current_accepted_order_dict = current_order_dict
-
-#         info_dict['accepted_order'] = current_accepted_order_dict
-#         info_dict['accepted_likelihood'] = current_accepted_likelihood
-
-#         all_participant_stages_at_the_end_of_each_iteration.append(participant_stages.copy())
-#         all_current_accepted_likelihoods.append(current_accepted_likelihood)
-#         acceptance_ratio = acceptance_count*100/(_+1)
-#         all_current_acceptance_ratios.append(acceptance_ratio)
-#         all_order_dicts.append(current_order_dict)
-#         all_current_accepted_order_dicts.append(current_accepted_order_dict)
-
-#         # if (_+1) % (iterations/10) == 0:
-#         #     participant_stages_sampled = sampled_row_based_on_column_frequencies(
-#         #         np.array(all_current_accepted_participant_stages)
-#         #     )
-
-#         # if _ >= burn_in and _ % thining == 0:
-#         if (_+1) % 10 == 0:
-#             formatted_string = (
-#                 f"iteration {_ + 1} done, "
-#                 f"current accepted likelihood: {current_accepted_likelihood}, "
-#                 f"current acceptance ratio is {acceptance_ratio:.2f} %, "
-#                 f"current accepted order is {current_accepted_order_dict}, "
-#                 f"current max likelihood is {max_dict['max_ll']}"
-#             )
-#             terminal_output_strings.append(formatted_string)
-#             print(formatted_string)
-
-#         info_dict['participant_stages_at_the_end_of_iteration'] = participant_stages.copy()
-#         info_dict['acceptance_ratio'] = acceptance_ratio
-#         info_dict_list.append(info_dict)
-
-#     final_acceptance_ratio = acceptance_count/iterations
-
-#     terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
-#     with open(terminal_output_filename, 'w') as file:
-#         for result in terminal_output_strings:
-#             file.write(result + '\n')
-
-#     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
-#     save_all_dicts(
-#         all_current_accepted_order_dicts, 
-#         log_folder_name, 
-#         "all_current_accepted_order_dicts")
-#     save_all_current_accepted(
-#         all_current_accepted_likelihoods, 
-#         "all_current_accepted_likelihoods", 
-#         log_folder_name)
-#     save_all_current_accepted(
-#         all_current_acceptance_ratios, 
-#         "all_current_acceptance_ratios", 
-#         log_folder_name)
-#     save_all_current_participant_stages(
-#         all_participant_stages_at_the_end_of_each_iteration, 
-#         "participant_stages_at_the_end_of_each_iteartion", 
-#         log_folder_name)
-#     pd.DataFrame(info_dict_list).to_csv(f"{log_folder_name}/info.csv", index = False)
-#     pd.DataFrame([max_dict]).to_csv(f"{log_folder_name}/max_info.csv", index = False)
-#     print("done!")
-#     return (
-#         current_accepted_order_dict,
-#         participant_stages,
-#         all_order_dicts,
-#         all_participant_stages_at_the_end_of_each_iteration,
-#         all_current_accepted_order_dicts,
-#         all_current_accepted_likelihoods,
-#         all_current_acceptance_ratios,
-#         final_acceptance_ratio
-#     )
-
-"""The following has the max method
-"""
-# def metropolis_hastings_kmeans(
-#         data_we_have, 
-#         iterations, 
-#         theta_phi_kmeans, 
-#         log_folder_name
-#     ):
-#     '''Implement the metropolis-hastings algorithm
-#     Inputs: 
-#         - data: data_we_have
-#         - iterations: number of iterations
-
-#     Outputs:
-#         - best_order: a numpy array
-#         - best_likelihood: a scalar 
-#     '''
-#     n_participants = len(data_we_have.participant.unique())
-#     biomarkers = data_we_have.biomarker.unique()
-#     n_biomarkers = len(biomarkers)
-#     n_stages = n_biomarkers + 1
-#     non_diseased_participant_ids = data_we_have.loc[
-#         data_we_have.diseased == False].participant.unique()
-#     diseased_stages = np.arange(start = 1, stop = n_stages, step = 1)
-
-#     all_order_dicts = []
-#     all_current_accepted_likelihoods = []
-#     acceptance_count = 0
-#     all_current_acceptance_ratios = []
-#     all_current_accepted_order_dicts = []
-#     terminal_output_strings = []
-
-#     current_accepted_order = np.random.permutation(np.arange(1, n_stages))
-#     current_accepted_order_dict = dict(zip(biomarkers, current_accepted_order))
-#     current_accepted_likelihood = -np.inf 
-
-#     max_likelihood = - np.inf
-#     max_dict = {'max_ll': max_likelihood}
-
-#     for _ in range(iterations):
-#         should_revert_to_max_likelihood_order = max_dict['max_ll'] > current_accepted_likelihood
-#         if np.random.rand() >= 0.9 and should_revert_to_max_likelihood_order:
-#             # shallow copy first.
-#             new_order = copy.deepcopy(max_dict["max_ll_order"])
-#             print(f"reverting to max_likelihood ({max_dict['max_ll']}) and the associated biomarker order now: {new_order}")
-#         else:
-#             new_order = current_accepted_order.copy()
-#             # random.shuffle(new_order)
-#             shuffle_order(new_order, n_shuffle=2)
-
-#         current_order_dict = dict(zip(biomarkers, new_order))
-
-#         all_participant_ln_likelihood = compute_all_participant_ln_likelihood(
-#             data_we_have,
-#             current_order_dict,
-#             n_participants,
-#             non_diseased_participant_ids,
-#             theta_phi_kmeans,
-#             diseased_stages,
-#         )
-        
-#         if all_participant_ln_likelihood > max_dict['max_ll']:
-#             max_dict['iteration'] = _+1
-#             max_dict["max_ll"] = all_participant_ln_likelihood.copy()
-#             max_dict["max_ll_order"] = copy.deepcopy(new_order)
-
-#         prob_of_accepting_new_order = np.exp(
-#             all_participant_ln_likelihood - current_accepted_likelihood)
-        
-#         # it will definitly update at the first iteration
-#         if np.random.rand() < prob_of_accepting_new_order:
-#             acceptance_count += 1
-#             current_accepted_order = new_order
-#             current_accepted_likelihood = all_participant_ln_likelihood
-#             current_accepted_order_dict = current_order_dict
- 
-#         all_current_accepted_likelihoods.append(current_accepted_likelihood)
-#         acceptance_ratio = acceptance_count*100/(_+1)
-#         all_current_acceptance_ratios.append(acceptance_ratio)
-#         all_order_dicts.append(current_order_dict)
-#         all_current_accepted_order_dicts.append(current_accepted_order_dict)
-
-#         if (_+1) % 10 == 0:
-#             formatted_string = (
-#                 f"iteration {_ + 1} done, "
-#                 f"current accepted likelihood: {current_accepted_likelihood}, "
-#                 f"current acceptance ratio is {acceptance_ratio:.2f} %, "
-#                 f"current accepted order is {current_accepted_order_dict}, "
-#                 f"current max likelihood is {max_dict['max_ll']}"
-#             )
-#             terminal_output_strings.append(formatted_string)
-#             print(formatted_string)
-
-#     final_acceptance_ratio = acceptance_count/iterations
-
-#     terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
-#     with open(terminal_output_filename, 'w') as file:
-#         for result in terminal_output_strings:
-#             file.write(result + '\n')
-
-#     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
-#     save_all_dicts(
-#         all_current_accepted_order_dicts, 
-#         log_folder_name, 
-#         "all_current_accepted_order_dicts")
-#     save_all_current_accepted(
-#         all_current_accepted_likelihoods, 
-#         "all_current_accepted_likelihoods", 
-#         log_folder_name)
-#     save_all_current_accepted(
-#         all_current_acceptance_ratios, 
-#         "all_current_acceptance_ratios", 
-#         log_folder_name)
-#     pd.DataFrame([max_dict]).to_csv(f"{log_folder_name}/max_info.csv", index = False)
-#     print("done!")
-#     return (
-#         current_accepted_order_dict, 
-#         all_order_dicts, 
-#         all_current_accepted_order_dicts, 
-#         all_current_accepted_likelihoods, 
-#         all_current_acceptance_ratios, 
-#         final_acceptance_ratio
-#     )
+    save_heatmap(
+        all_order_dicts, burn_in, thining, 
+        folder_name=img_folder_name,
+        file_name = "heatmap_all_orderings",
+        title = f"{data_source} with KMeans, All Orderings"
+    )
+    save_heatmap(
+        all_current_accepted_order_dicts, 
+        burn_in=0, thining=1, 
+        folder_name=img_folder_name,
+        file_name = "heatmap_all_current_accepted",
+        title = f"{data_source} with KMeans, All Current Accepted Orderings"
+    )
+    save_trace_plot(
+        burn_in,
+        all_current_accepted_likelihoods, 
+        folder_name=img_folder_name, 
+        file_name="trace_plot",
+        title = f"Trace Plot, {data_source} with KMeans"
+    )
+    end_time = time.time()
+    execution_time = (end_time - start_time)/60
+    print(f"Execution time: {execution_time} mins for {data_source} using kmeans.")
+    print("---------------------------------------------")
