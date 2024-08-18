@@ -1,0 +1,3 @@
+The most likely ordering is different from the true ordering. 
+Likelihood of the most likely ordering: -1134.7956794113963. 
+Likelihood of the real ordering: -1234.9455954095408.

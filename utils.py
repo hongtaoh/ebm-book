@@ -128,7 +128,8 @@ def get_theta_phi_estimates(
         - biomarkers: List of biomarkers in string.
         - n_clusters: Number of clusters (should be 2).
     Output:
-        - a dictionary containing the means and standard deviations for theta and phi for each biomarker.
+        - a dictionary where key is biomarker and 
+        value is the means and standard deviations for theta and phi for that biomarker.
     """
     kmeans_setup = KMeans(n_clusters, random_state=0, n_init="auto")
     hierarchical_clustering_setup = AgglomerativeClustering(n_clusters=2)
@@ -356,6 +357,8 @@ def calculate_all_participant_ln_likelihood_and_update_hashmap(
     data = data_we_have.copy()
     data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
     all_participant_ln_likelihood = 0 
+    # key is participant id 
+    # value is normalized_stage_likelihood_dict
     hashmap_of_normalized_stage_likelihood_dicts = {}
     for p in range(n_participants):
         pdata = data[data.participant == p].reset_index(drop=True)
@@ -395,6 +398,7 @@ def metropolis_hastings_soft_kmeans(
     Inputs: 
         - data: data_we_have
         - iterations: number of iterations
+        - log_folder_name: the folder where log files locate
 
     Outputs:
         - best_order: a numpy array
@@ -446,6 +450,7 @@ def metropolis_hastings_soft_kmeans(
         )
 
         # Now, update theta_phi_estimates using soft kmeans
+        # based on the updated hashmap of normalized stage likelihood dicts
         theta_phi_estimates = soft_kmeans_theta_phi_estimates(
             _,
             prior_theta_phi_estimates,
@@ -523,7 +528,10 @@ def metropolis_hastings_soft_kmeans(
 def metropolis_hastings_kmeans(
         data_we_have, 
         iterations, 
-        log_folder_name
+        log_folder_name,
+        real_order,
+        burn_in, 
+        thining,
     ):
     '''Implement the metropolis-hastings algorithm
     Inputs: 
@@ -607,6 +615,22 @@ def metropolis_hastings_kmeans(
     with open(terminal_output_filename, 'w') as file:
         for result in terminal_output_strings:
             file.write(result + '\n')
+    
+    most_likely_order_dic = obtain_most_likely_order(
+        all_current_accepted_order_dicts, 
+        burn_in, 
+        thining,
+    )
+    output_likelihood_comparison(
+        most_likely_order_dic, 
+        real_order,
+        data_we_have,
+        n_participants,
+        non_diseased_participant_ids,
+        theta_phi_kmeans,
+        diseased_stages,
+        log_folder_name,
+    )
 
     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
     save_all_dicts(
@@ -631,129 +655,74 @@ def metropolis_hastings_kmeans(
         final_acceptance_ratio
     )
 
-"""The following has the max method
-"""
-# def metropolis_hastings_kmeans(
-#         data_we_have, 
-#         iterations, 
-#         theta_phi_kmeans, 
-#         log_folder_name
-#     ):
-#     '''Implement the metropolis-hastings algorithm
-#     Inputs: 
-#         - data: data_we_have
-#         - iterations: number of iterations
+def obtain_most_likely_order(all_current_accepted_order_dicts, burn_in, thining, ):
+    """Obtain the most likely order based on all the accepted orders 
+    Inputs:
+        - all_current_accepted_order_dicts 
+        - burn_in
+        - thining
+    Outputs:
+        - a dictionary where key is biomarker and value is the most likely order for that biomarker
+    """
+    df = pd.DataFrame(all_current_accepted_order_dicts)
+    biomarker_stage_probability_df = get_biomarker_stage_probability(df, burn_in, thining)
+    # the idx thing is to deal with the situation where there are multiple max values
+    idx = 0
+    dic = {}
+    for i, biomarker in enumerate(biomarker_stage_probability_df.index):
+        arr = np.array(biomarker_stage_probability_df.iloc[i, :])
+        occurances = np.sum(arr == np.max(arr))
+        more_than_one_max_value = occurances > 1 
+        if more_than_one_max_value:
+            indices = np.where(arr == np.max(arr))[0]
+            max_value_idx = indices[idx] + 1
+            dic[biomarker] = max_value_idx
+            idx += 1
+        else:
+            max_value_idx = np.argmax(biomarker_stage_probability_df.iloc[i, :]) + 1
+            dic[biomarker] = max_value_idx
+    return dic 
 
-#     Outputs:
-#         - best_order: a numpy array
-#         - best_likelihood: a scalar 
-#     '''
-#     n_participants = len(data_we_have.participant.unique())
-#     biomarkers = data_we_have.biomarker.unique()
-#     n_biomarkers = len(biomarkers)
-#     n_stages = n_biomarkers + 1
-#     non_diseased_participant_ids = data_we_have.loc[
-#         data_we_have.diseased == False].participant.unique()
-#     diseased_stages = np.arange(start = 1, stop = n_stages, step = 1)
-
-#     all_order_dicts = []
-#     all_current_accepted_likelihoods = []
-#     acceptance_count = 0
-#     all_current_acceptance_ratios = []
-#     all_current_accepted_order_dicts = []
-#     terminal_output_strings = []
-
-#     current_accepted_order = np.random.permutation(np.arange(1, n_stages))
-#     current_accepted_order_dict = dict(zip(biomarkers, current_accepted_order))
-#     current_accepted_likelihood = -np.inf 
-
-#     max_likelihood = - np.inf
-#     max_dict = {'max_ll': max_likelihood}
-
-#     for _ in range(iterations):
-#         should_revert_to_max_likelihood_order = max_dict['max_ll'] > current_accepted_likelihood
-#         if np.random.rand() >= 0.9 and should_revert_to_max_likelihood_order:
-#             # shallow copy first.
-#             new_order = copy.deepcopy(max_dict["max_ll_order"])
-#             print(f"reverting to max_likelihood ({max_dict['max_ll']}) and the associated biomarker order now: {new_order}")
-#         else:
-#             new_order = current_accepted_order.copy()
-#             # random.shuffle(new_order)
-#             shuffle_order(new_order, n_shuffle=2)
-
-#         current_order_dict = dict(zip(biomarkers, new_order))
-
-#         all_participant_ln_likelihood = compute_all_participant_ln_likelihood(
-#             data_we_have,
-#             current_order_dict,
-#             n_participants,
-#             non_diseased_participant_ids,
-#             theta_phi_kmeans,
-#             diseased_stages,
-#         )
-        
-#         if all_participant_ln_likelihood > max_dict['max_ll']:
-#             max_dict['iteration'] = _+1
-#             max_dict["max_ll"] = all_participant_ln_likelihood.copy()
-#             max_dict["max_ll_order"] = copy.deepcopy(new_order)
-
-#         prob_of_accepting_new_order = np.exp(
-#             all_participant_ln_likelihood - current_accepted_likelihood)
-        
-#         # it will definitly update at the first iteration
-#         if np.random.rand() < prob_of_accepting_new_order:
-#             acceptance_count += 1
-#             current_accepted_order = new_order
-#             current_accepted_likelihood = all_participant_ln_likelihood
-#             current_accepted_order_dict = current_order_dict
- 
-#         all_current_accepted_likelihoods.append(current_accepted_likelihood)
-#         acceptance_ratio = acceptance_count*100/(_+1)
-#         all_current_acceptance_ratios.append(acceptance_ratio)
-#         all_order_dicts.append(current_order_dict)
-#         all_current_accepted_order_dicts.append(current_accepted_order_dict)
-
-#         if (_+1) % 10 == 0:
-#             formatted_string = (
-#                 f"iteration {_ + 1} done, "
-#                 f"current accepted likelihood: {current_accepted_likelihood}, "
-#                 f"current acceptance ratio is {acceptance_ratio:.2f} %, "
-#                 f"current accepted order is {current_accepted_order_dict}, "
-#                 f"current max likelihood is {max_dict['max_ll']}"
-#             )
-#             terminal_output_strings.append(formatted_string)
-#             print(formatted_string)
-
-#     final_acceptance_ratio = acceptance_count/iterations
-
-#     terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
-#     with open(terminal_output_filename, 'w') as file:
-#         for result in terminal_output_strings:
-#             file.write(result + '\n')
-
-#     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
-#     save_all_dicts(
-#         all_current_accepted_order_dicts, 
-#         log_folder_name, 
-#         "all_current_accepted_order_dicts")
-#     save_all_current_accepted(
-#         all_current_accepted_likelihoods, 
-#         "all_current_accepted_likelihoods", 
-#         log_folder_name)
-#     save_all_current_accepted(
-#         all_current_acceptance_ratios, 
-#         "all_current_acceptance_ratios", 
-#         log_folder_name)
-#     pd.DataFrame([max_dict]).to_csv(f"{log_folder_name}/max_info.csv", index = False)
-#     print("done!")
-#     return (
-#         current_accepted_order_dict, 
-#         all_order_dicts, 
-#         all_current_accepted_order_dicts, 
-#         all_current_accepted_likelihoods, 
-#         all_current_acceptance_ratios, 
-#         final_acceptance_ratio
-#     )
+def output_likelihood_comparison(
+        most_likely_order_dic, 
+        real_order,
+        data_we_have,
+        n_participants,
+        non_diseased_participant_ids,
+        theta_phi_kmeans,
+        diseased_stages,
+        log_folder_name,
+        ):
+    """This is to output a text file comparing the likelihood of the most likely ordering
+    and the real ordering
+    """
+    real_order_dic = dict(zip(most_likely_order_dic.keys(), real_order))
+    output_filename = f"{log_folder_name}/compare_most_likely_and_true_ordering.txt"
+    with open(output_filename, 'w') as file:
+            if most_likely_order_dic == real_order_dic:
+                file.write("The most likely ordering is the true ordering")
+            else:
+                file.write("The most likely ordering is different from the true ordering. \n")
+                most_likely_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
+                    "iteration",
+                    data_we_have,
+                    most_likely_order_dic,
+                    n_participants,
+                    non_diseased_participant_ids,
+                    theta_phi_kmeans,
+                    diseased_stages,
+                )
+                real_order_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
+                    "iteration",
+                    data_we_have,
+                    real_order_dic,
+                    n_participants,
+                    non_diseased_participant_ids,
+                    theta_phi_kmeans,
+                    diseased_stages,
+                )
+                file.write(f"Likelihood of the most likely ordering: {most_likely_ln_likelihood}. \n")
+                file.write(f"Likelihood of the true ordering: {real_order_ln_likelihood}.")
 
 def estimate_params_exact(m0, n0, s0_sq, v0, data):
     '''This is to estimate means and vars based on conjugate priors
@@ -1054,7 +1023,8 @@ def get_biomarker_stage_probability(df, burn_in, thining):
     and for each biomarker, get probability of being in each possible stage
 
     Input:
-        - df: all_ordering.csv
+        - df: all_order_dicts or all_current_accepted_order_dicts, but after turning into
+            dataframes.
         - burn_in
         - thinning
     Output:
@@ -1065,7 +1035,7 @@ def get_biomarker_stage_probability(df, burn_in, thining):
     # Create an empty list to hold dictionaries
     dict_list = []
 
-    # for each biomarker
+    # iterate through biomarkers
     for col in df.columns:
         dic = {"biomarker": col}
         # get the frequency of biomarkers
@@ -1095,6 +1065,7 @@ def save_heatmap(all_dicts, burn_in, thining, folder_name, file_name, title):
     plt.xlabel('Stage')
     plt.ylabel('Biomarker')
     plt.title(title)
+    plt.tight_layout()
     plt.savefig(f"{folder_name}/{file_name}.png")
     # plt.savefig(f'{file_name}.pdf')
     plt.close() 
@@ -1149,6 +1120,7 @@ def save_trace_plot(burn_in, all_current_likelihoods, folder_name, file_name, ti
     plt.savefig(f'{folder_name}/{file_name}.png')
     plt.close() 
 
+# This utilizes the "reverting to max" method. 
 
 # def metropolis_hastings_with_conjugate_priors(
 #         data_we_have, iterations, log_folder_name, n_shuffle):
@@ -1321,5 +1293,129 @@ def save_trace_plot(burn_in, all_current_likelihoods, folder_name, file_name, ti
 #         all_current_accepted_order_dicts,
 #         all_current_accepted_likelihoods,
 #         all_current_acceptance_ratios,
+#         final_acceptance_ratio
+#     )
+
+"""The following has the max method
+"""
+# def metropolis_hastings_kmeans(
+#         data_we_have, 
+#         iterations, 
+#         theta_phi_kmeans, 
+#         log_folder_name
+#     ):
+#     '''Implement the metropolis-hastings algorithm
+#     Inputs: 
+#         - data: data_we_have
+#         - iterations: number of iterations
+
+#     Outputs:
+#         - best_order: a numpy array
+#         - best_likelihood: a scalar 
+#     '''
+#     n_participants = len(data_we_have.participant.unique())
+#     biomarkers = data_we_have.biomarker.unique()
+#     n_biomarkers = len(biomarkers)
+#     n_stages = n_biomarkers + 1
+#     non_diseased_participant_ids = data_we_have.loc[
+#         data_we_have.diseased == False].participant.unique()
+#     diseased_stages = np.arange(start = 1, stop = n_stages, step = 1)
+
+#     all_order_dicts = []
+#     all_current_accepted_likelihoods = []
+#     acceptance_count = 0
+#     all_current_acceptance_ratios = []
+#     all_current_accepted_order_dicts = []
+#     terminal_output_strings = []
+
+#     current_accepted_order = np.random.permutation(np.arange(1, n_stages))
+#     current_accepted_order_dict = dict(zip(biomarkers, current_accepted_order))
+#     current_accepted_likelihood = -np.inf 
+
+#     max_likelihood = - np.inf
+#     max_dict = {'max_ll': max_likelihood}
+
+#     for _ in range(iterations):
+#         should_revert_to_max_likelihood_order = max_dict['max_ll'] > current_accepted_likelihood
+#         if np.random.rand() >= 0.9 and should_revert_to_max_likelihood_order:
+#             # shallow copy first.
+#             new_order = copy.deepcopy(max_dict["max_ll_order"])
+#             print(f"reverting to max_likelihood ({max_dict['max_ll']}) and the associated biomarker order now: {new_order}")
+#         else:
+#             new_order = current_accepted_order.copy()
+#             # random.shuffle(new_order)
+#             shuffle_order(new_order, n_shuffle=2)
+
+#         current_order_dict = dict(zip(biomarkers, new_order))
+
+#         all_participant_ln_likelihood = compute_all_participant_ln_likelihood(
+#             data_we_have,
+#             current_order_dict,
+#             n_participants,
+#             non_diseased_participant_ids,
+#             theta_phi_kmeans,
+#             diseased_stages,
+#         )
+        
+#         if all_participant_ln_likelihood > max_dict['max_ll']:
+#             max_dict['iteration'] = _+1
+#             max_dict["max_ll"] = all_participant_ln_likelihood.copy()
+#             max_dict["max_ll_order"] = copy.deepcopy(new_order)
+
+#         prob_of_accepting_new_order = np.exp(
+#             all_participant_ln_likelihood - current_accepted_likelihood)
+        
+#         # it will definitly update at the first iteration
+#         if np.random.rand() < prob_of_accepting_new_order:
+#             acceptance_count += 1
+#             current_accepted_order = new_order
+#             current_accepted_likelihood = all_participant_ln_likelihood
+#             current_accepted_order_dict = current_order_dict
+ 
+#         all_current_accepted_likelihoods.append(current_accepted_likelihood)
+#         acceptance_ratio = acceptance_count*100/(_+1)
+#         all_current_acceptance_ratios.append(acceptance_ratio)
+#         all_order_dicts.append(current_order_dict)
+#         all_current_accepted_order_dicts.append(current_accepted_order_dict)
+
+#         if (_+1) % 10 == 0:
+#             formatted_string = (
+#                 f"iteration {_ + 1} done, "
+#                 f"current accepted likelihood: {current_accepted_likelihood}, "
+#                 f"current acceptance ratio is {acceptance_ratio:.2f} %, "
+#                 f"current accepted order is {current_accepted_order_dict}, "
+#                 f"current max likelihood is {max_dict['max_ll']}"
+#             )
+#             terminal_output_strings.append(formatted_string)
+#             print(formatted_string)
+
+#     final_acceptance_ratio = acceptance_count/iterations
+
+#     terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
+#     with open(terminal_output_filename, 'w') as file:
+#         for result in terminal_output_strings:
+#             file.write(result + '\n')
+
+#     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
+#     save_all_dicts(
+#         all_current_accepted_order_dicts, 
+#         log_folder_name, 
+#         "all_current_accepted_order_dicts")
+#     save_all_current_accepted(
+#         all_current_accepted_likelihoods, 
+#         "all_current_accepted_likelihoods", 
+#         log_folder_name)
+#     save_all_current_accepted(
+#         all_current_acceptance_ratios, 
+#         "all_current_acceptance_ratios", 
+#         log_folder_name)
+#     pd.DataFrame([max_dict]).to_csv(f"{log_folder_name}/max_info.csv", index = False)
+#     print("done!")
+#     return (
+#         current_accepted_order_dict, 
+#         all_order_dicts, 
+#         all_current_accepted_order_dicts, 
+#         all_current_accepted_likelihoods, 
+#         all_current_acceptance_ratios, 
 #         final_acceptance_ratio
 #     )

@@ -14,6 +14,8 @@ def process_chen_data(file):
     """Prepare data for analysis below
     """
     df = pd.read_excel(file)
+    biomarker_name_change_dic = dict(zip(['FCI(HIP)', 'GMI(HIP)', 'FCI(Fusi)', 'FCI(PCC)', 'GMI(FUS)'],
+                                         [1, 3, 5, 2, 4]))
     df.rename(
         columns={df.columns[0]: 
                  'participant_category', df.columns[1]: 
@@ -29,15 +31,21 @@ def process_chen_data(file):
     participant_ids = [_ for _ in range(n_participant)]
     participant_string_id_dic = dict(zip(df.participant.unique(), participant_ids))
     df['participant'] = df.apply(lambda row: participant_string_id_dic[row.participant], axis = 1 )
+    df['biomarker'] = df.apply(lambda row: f"{row.biomarker}-{biomarker_name_change_dic[row.biomarker]}", 
+                               axis = 1)
     return df 
 
 def get_data_we_have(data_source):
     if data_source == "Chen Data":
          data_we_have = process_chen_data("data/Chen2016Data.xlsx")
     else:
+        biomarker_name_change_dic = dict(zip(['HIP-FCI', 'HIP-GMI', 'FUS-FCI', 'PCC-FCI', 'FUS-GMI'],
+                                         [1, 3, 5, 2, 4]))
         original_data = pd.read_csv('data/participant_data.csv')
         original_data['diseased'] = original_data.apply(lambda row: row.k_j > 0, axis = 1)
         data_we_have = original_data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
+        data_we_have['biomarker'] = data_we_have.apply(
+            lambda row: f"{row.biomarker} ({biomarker_name_change_dic[row.biomarker]})", axis = 1)
     return data_we_have
 
 def run_conjugate_priors(
@@ -136,7 +144,10 @@ def run_kmeans(
         data_source,
         iterations,
         log_folder_name, 
-        img_folder_name
+        img_folder_name,
+        real_order,
+        burn_in, 
+        thining
     ):
     data_we_have = get_data_we_have(data_source)
     # theta_phi_estimates = pd.read_csv('data/means_stds.csv')
@@ -149,7 +160,7 @@ def run_kmeans(
     all_current_accepted_likelihoods,\
     all_current_acceptance_ratios, \
     final_acceptance_ratio = utils.metropolis_hastings_kmeans(
-        data_we_have, iterations, log_folder_name
+        data_we_have, iterations, log_folder_name, real_order, burn_in, thining
     )
 
     utils.save_heatmap(
@@ -179,10 +190,11 @@ def run_kmeans(
 
 if __name__ == '__main__':
      
-    iterations = 1500
-    burn_in = 1000
-    thining = 20
+    iterations = 100
+    burn_in = 10
+    thining = 2
     n_shuffle = 2
+    real_order = [1, 3, 5, 2, 4]
 
     # """Simulated Data
     # """
@@ -201,13 +213,16 @@ if __name__ == '__main__':
     #     log_folder_name = "logs/simulated_data_soft_kmeans", 
     #     img_folder_name = "img/simulated_data_soft_kmeans"
     # )
-    # # Soley kmeans
-    # run_kmeans(
-    #     data_source = "Simulated Data",
-    #     iterations=iterations,
-    #     log_folder_name = "logs/simulated_data_kmeans", 
-    #     img_folder_name = "img/simulated_data_kmeans"
-    # )
+    # Soley kmeans
+    run_kmeans(
+        data_source = "Simulated Data",
+        iterations=iterations,
+        log_folder_name = "logs/simulated_data_kmeans", 
+        img_folder_name = "img/simulated_data_kmeans",
+        real_order = real_order,
+        burn_in = burn_in, 
+        thining = thining
+    )
     # """Chen Data
     # """
     # # Chen data with conjugate priors
@@ -229,7 +244,10 @@ if __name__ == '__main__':
         data_source = "Chen Data",
         iterations=iterations,
         log_folder_name = "logs/chen_data_kmeans", 
-        img_folder_name = "img/chen_data_kmeans"
+        img_folder_name = "img/chen_data_kmeans",
+        real_order = real_order,
+        burn_in = burn_in, 
+        thining = thining
     )
     
     
