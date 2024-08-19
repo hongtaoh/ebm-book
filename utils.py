@@ -10,6 +10,91 @@ import math
 import json
 import time 
 import os 
+import scipy.stats as stats
+
+def generate_data_from_ebm(
+        n_participants, 
+        S_ordering, 
+        real_theta_phi, 
+        healthy_ratio
+    ):
+    """
+    Simulate an Event-Based Model (EBM) for disease progression.
+    
+    Args:
+    n_participants (int): Number of participants.
+    S_ordering: Biomarker names ordered according to the order 
+        in which each of them get affected by the disease
+    real_theta_phi: pandas dataframes of theta and phi values for all biomarkers
+    healthy_ratio: # of healthy participants/n_participants
+    
+    Returns:
+    pandas dataframe: colmns are 'participant', "biomarker", 'measurement', 
+        'k_j', 'S_n', 'affected_or_not'
+    """
+    biomarkers = np.array(real_theta_phi.biomarker)
+    n_biomarkers = len(biomarkers)
+    n_stages = n_biomarkers + 1
+
+    n_healthy = n_participants*healthy_ratio
+    n_diseased = n_participants - n_healthy
+    
+    # generate kjs 
+    zeros = np.zeros(n_healthy, dtype=int)
+    random_integers = np.random.randint(1, n_stages, n_diseased)
+    kjs = np.concatenate((zeros, random_integers))
+    np.random.shuffle(kjs)
+    
+    # Initiate biomarker measurement matrix (J participants x N biomarkers), 
+    # with entries as None
+    X = np.full((n_participants, n_biomarkers), None, dtype=object)
+    
+    # biomarker : normal distribution
+    theta_dist = {biomarker: stats.norm(
+        real_theta_phi[real_theta_phi.biomarker == biomarker].reset_index()['theta_mean'][0],
+        real_theta_phi[real_theta_phi.biomarker == biomarker].reset_index()['theta_std'][0]
+        ) for biomarker in biomarkers}
+    phi_dist = {biomarker: stats.norm(
+        real_theta_phi[real_theta_phi.biomarker == biomarker].reset_index()['phi_mean'][0],
+        real_theta_phi[real_theta_phi.biomarker == biomarker].reset_index()['phi_std'][0]
+        ) for biomarker in biomarkers}
+
+    # Iterate through participants
+    for j in range(n_participants):
+        # Iterate through biomarkers
+        for n, biomarker in enumerate(biomarkers):
+            # Disease stage of the current participant
+            k_j = kjs[j]
+            # Disease stage indicated by the current biomarker
+            # Note that biomarkers always indicate that the participant is diseased
+            # Thus, S_n >= 1
+            S_n = np.where(S_ordering == biomarker)[0][0] + 1
+            
+            # Assign biomarker values based on the participant's disease stage 
+            # affected, or not_affected, is regarding the biomarker, not the participant
+            if k_j >= 1:
+                if k_j >= S_n:
+                    X[j, n] = (j, biomarker, theta_dist[biomarker].rvs(), k_j, S_n, 'affected') 
+                else:
+                    X[j, n] = (j, biomarker, phi_dist[biomarker].rvs(), k_j, S_n, 'not_affected')  
+            # if the participant is healthy
+            else:
+                X[j, n] = (j, biomarker, phi_dist[biomarker].rvs(), k_j, S_n, 'not_affected')  
+
+    df = pd.DataFrame(X, columns=biomarkers)
+    # make this dataframe wide to long 
+    df_long = df.melt(var_name = "Biomarker", value_name="Value")
+    values_df = df_long['Value'].apply(pd.Series)
+    values_df.columns = [
+        'participant', 
+        "biomarker", 
+        'measurement', 
+        'k_j', 
+        'S_n', 
+        'affected_or_not'
+    ]
+    values_df.to_csv("data/participant_data.csv", index=False)
+    return values_df
 
 def get_theta_phi_for_single_biomarker(data, biomarker, clustering_setup):
     """To get theta and phi parametesr for a single biomarker 
