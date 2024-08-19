@@ -290,18 +290,19 @@ def compute_likelihood(pdata, k_j, theta_phi):
             theta_phi, biomarker, affected, measurement)
     return likelihood
 
-def weighted_average_likelihood(pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi):
+def weighted_average_likelihood(pdata, diseased_stages, theta_phi):
     """using weighted average likelihood
     https://ebm-book2.vercel.app/distributions.html#unknown-k-j
-    just that we do not assume each stage having exactly the same likelihood
+    Note that we have uniform prior on kj
     """
-    weighted_average_ll = 0
-    for x in diseased_stages:
-        # likelihood: the product of the normalized likelihood of this participant being at this stage
-        # and the likelihood of this participant having this sequence of biomarker measurements
-        # assuming this participant is at this stage. 
-        weighted_average_ll += normalized_stage_likelihood_dict[x] * compute_likelihood(pdata, x, theta_phi)
-    return weighted_average_ll
+    return np.mean(sum(compute_likelihood(pdata, kj, theta_phi) for kj in diseased_stages))
+    # weighted_average_ll = 0
+    # for x in diseased_stages:
+    #     # likelihood: the product of the normalized likelihood of this participant being at this stage
+    #     # and the likelihood of this participant having this sequence of biomarker measurements
+    #     # assuming this participant is at this stage. 
+    #     weighted_average_ll += normalized_stage_likelihood_dict[x] * compute_likelihood(pdata, x, theta_phi)
+    # return weighted_average_ll
 
 def calculate_soft_kmeans_for_biomarker(
         data,
@@ -470,7 +471,9 @@ def calculate_all_participant_ln_likelihood_and_update_hashmap(
                 zip(diseased_stages, normalized_stage_likelihood))
             hashmap_of_normalized_stage_likelihood_dicts[p] = normalized_stage_likelihood_dict
             this_participant_likelihood = weighted_average_likelihood(
-                pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi_estimates)
+                pdata, diseased_stages, theta_phi_estimates)
+            # this_participant_likelihood = weighted_average_likelihood(
+            #     pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi_estimates)
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         all_participant_ln_likelihood += this_participant_ln_likelihood
     return all_participant_ln_likelihood, hashmap_of_normalized_stage_likelihood_dicts
@@ -611,6 +614,31 @@ def metropolis_hastings_soft_kmeans(
         final_acceptance_ratio
     )
 
+def calculate_all_participant_ln_likelihood(
+        iteration,
+        data_we_have,
+        current_order_dict,
+        n_participants,
+        non_diseased_participant_ids,
+        theta_phi_estimates,
+        diseased_stages,
+):
+    data = data_we_have.copy()
+    data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
+    all_participant_ln_likelihood = 0 
+    for p in range(n_participants):
+        pdata = data[data.participant == p].reset_index(drop=True)
+        if p in non_diseased_participant_ids:
+            this_participant_likelihood = compute_likelihood(
+            pdata, k_j=0, theta_phi = theta_phi_estimates)
+            this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
+        else:
+            this_participant_likelihood = weighted_average_likelihood(
+                pdata, diseased_stages, theta_phi_estimates)
+            this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
+        all_participant_ln_likelihood += this_participant_ln_likelihood
+    return all_participant_ln_likelihood
+
 def metropolis_hastings_kmeans(
         data_we_have, 
         iterations, 
@@ -659,7 +687,7 @@ def metropolis_hastings_kmeans(
         shuffle_order(new_order, n_shuffle=2)
         current_order_dict = dict(zip(biomarkers, new_order))
 
-        all_participant_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
+        all_participant_ln_likelihood = calculate_all_participant_ln_likelihood(
             _,
             data_we_have,
             current_order_dict,
@@ -960,9 +988,8 @@ def compute_all_participant_ln_likelihood_and_update_participant_stages(
 
             # use weighted average likelihood because we didn't know the exact participant stage
             # all above to calculate participant_stage is only for the purpous of calculate theta_phi
-            # this_participant_likelihood = average_all_likelihood(pdata, n_biomarkers, estimated_theta_phi)
             this_participant_likelihood = weighted_average_likelihood(
-                pdata, diseased_stages, normalized_stage_likelihood_dict, estimated_theta_phi)
+                pdata, diseased_stages, estimated_theta_phi)
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         """
         All the codes in between are calculating this_participant_ln_likelihood. 
