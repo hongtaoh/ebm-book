@@ -16,7 +16,8 @@ def generate_data_from_ebm(
         n_participants, 
         S_ordering, 
         real_theta_phi, 
-        healthy_ratio
+        healthy_ratio,
+        seed=None  # Add seed parameter
     ):
     """
     Simulate an Event-Based Model (EBM) for disease progression.
@@ -32,12 +33,16 @@ def generate_data_from_ebm(
     pandas dataframe: colmns are 'participant', "biomarker", 'measurement', 
         'k_j', 'S_n', 'affected_or_not'
     """
+    if seed is not None:
+        np.random.seed(seed)  # Set the seed for numpy's random number generator
+        random.seed(seed)    # Set the seed for random's number generator
+
     biomarkers = np.array(real_theta_phi.biomarker)
     n_biomarkers = len(biomarkers)
     n_stages = n_biomarkers + 1
 
-    n_healthy = n_participants*healthy_ratio
-    n_diseased = n_participants - n_healthy
+    n_healthy = int(n_participants*healthy_ratio)
+    n_diseased = int(n_participants - n_healthy)
     
     # generate kjs 
     zeros = np.zeros(n_healthy, dtype=int)
@@ -84,8 +89,8 @@ def generate_data_from_ebm(
     df = pd.DataFrame(X, columns=biomarkers)
     # make this dataframe wide to long 
     df_long = df.melt(var_name = "Biomarker", value_name="Value")
-    values_df = df_long['Value'].apply(pd.Series)
-    values_df.columns = [
+    data = df_long['Value'].apply(pd.Series)
+    data.columns = [
         'participant', 
         "biomarker", 
         'measurement', 
@@ -93,8 +98,28 @@ def generate_data_from_ebm(
         'S_n', 
         'affected_or_not'
     ]
-    values_df.to_csv("data/participant_data.csv", index=False)
-    return values_df
+    # values_df.to_csv("data/participant_data.csv", index=False)
+    biomarker_name_change_dic = dict(
+        zip(['HIP-FCI', 'HIP-GMI', 'FUS-FCI', 'PCC-FCI', 'FUS-GMI'],
+            [1, 3, 5, 2, 4]))
+    data['diseased'] = data.apply(lambda row: row.k_j > 0, axis = 1)
+    data = data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
+    data['biomarker'] = data.apply(
+        lambda row: f"{row.biomarker} ({biomarker_name_change_dic[row.biomarker]})", axis = 1)
+    return data
+
+# def get_data_we_have(data_source):
+#     if data_source == "Chen Data":
+#          data_we_have = process_chen_data("data/Chen2016Data.xlsx")
+#     else:
+#         biomarker_name_change_dic = dict(zip(['HIP-FCI', 'HIP-GMI', 'FUS-FCI', 'PCC-FCI', 'FUS-GMI'],
+#                                          [1, 3, 5, 2, 4]))
+#         original_data = pd.read_csv('data/participant_data.csv')
+#         original_data['diseased'] = original_data.apply(lambda row: row.k_j > 0, axis = 1)
+#         data_we_have = original_data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
+#         data_we_have['biomarker'] = data_we_have.apply(
+#             lambda row: f"{row.biomarker} ({biomarker_name_change_dic[row.biomarker]})", axis = 1)
+#     return data_we_have
 
 def get_theta_phi_for_single_biomarker(data, biomarker, clustering_setup):
     """To get theta and phi parametesr for a single biomarker 
@@ -290,19 +315,19 @@ def compute_likelihood(pdata, k_j, theta_phi):
             theta_phi, biomarker, affected, measurement)
     return likelihood
 
-def weighted_average_likelihood(pdata, diseased_stages, theta_phi):
+def weighted_average_likelihood(pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi):
     """using weighted average likelihood
     https://ebm-book2.vercel.app/distributions.html#unknown-k-j
     Note that we have uniform prior on kj
     """
-    return np.mean(sum(compute_likelihood(pdata, kj, theta_phi) for kj in diseased_stages))
-    # weighted_average_ll = 0
-    # for x in diseased_stages:
-    #     # likelihood: the product of the normalized likelihood of this participant being at this stage
-    #     # and the likelihood of this participant having this sequence of biomarker measurements
-    #     # assuming this participant is at this stage. 
-    #     weighted_average_ll += normalized_stage_likelihood_dict[x] * compute_likelihood(pdata, x, theta_phi)
-    # return weighted_average_ll
+    # return np.mean(sum(compute_likelihood(pdata, kj, theta_phi) for kj in diseased_stages))
+    weighted_average_ll = 0
+    for x in diseased_stages:
+        # likelihood: the product of the normalized likelihood of this participant being at this stage
+        # and the likelihood of this participant having this sequence of biomarker measurements
+        # assuming this participant is at this stage. 
+        weighted_average_ll += normalized_stage_likelihood_dict[x] * compute_likelihood(pdata, x, theta_phi)
+    return weighted_average_ll
 
 def calculate_soft_kmeans_for_biomarker(
         data,
@@ -470,10 +495,10 @@ def calculate_all_participant_ln_likelihood_and_update_hashmap(
             normalized_stage_likelihood_dict = dict(
                 zip(diseased_stages, normalized_stage_likelihood))
             hashmap_of_normalized_stage_likelihood_dicts[p] = normalized_stage_likelihood_dict
-            this_participant_likelihood = weighted_average_likelihood(
-                pdata, diseased_stages, theta_phi_estimates)
             # this_participant_likelihood = weighted_average_likelihood(
-            #     pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi_estimates)
+            #     pdata, diseased_stages, theta_phi_estimates)
+            this_participant_likelihood = weighted_average_likelihood(
+                pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi_estimates)
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         all_participant_ln_likelihood += this_participant_ln_likelihood
     return all_participant_ln_likelihood, hashmap_of_normalized_stage_likelihood_dicts
@@ -582,10 +607,7 @@ def metropolis_hastings_soft_kmeans(
 
     final_acceptance_ratio = acceptance_count/iterations
 
-    terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
-    with open(terminal_output_filename, 'w') as file:
-        for result in terminal_output_strings:
-            file.write(result + '\n')
+    save_output_strings(log_folder_name, terminal_output_strings)
     
     # Writing dictionaries to a JSON file
     with open(f'{log_folder_name}/hashmaps_of_theta_phi_estimates.json', 'w') as json_file:
@@ -614,30 +636,30 @@ def metropolis_hastings_soft_kmeans(
         final_acceptance_ratio
     )
 
-def calculate_all_participant_ln_likelihood(
-        iteration,
-        data_we_have,
-        current_order_dict,
-        n_participants,
-        non_diseased_participant_ids,
-        theta_phi_estimates,
-        diseased_stages,
-):
-    data = data_we_have.copy()
-    data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
-    all_participant_ln_likelihood = 0 
-    for p in range(n_participants):
-        pdata = data[data.participant == p].reset_index(drop=True)
-        if p in non_diseased_participant_ids:
-            this_participant_likelihood = compute_likelihood(
-            pdata, k_j=0, theta_phi = theta_phi_estimates)
-            this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
-        else:
-            this_participant_likelihood = weighted_average_likelihood(
-                pdata, diseased_stages, theta_phi_estimates)
-            this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
-        all_participant_ln_likelihood += this_participant_ln_likelihood
-    return all_participant_ln_likelihood
+# def calculate_all_participant_ln_likelihood(
+#         iteration,
+#         data_we_have,
+#         current_order_dict,
+#         n_participants,
+#         non_diseased_participant_ids,
+#         theta_phi_estimates,
+#         diseased_stages,
+# ):
+#     data = data_we_have.copy()
+#     data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
+#     all_participant_ln_likelihood = 0 
+#     for p in range(n_participants):
+#         pdata = data[data.participant == p].reset_index(drop=True)
+#         if p in non_diseased_participant_ids:
+#             this_participant_likelihood = compute_likelihood(
+#             pdata, k_j=0, theta_phi = theta_phi_estimates)
+#             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
+#         else:
+#             this_participant_likelihood = weighted_average_likelihood(
+#                 pdata, diseased_stages, theta_phi_estimates)
+#             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
+#         all_participant_ln_likelihood += this_participant_ln_likelihood
+#     return all_participant_ln_likelihood
 
 def metropolis_hastings_kmeans(
         data_we_have, 
@@ -687,7 +709,8 @@ def metropolis_hastings_kmeans(
         shuffle_order(new_order, n_shuffle=2)
         current_order_dict = dict(zip(biomarkers, new_order))
 
-        all_participant_ln_likelihood = calculate_all_participant_ln_likelihood(
+        all_participant_ln_likelihood, \
+        hashmap_of_normalized_stage_likelihood_dicts = calculate_all_participant_ln_likelihood_and_update_hashmap(
             _,
             data_we_have,
             current_order_dict,
@@ -696,6 +719,17 @@ def metropolis_hastings_kmeans(
             theta_phi_kmeans,
             diseased_stages,
         )
+
+
+        # all_participant_ln_likelihood = calculate_all_participant_ln_likelihood(
+        #     _,
+        #     data_we_have,
+        #     current_order_dict,
+        #     n_participants,
+        #     non_diseased_participant_ids,
+        #     theta_phi_kmeans,
+        #     diseased_stages,
+        # )
         
         prob_of_accepting_new_order = np.exp(
             all_participant_ln_likelihood - current_accepted_likelihood)
@@ -725,10 +759,7 @@ def metropolis_hastings_kmeans(
 
     final_acceptance_ratio = acceptance_count/iterations
 
-    terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
-    with open(terminal_output_filename, 'w') as file:
-        for result in terminal_output_strings:
-            file.write(result + '\n')
+    save_output_strings(log_folder_name, terminal_output_strings)
     
     most_likely_order_dic = obtain_most_likely_order(
         all_current_accepted_order_dicts, 
@@ -835,8 +866,8 @@ def output_likelihood_comparison(
                     theta_phi_kmeans,
                     diseased_stages,
                 )
-                file.write(f"Likelihood of the most likely ordering: {most_likely_ln_likelihood}. \n")
-                file.write(f"Likelihood of the true ordering: {real_order_ln_likelihood}.")
+                file.write(f"Likelihood of the most likely ordering ({most_likely_order_dic.values()}): {most_likely_ln_likelihood}. \n")
+                file.write(f"Likelihood of the true ordering ({real_order}): {real_order_ln_likelihood}.")
 
 def estimate_params_exact(m0, n0, s0_sq, v0, data):
     '''This is to estimate means and vars based on conjugate priors
@@ -989,7 +1020,7 @@ def compute_all_participant_ln_likelihood_and_update_participant_stages(
             # use weighted average likelihood because we didn't know the exact participant stage
             # all above to calculate participant_stage is only for the purpous of calculate theta_phi
             this_participant_likelihood = weighted_average_likelihood(
-                pdata, diseased_stages, estimated_theta_phi)
+                pdata, diseased_stages, normalized_stage_likelihood_dict, estimated_theta_phi)
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         """
         All the codes in between are calculating this_participant_ln_likelihood. 
@@ -1097,10 +1128,7 @@ def metropolis_hastings_with_conjugate_priors(
 
     final_acceptance_ratio = acceptance_count/iterations
 
-    terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
-    with open(terminal_output_filename, 'w') as file:
-        for result in terminal_output_strings:
-            file.write(result + '\n')
+    save_output_strings(log_folder_name, terminal_output_strings)
 
     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
     save_all_dicts(
@@ -1130,6 +1158,19 @@ def metropolis_hastings_with_conjugate_priors(
         all_current_acceptance_ratios,
         final_acceptance_ratio
     )
+
+def save_output_strings(
+        log_folder_name,
+        terminal_output_strings
+):
+    # Check if the directory exists
+    if not os.path.exists(log_folder_name):
+        # Create the directory if it does not exist
+        os.makedirs(log_folder_name)
+    terminal_output_filename = f"{log_folder_name}/terminal_output.txt"
+    with open(terminal_output_filename, 'w') as file:
+        for result in terminal_output_strings:
+            file.write(result + '\n')
 
 def get_biomarker_stage_probability(df, burn_in, thining):
     """filter through all_dicts using burn_in and thining 
@@ -1229,7 +1270,7 @@ def save_all_current_accepted(var, var_name, log_folder_name):
     """save all_current_order_dicts, all_current_ikelihoods, 
     and all_current_acceptance_ratios
     """
-     # Check if the directory exists
+    # Check if the directory exists
     if not os.path.exists(log_folder_name):
         # Create the directory if it does not exist
         os.makedirs(log_folder_name)
@@ -1239,7 +1280,7 @@ def save_all_current_accepted(var, var_name, log_folder_name):
     df.to_csv(f"{log_folder_name}/{var_name}.csv", index=True)
 
 def save_all_current_participant_stages(var, var_name, log_folder_name):
-     # Check if the directory exists
+    # Check if the directory exists
     if not os.path.exists(log_folder_name):
         # Create the directory if it does not exist
         os.makedirs(log_folder_name)
@@ -1249,7 +1290,7 @@ def save_all_current_participant_stages(var, var_name, log_folder_name):
     df.to_csv(f"{log_folder_name}/{var_name}.csv", index=False)
 
 def save_trace_plot(burn_in, all_current_likelihoods, folder_name, file_name, title):
-     # Check if the directory exists
+    # Check if the directory exists
     if not os.path.exists(folder_name):
         # Create the directory if it does not exist
         os.makedirs(folder_name)
@@ -1288,30 +1329,21 @@ def process_chen_data(file):
                                axis = 1)
     return df 
 
-def get_data_we_have(data_source):
-    if data_source == "Chen Data":
-         data_we_have = process_chen_data("data/Chen2016Data.xlsx")
-    else:
-        biomarker_name_change_dic = dict(zip(['HIP-FCI', 'HIP-GMI', 'FUS-FCI', 'PCC-FCI', 'FUS-GMI'],
-                                         [1, 3, 5, 2, 4]))
-        original_data = pd.read_csv('data/participant_data.csv')
-        original_data['diseased'] = original_data.apply(lambda row: row.k_j > 0, axis = 1)
-        data_we_have = original_data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
-        data_we_have['biomarker'] = data_we_have.apply(
-            lambda row: f"{row.biomarker} ({biomarker_name_change_dic[row.biomarker]})", axis = 1)
-    return data_we_have
-
 def run_conjugate_priors(
-        data_source,
+        data_we_have,
         iterations,
         log_folder_name, 
         img_folder_name,
         n_shuffle,
         burn_in,
         thining,
+        chen_data = False
     ):
-        
-    data_we_have = get_data_we_have(data_source)
+    if chen_data:
+        data_we_have = process_chen_data("data/Chen2016Data.xlsx")
+        data_source = "Chen data"
+    else:
+        data_source = "Simulated data"
 
     print(f"Now begins with {data_source} with conjugate priors")
     start_time = time.time()
@@ -1335,7 +1367,7 @@ def run_conjugate_priors(
         all_current_order_dicts, 
         burn_in=0, thining=1, 
         folder_name=img_folder_name,
-        file_name = "heatmap_all_current",
+        file_name = "heatmap_all_current_accepted",
         title = f"{data_source} with Conjugate Priors, All Current Best Orderings"
     )
     save_trace_plot(
@@ -1351,14 +1383,19 @@ def run_conjugate_priors(
     print("---------------------------------------------")
 
 def run_soft_kmeans(
-        data_source,
+        data_we_have,
         iterations,
         log_folder_name, 
         img_folder_name,
         burn_in,
         thining,
+        chen_data = False,
     ):
-    data_we_have = get_data_we_have(data_source)
+    if chen_data:
+        data_we_have = process_chen_data("data/Chen2016Data.xlsx")
+        data_source = "Chen data"
+    else:
+        data_source = "Simulated data"
     # theta_phi_estimates = pd.read_csv('data/means_stds.csv')
 
     print(f"Now begins with {data_source} with soft kmeans")
@@ -1398,15 +1435,20 @@ def run_soft_kmeans(
     print("---------------------------------------------")
 
 def run_kmeans(
-        data_source,
+        data_we_have,
         iterations,
         log_folder_name, 
         img_folder_name,
         real_order,
         burn_in, 
-        thining
+        thining,
+        chen_data = False,
     ):
-    data_we_have = get_data_we_have(data_source)
+    if chen_data:
+        data_we_have = process_chen_data("data/Chen2016Data.xlsx")
+        data_source = "Chen data"
+    else:
+        data_source = "Simulated data"
     # theta_phi_estimates = pd.read_csv('data/means_stds.csv')
 
     print(f"Now begins with {data_source} with kmeans")

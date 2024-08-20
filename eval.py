@@ -1,6 +1,8 @@
 import pandas as pd 
 import numpy as np 
 import seaborn as sns
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt 
 from scipy.stats import mode
 from sklearn.cluster import KMeans
@@ -11,10 +13,53 @@ import json
 import time 
 import os 
 import utils
+import concurrent.futures
+
+# def task_parallelism_simulated(
+#         iterations, 
+#         burn_in, 
+#         thining, 
+#         n_shuffle, 
+#         real_order,
+#         ns, 
+#         rs,
+#         participants_data,
+#     ):
+#     """Simulated Data"""
+#     with concurrent.futures.ThreadPoolExecutor() as executor:
+#         executor.submit(
+#             utils.run_conjugate_priors,
+#             participants_data,
+#             iterations,
+#             "logs/simulated_data_conjugate_priors",
+#             "img/simulated_data_conjugate_priors",
+#             n_shuffle,
+#             burn_in, 
+#             thining,
+#         )
+#         executor.submit(
+#             utils.run_soft_kmeans,
+#             participants_data,
+#             iterations,
+#             "logs/simulated_data_conjugate_priors",
+#             "img/simulated_data_conjugate_priors",
+#             n_shuffle,
+#             burn_in, 
+#             thining,
+#         )
+#         executor.submit(
+#             utils.run_kmeans,
+#             participants_data,
+#             iterations,
+#             "logs/simulated_data_kmeans", 
+#             "img/simulated_data_kmeans",
+#             real_order,
+#             burn_in, 
+#             thining
+#         )
 
 if __name__ == '__main__':
-     
-    iterations = 100
+    iterations = 20
     burn_in = 10
     thining = 2
     n_shuffle = 2
@@ -27,23 +72,42 @@ if __name__ == '__main__':
     ns = [25, 50, 100, 200]
     rs = [0.1, 0.2, 0.4, 0.5]
 
-    def task_parallelism()
+    participants_data = utils.generate_data_from_ebm(
+        n_participants = ns[-2], 
+        S_ordering = S_ordering, 
+        real_theta_phi = real_theta_phi, 
+        healthy_ratio = rs[1],
+        seed=1234,
+    )
 
-    """Simulated Data
-    """
+    # start_time = time.time()
+    # task_parallelism_simulated(
+    #     iterations, 
+    #     burn_in, 
+    #     thining, 
+    #     n_shuffle, 
+    #     real_order,
+    #     ns, 
+    #     rs,
+    #     participants_data
+    # )
+    # task_parallelism_time = time.time() - start_time
+    # print(f"Task Parallelism Only execution time: {task_parallelism_time:.4f} seconds")
+
+
     # Simulated data with conjugate priors
     utils.run_conjugate_priors(
-        data_source = "Simulated Data",
+        data_we_have = participants_data,
         iterations=iterations,
         log_folder_name = "logs/simulated_data_conjugate_priors",
         img_folder_name = "img/simulated_data_conjugate_priors",
         n_shuffle = n_shuffle,
         burn_in = burn_in, 
-        thining = thining
+        thining = thining,
     )
     # Simulated data with kmeans
     utils.run_soft_kmeans(
-        data_source = "Simulated Data",
+        data_we_have=participants_data,
         iterations=iterations,
         log_folder_name = "logs/simulated_data_soft_kmeans", 
         img_folder_name = "img/simulated_data_soft_kmeans",
@@ -52,7 +116,7 @@ if __name__ == '__main__':
     )
     # Soley kmeans
     utils.run_kmeans(
-        data_source = "Simulated Data",
+        data_we_have=participants_data,
         iterations=iterations,
         log_folder_name = "logs/simulated_data_kmeans", 
         img_folder_name = "img/simulated_data_kmeans",
@@ -60,36 +124,40 @@ if __name__ == '__main__':
         burn_in = burn_in, 
         thining = thining
     )
-    # """Chen Data
-    # """
-    # # Chen data with conjugate priors
-    # utils.run_conjugate_priors(
-    #     data_source = "Chen Data",
-    #     iterations=iterations,
-    #     log_folder_name = "logs/chen_data_conjugate_priors", 
-    #     img_folder_name = "img/chen_data_conjugate_priors",
-    #     n_shuffle=n_shuffle,
-    #     burn_in = burn_in, 
-    #     thining = thining
-    # )
-    # # Chen data with soft kmeans
-    # utils.run_soft_kmeans(
-    #     data_source = "Chen Data",
-    #     iterations=iterations,
-    #     log_folder_name = "logs/chen_data_soft_kmeans", 
-    #     img_folder_name = "img/chen_data_soft_kmeans",
-    #     burn_in = burn_in, 
-    #     thining = thining
-    # )
-    # utils.run_kmeans(
-    #     data_source = "Chen Data",
-    #     iterations=iterations,
-    #     log_folder_name = "logs/chen_data_kmeans", 
-    #     img_folder_name = "img/chen_data_kmeans",
-    #     real_order = real_order,
-    #     burn_in = burn_in, 
-    #     thining = thining
-    # )
+    
+    """Chen Data
+    """
+    # Chen data with conjugate priors
+    utils.run_conjugate_priors(
+        data_we_have = participants_data,
+        iterations=iterations,
+        log_folder_name = "logs/chen_data_conjugate_priors", 
+        img_folder_name = "img/chen_data_conjugate_priors",
+        n_shuffle=n_shuffle,
+        burn_in = burn_in, 
+        thining = thining,
+        chen_data=True,
+    )
+    # Chen data with soft kmeans
+    utils.run_soft_kmeans(
+        data_we_have = participants_data,
+        iterations=iterations,
+        log_folder_name = "logs/chen_data_soft_kmeans", 
+        img_folder_name = "img/chen_data_soft_kmeans",
+        burn_in = burn_in, 
+        thining = thining,
+        chen_data=True,
+    )
+    utils.run_kmeans(
+        data_we_have = participants_data,
+        iterations=iterations,
+        log_folder_name = "logs/chen_data_kmeans", 
+        img_folder_name = "img/chen_data_kmeans",
+        real_order = real_order,
+        burn_in = burn_in, 
+        thining = thining,
+        chen_data=True
+    )
     
     
    
