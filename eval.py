@@ -59,9 +59,9 @@ import concurrent.futures
 #         )
 
 if __name__ == '__main__':
-    iterations = 20
-    burn_in = 10
-    thining = 2
+    iterations = 2000
+    burn_in = 1000
+    thining = 20
     n_shuffle = 2
     real_order = [1, 3, 5, 2, 4]
     S_ordering = np.array([
@@ -69,8 +69,8 @@ if __name__ == '__main__':
     ])
     real_theta_phi = pd.read_csv('data/means_stds.csv')
 
-    ns = [25, 50, 100, 200]
-    rs = [0.1, 0.2, 0.4, 0.5]
+    ns = [25, 50, 100, 150, 200]
+    rs = [0.1, 0.2, 0.4, 0.5, 0.6]
 
     participants_data = utils.generate_data_from_ebm(
         n_participants = ns[-2], 
@@ -95,70 +95,85 @@ if __name__ == '__main__':
     # print(f"Task Parallelism Only execution time: {task_parallelism_time:.4f} seconds")
 
 
-    # Simulated data with conjugate priors
-    utils.run_conjugate_priors(
-        data_we_have = participants_data,
-        iterations=iterations,
-        log_folder_name = "logs/simulated_data_conjugate_priors",
-        img_folder_name = "img/simulated_data_conjugate_priors",
-        n_shuffle = n_shuffle,
-        burn_in = burn_in, 
-        thining = thining,
-    )
-    # Simulated data with kmeans
-    utils.run_soft_kmeans(
-        data_we_have=participants_data,
-        iterations=iterations,
-        log_folder_name = "logs/simulated_data_soft_kmeans", 
-        img_folder_name = "img/simulated_data_soft_kmeans",
-        burn_in = burn_in, 
-        thining = thining
-    )
-    # Soley kmeans
-    utils.run_kmeans(
-        data_we_have=participants_data,
-        iterations=iterations,
-        log_folder_name = "logs/simulated_data_kmeans", 
-        img_folder_name = "img/simulated_data_kmeans",
-        real_order = real_order,
-        burn_in = burn_in, 
-        thining = thining
-    )
-    
-    """Chen Data
-    """
-    # Chen data with conjugate priors
-    utils.run_conjugate_priors(
-        data_we_have = participants_data,
-        iterations=iterations,
-        log_folder_name = "logs/chen_data_conjugate_priors", 
-        img_folder_name = "img/chen_data_conjugate_priors",
-        n_shuffle=n_shuffle,
-        burn_in = burn_in, 
-        thining = thining,
-        chen_data=True,
-    )
-    # Chen data with soft kmeans
-    utils.run_soft_kmeans(
-        data_we_have = participants_data,
-        iterations=iterations,
-        log_folder_name = "logs/chen_data_soft_kmeans", 
-        img_folder_name = "img/chen_data_soft_kmeans",
-        burn_in = burn_in, 
-        thining = thining,
-        chen_data=True,
-    )
-    utils.run_kmeans(
-        data_we_have = participants_data,
-        iterations=iterations,
-        log_folder_name = "logs/chen_data_kmeans", 
-        img_folder_name = "img/chen_data_kmeans",
-        real_order = real_order,
-        burn_in = burn_in, 
-        thining = thining,
-        chen_data=True
-    )
-    
+    for uniform_prior in [True, False]:
+        if uniform_prior:
+            text = "uniform_prior"
+        else:
+            text = "non_uniform_prior"
+        # Simulated data with conjugate priors
+        utils.run_conjugate_priors(
+            data_we_have = participants_data,
+            iterations=iterations,
+            log_folder_name = f"logs/{text}/simulated_data_conjugate_priors",
+            img_folder_name = f"img/{text}/simulated_data_conjugate_priors",
+            n_shuffle = n_shuffle,
+            burn_in = burn_in, 
+            thining = thining,
+            uniform_prior=uniform_prior
+        )
+        # Simulated data with kmeans
+        utils.run_soft_kmeans(
+            data_we_have=participants_data,
+            iterations=iterations,
+            n_shuffle = n_shuffle,
+            log_folder_name = f"logs/{text}/simulated_data_soft_kmeans", 
+            img_folder_name = f"img/{text}/simulated_data_soft_kmeans",
+            burn_in = burn_in, 
+            thining = thining,
+            uniform_prior=uniform_prior
+        )
+        # Soley kmeans
+        utils.run_kmeans(
+            data_we_have=participants_data,
+            iterations=iterations,
+            n_shuffle = n_shuffle,
+            log_folder_name = f"logs/{text}/simulated_data_kmeans", 
+            img_folder_name = f"img/{text}/simulated_data_kmeans",
+            real_order = real_order,
+            burn_in = burn_in, 
+            thining = thining,
+            uniform_prior=uniform_prior
+        )
+        
+        """Chen Data
+        """
+        # Chen data with conjugate priors
+        utils.run_conjugate_priors(
+            data_we_have = participants_data,
+            iterations=iterations,
+            log_folder_name = f"logs/{text}/chen_data_conjugate_priors", 
+            img_folder_name = f"img/{text}/chen_data_conjugate_priors",
+            n_shuffle=n_shuffle,
+            burn_in = burn_in, 
+            thining = thining,
+            chen_data=True,
+            uniform_prior=uniform_prior
+        )
+        # Chen data with soft kmeans
+        utils.run_soft_kmeans(
+            data_we_have = participants_data,
+            iterations=iterations,
+            n_shuffle = n_shuffle,
+            log_folder_name = f"logs/{text}/chen_data_soft_kmeans", 
+            img_folder_name = f"img/{text}/chen_data_soft_kmeans",
+            burn_in = burn_in, 
+            thining = thining,
+            chen_data=True,
+            uniform_prior=uniform_prior
+        )
+        # Chen data with kmeans only
+        utils.run_kmeans(
+                data_we_have = participants_data,
+                iterations=iterations,
+                n_shuffle = n_shuffle,
+                log_folder_name = f"logs/{text}/chen_data_kmeans", 
+                img_folder_name = f"img/{text}/chen_data_kmeans",
+                real_order = real_order,
+                burn_in = burn_in, 
+                thining = thining,
+                chen_data=True,
+                uniform_prior=uniform_prior
+            )
     
    
 

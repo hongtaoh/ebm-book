@@ -35,7 +35,6 @@ def generate_data_from_ebm(
     """
     if seed is not None:
         np.random.seed(seed)  # Set the seed for numpy's random number generator
-        random.seed(seed)    # Set the seed for random's number generator
 
     biomarkers = np.array(real_theta_phi.biomarker)
     n_biomarkers = len(biomarkers)
@@ -79,6 +78,7 @@ def generate_data_from_ebm(
             # affected, or not_affected, is regarding the biomarker, not the participant
             if k_j >= 1:
                 if k_j >= S_n:
+                    # rvs() is affected by np.random()
                     X[j, n] = (j, biomarker, theta_dist[biomarker].rvs(), k_j, S_n, 'affected') 
                 else:
                     X[j, n] = (j, biomarker, phi_dist[biomarker].rvs(), k_j, S_n, 'not_affected')  
@@ -106,20 +106,8 @@ def generate_data_from_ebm(
     data = data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
     data['biomarker'] = data.apply(
         lambda row: f"{row.biomarker} ({biomarker_name_change_dic[row.biomarker]})", axis = 1)
+    print("data generation done!")
     return data
-
-# def get_data_we_have(data_source):
-#     if data_source == "Chen Data":
-#          data_we_have = process_chen_data("data/Chen2016Data.xlsx")
-#     else:
-#         biomarker_name_change_dic = dict(zip(['HIP-FCI', 'HIP-GMI', 'FUS-FCI', 'PCC-FCI', 'FUS-GMI'],
-#                                          [1, 3, 5, 2, 4]))
-#         original_data = pd.read_csv('data/participant_data.csv')
-#         original_data['diseased'] = original_data.apply(lambda row: row.k_j > 0, axis = 1)
-#         data_we_have = original_data.drop(['k_j', 'S_n', 'affected_or_not'], axis = 1)
-#         data_we_have['biomarker'] = data_we_have.apply(
-#             lambda row: f"{row.biomarker} ({biomarker_name_change_dic[row.biomarker]})", axis = 1)
-#     return data_we_have
 
 def get_theta_phi_for_single_biomarker(data, biomarker, clustering_setup):
     """To get theta and phi parametesr for a single biomarker 
@@ -315,20 +303,6 @@ def compute_likelihood(pdata, k_j, theta_phi):
             theta_phi, biomarker, affected, measurement)
     return likelihood
 
-def weighted_average_likelihood(pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi):
-    """using weighted average likelihood
-    https://ebm-book2.vercel.app/distributions.html#unknown-k-j
-    Note that we have uniform prior on kj
-    """
-    # return np.mean(sum(compute_likelihood(pdata, kj, theta_phi) for kj in diseased_stages))
-    weighted_average_ll = 0
-    for x in diseased_stages:
-        # likelihood: the product of the normalized likelihood of this participant being at this stage
-        # and the likelihood of this participant having this sequence of biomarker measurements
-        # assuming this participant is at this stage. 
-        weighted_average_ll += normalized_stage_likelihood_dict[x] * compute_likelihood(pdata, x, theta_phi)
-    return weighted_average_ll
-
 def calculate_soft_kmeans_for_biomarker(
         data,
         biomarker,
@@ -348,7 +322,8 @@ def calculate_soft_kmeans_for_biomarker(
         order_dict (dict): Dictionary mapping biomarkers to their order.
         n_participants (int): Number of participants in the study.
         non_diseased_participants (list): List of non-diseased participants.
-        hashmap_of_normalized_stage_likelihood_dicts (dict): Hash map of dictionaries containing stage likelihoods for each participant.
+        hashmap_of_normalized_stage_likelihood_dicts (dict): Hash map of 
+            dictionaries containing stage likelihoods for each participant.
         diseased_stages (list): List of diseased stages.
         seed (int, optional): Random seed for reproducibility.
     
@@ -457,6 +432,14 @@ def soft_kmeans_theta_phi_estimates(
         hashmap_of_means_stds_estimate_dicts[biomarker] = dic 
     return hashmap_of_means_stds_estimate_dicts
 
+"""
+If soft kmeans, no matter uniform prior on kjs or not, I always need to update hashmap of dicts
+    This is because, even if when we do not have uniform prior, we don't need normalized_stage_likelihood_dict
+    to calculate the weighted average, we still need it to calculate soft kmeans
+If kmeans only, if with uniform prior, we don't need normalized_stage_likelihood_dict to calculate 
+    weighted average;
+    but we do need to calculate normalized_stage_likelihood_dict when without uniform prior 
+"""
 def calculate_all_participant_ln_likelihood_and_update_hashmap(
         iteration,
         data_we_have,
@@ -465,6 +448,7 @@ def calculate_all_participant_ln_likelihood_and_update_hashmap(
         non_diseased_participant_ids,
         theta_phi_estimates,
         diseased_stages,
+        uniform_prior,
 ):
     data = data_we_have.copy()
     data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
@@ -479,8 +463,9 @@ def calculate_all_participant_ln_likelihood_and_update_hashmap(
             pdata, k_j=0, theta_phi = theta_phi_estimates)
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         else:
+            normalized_stage_likelihood_dict = None
             # initiaze stage_likelihood
-            stage_likelihood_dict = dict(zip(diseased_stages, [0]*len(diseased_stages)))
+            stage_likelihood_dict = {}
             for k_j in diseased_stages:
                 kj_likelihood = compute_likelihood(pdata, k_j, theta_phi_estimates)
                 # update each stage likelihood for this participant
@@ -495,18 +480,43 @@ def calculate_all_participant_ln_likelihood_and_update_hashmap(
             normalized_stage_likelihood_dict = dict(
                 zip(diseased_stages, normalized_stage_likelihood))
             hashmap_of_normalized_stage_likelihood_dicts[p] = normalized_stage_likelihood_dict
-            # this_participant_likelihood = weighted_average_likelihood(
-            #     pdata, diseased_stages, theta_phi_estimates)
+
+            # calculate weighted average
             this_participant_likelihood = weighted_average_likelihood(
-                pdata, diseased_stages, normalized_stage_likelihood_dict, theta_phi_estimates)
+                diseased_stages,
+                stage_likelihood_dict,
+                likelihood_sum,
+                normalized_stage_likelihood_dict, 
+                uniform_prior,
+            )
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         all_participant_ln_likelihood += this_participant_ln_likelihood
     return all_participant_ln_likelihood, hashmap_of_normalized_stage_likelihood_dicts
 
+def weighted_average_likelihood(
+        disease_stages,
+        stage_likelihood_dict,
+        likelihood_sum,
+        normalized_stage_likelihood_dict, 
+        uniform_prior
+    ):
+    """using weighted average likelihood
+    https://ebm-book2.vercel.app/distributions.html#unknown-k-j
+    Note that we have uniform prior on kj
+    """
+    if uniform_prior:
+        weighted_average_ll = np.mean(likelihood_sum)
+    else:
+        weighted_average_ll = sum(
+            normalized_stage_likelihood_dict[x] * stage_likelihood_dict[x] for x in disease_stages)
+    return weighted_average_ll
+
 def metropolis_hastings_soft_kmeans(
         data_we_have, 
         iterations, 
-        log_folder_name
+        n_shuffle,
+        log_folder_name,
+        uniform_prior,
     ):
     '''Implement the metropolis-hastings algorithm
     Inputs: 
@@ -550,7 +560,7 @@ def metropolis_hastings_soft_kmeans(
     for _ in range(iterations):
         new_order = current_accepted_order.copy()
         # random.shuffle(new_order)
-        shuffle_order(new_order, n_shuffle=2)
+        shuffle_order(new_order, n_shuffle)
         current_order_dict = dict(zip(biomarkers, new_order))
         all_participant_ln_likelihood, \
         hashmap_of_normalized_stage_likelihood_dicts = calculate_all_participant_ln_likelihood_and_update_hashmap(
@@ -561,6 +571,7 @@ def metropolis_hastings_soft_kmeans(
             non_diseased_participant_ids,
             theta_phi_estimates,
             diseased_stages,
+            uniform_prior,
         )
 
         # Now, update theta_phi_estimates using soft kmeans
@@ -636,38 +647,15 @@ def metropolis_hastings_soft_kmeans(
         final_acceptance_ratio
     )
 
-# def calculate_all_participant_ln_likelihood(
-#         iteration,
-#         data_we_have,
-#         current_order_dict,
-#         n_participants,
-#         non_diseased_participant_ids,
-#         theta_phi_estimates,
-#         diseased_stages,
-# ):
-#     data = data_we_have.copy()
-#     data['S_n'] = data.apply(lambda row: current_order_dict[row['biomarker']], axis = 1)
-#     all_participant_ln_likelihood = 0 
-#     for p in range(n_participants):
-#         pdata = data[data.participant == p].reset_index(drop=True)
-#         if p in non_diseased_participant_ids:
-#             this_participant_likelihood = compute_likelihood(
-#             pdata, k_j=0, theta_phi = theta_phi_estimates)
-#             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
-#         else:
-#             this_participant_likelihood = weighted_average_likelihood(
-#                 pdata, diseased_stages, theta_phi_estimates)
-#             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
-#         all_participant_ln_likelihood += this_participant_ln_likelihood
-#     return all_participant_ln_likelihood
-
 def metropolis_hastings_kmeans(
         data_we_have, 
         iterations, 
+        n_shuffle,
         log_folder_name,
         real_order,
         burn_in, 
         thining,
+        uniform_prior,
     ):
     '''Implement the metropolis-hastings algorithm
     Inputs: 
@@ -706,7 +694,7 @@ def metropolis_hastings_kmeans(
 
     for _ in range(iterations):
         new_order = current_accepted_order.copy()
-        shuffle_order(new_order, n_shuffle=2)
+        shuffle_order(new_order, n_shuffle)
         current_order_dict = dict(zip(biomarkers, new_order))
 
         all_participant_ln_likelihood, \
@@ -718,18 +706,8 @@ def metropolis_hastings_kmeans(
             non_diseased_participant_ids,
             theta_phi_kmeans,
             diseased_stages,
+            uniform_prior,
         )
-
-
-        # all_participant_ln_likelihood = calculate_all_participant_ln_likelihood(
-        #     _,
-        #     data_we_have,
-        #     current_order_dict,
-        #     n_participants,
-        #     non_diseased_participant_ids,
-        #     theta_phi_kmeans,
-        #     diseased_stages,
-        # )
         
         prob_of_accepting_new_order = np.exp(
             all_participant_ln_likelihood - current_accepted_likelihood)
@@ -775,8 +753,8 @@ def metropolis_hastings_kmeans(
         theta_phi_kmeans,
         diseased_stages,
         log_folder_name,
+        uniform_prior
     )
-
     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
     save_all_dicts(
         all_current_accepted_order_dicts, 
@@ -837,6 +815,7 @@ def output_likelihood_comparison(
         theta_phi_kmeans,
         diseased_stages,
         log_folder_name,
+        uniform_prior
         ):
     """This is to output a text file comparing the likelihood of the most likely ordering
     and the real ordering
@@ -856,6 +835,7 @@ def output_likelihood_comparison(
                     non_diseased_participant_ids,
                     theta_phi_kmeans,
                     diseased_stages,
+                    uniform_prior
                 )
                 real_order_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
                     "iteration",
@@ -865,6 +845,7 @@ def output_likelihood_comparison(
                     non_diseased_participant_ids,
                     theta_phi_kmeans,
                     diseased_stages,
+                    uniform_prior
                 )
                 file.write(f"Likelihood of the most likely ordering ({most_likely_order_dic.values()}): {most_likely_ln_likelihood}. \n")
                 file.write(f"Likelihood of the true ordering ({real_order}): {real_order_ln_likelihood}.")
@@ -983,8 +964,9 @@ def compute_all_participant_ln_likelihood_and_update_participant_stages(
         data,
         non_diseased_participant_ids,
         estimated_theta_phi,
-        diseased_stages,
-        participant_stages
+        disease_stages,
+        participant_stages,
+        uniform_prior
 ):
     all_participant_ln_likelihood = 0 
     for p in range(n_participants):
@@ -1003,8 +985,8 @@ def compute_all_participant_ln_likelihood_and_update_participant_stages(
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         else:
             # initiaze stage_likelihood
-            stage_likelihood_dict = dict(zip(diseased_stages, [0]*len(diseased_stages)))
-            for k_j in diseased_stages:
+            stage_likelihood_dict = {}
+            for k_j in disease_stages:
                 # even though data above has everything, it is filled up by random stages
                 # we don't like it and want to know the true k_j. All the following is to update participant_stages
                 participant_likelihood = compute_likelihood(pdata, k_j, estimated_theta_phi)
@@ -1012,15 +994,20 @@ def compute_all_participant_ln_likelihood_and_update_participant_stages(
                 stage_likelihood_dict[k_j] = participant_likelihood
             likelihood_sum = sum(stage_likelihood_dict.values())
             normalized_stage_likelihood = [l/likelihood_sum for l in stage_likelihood_dict.values()]
-            normalized_stage_likelihood_dict = dict(zip(diseased_stages, normalized_stage_likelihood))
+            normalized_stage_likelihood_dict = dict(zip(disease_stages, normalized_stage_likelihood))
             # print(normalized_stage_likelihood)
-            sampled_stage = np.random.choice(diseased_stages, p = normalized_stage_likelihood)
+            sampled_stage = np.random.choice(disease_stages, p = normalized_stage_likelihood)
             participant_stages[p] = sampled_stage   
 
             # use weighted average likelihood because we didn't know the exact participant stage
             # all above to calculate participant_stage is only for the purpous of calculate theta_phi
             this_participant_likelihood = weighted_average_likelihood(
-                pdata, diseased_stages, normalized_stage_likelihood_dict, estimated_theta_phi)
+                disease_stages,
+                stage_likelihood_dict,
+                likelihood_sum,
+                normalized_stage_likelihood_dict, 
+                uniform_prior
+            )
             this_participant_ln_likelihood = np.log(this_participant_likelihood + 1e-10)
         """
         All the codes in between are calculating this_participant_ln_likelihood. 
@@ -1037,7 +1024,7 @@ def compute_all_participant_ln_likelihood_and_update_participant_stages(
 """The versionn without reverting back to the max order
 """
 def metropolis_hastings_with_conjugate_priors(
-        data_we_have, iterations, log_folder_name, n_shuffle):
+        data_we_have, iterations, log_folder_name, n_shuffle, uniform_prior):
     n_participants = len(data_we_have.participant.unique())
     biomarkers = data_we_have.biomarker.unique()
     n_biomarkers = len(biomarkers)
@@ -1073,6 +1060,7 @@ def metropolis_hastings_with_conjugate_priors(
         # we are going to shuffle new_order below. So it's better to copy first. 
         new_order = current_accepted_order.copy()
         # random.shuffle(new_order)
+
         shuffle_order(new_order, n_shuffle)
 
         current_order_dict = dict(zip(biomarkers, new_order))
@@ -1092,6 +1080,7 @@ def metropolis_hastings_with_conjugate_priors(
             estimated_theta_phi,
             diseased_stages,
             participant_stages,
+            uniform_prior
         )
 
         # ratio = likelihood/best_likelihood
@@ -1337,7 +1326,8 @@ def run_conjugate_priors(
         n_shuffle,
         burn_in,
         thining,
-        chen_data = False
+        chen_data = False,
+        uniform_prior = True,
     ):
     if chen_data:
         data_we_have = process_chen_data("data/Chen2016Data.xlsx")
@@ -1355,7 +1345,7 @@ def run_conjugate_priors(
     all_current_likelihoods, \
     all_current_acceptance_ratios, \
     final_acceptance_ratio = metropolis_hastings_with_conjugate_priors(
-        data_we_have, iterations, log_folder_name, n_shuffle
+        data_we_have, iterations, log_folder_name, n_shuffle, uniform_prior,
     )
     save_heatmap(
         all_dicts, burn_in, thining, 
@@ -1385,11 +1375,13 @@ def run_conjugate_priors(
 def run_soft_kmeans(
         data_we_have,
         iterations,
+        n_shuffle,
         log_folder_name, 
         img_folder_name,
         burn_in,
         thining,
         chen_data = False,
+        uniform_prior = True,
     ):
     if chen_data:
         data_we_have = process_chen_data("data/Chen2016Data.xlsx")
@@ -1406,7 +1398,7 @@ def run_soft_kmeans(
     all_current_accepted_likelihoods,\
     all_current_acceptance_ratios, \
     final_acceptance_ratio = metropolis_hastings_soft_kmeans(
-        data_we_have, iterations, log_folder_name
+        data_we_have, iterations, n_shuffle, log_folder_name, uniform_prior,
     )
 
     save_heatmap(
@@ -1437,12 +1429,14 @@ def run_soft_kmeans(
 def run_kmeans(
         data_we_have,
         iterations,
+        n_shuffle,
         log_folder_name, 
         img_folder_name,
         real_order,
         burn_in, 
         thining,
         chen_data = False,
+        uniform_prior = True,
     ):
     if chen_data:
         data_we_have = process_chen_data("data/Chen2016Data.xlsx")
@@ -1459,7 +1453,7 @@ def run_kmeans(
     all_current_accepted_likelihoods,\
     all_current_acceptance_ratios, \
     final_acceptance_ratio = metropolis_hastings_kmeans(
-        data_we_have, iterations, log_folder_name, real_order, burn_in, thining
+        data_we_have, iterations, n_shuffle, log_folder_name, real_order, burn_in, thining, uniform_prior
     )
 
     save_heatmap(
