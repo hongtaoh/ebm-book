@@ -94,7 +94,6 @@ if __name__ == '__main__':
     # task_parallelism_time = time.time() - start_time
     # print(f"Task Parallelism Only execution time: {task_parallelism_time:.4f} seconds")
 
-
     for uniform_prior in [True, False]:
         if uniform_prior:
             text = "uniform_prior"

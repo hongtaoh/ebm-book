@@ -666,6 +666,7 @@ def metropolis_hastings_kmeans(
         - best_order: a numpy array
         - best_likelihood: a scalar 
     '''
+    doc_strings = []
     n_participants = len(data_we_have.participant.unique())
     biomarkers = data_we_have.biomarker.unique()
     n_biomarkers = len(biomarkers)
@@ -744,6 +745,9 @@ def metropolis_hastings_kmeans(
         burn_in, 
         thining,
     )
+    most_likely_order = most_likely_order_dic.values()
+    if set(most_likely_order) != set(real_order):
+        doc_strings.append("This most likelihood has repeated stages.")
     output_likelihood_comparison(
         most_likely_order_dic, 
         real_order,
@@ -753,7 +757,8 @@ def metropolis_hastings_kmeans(
         theta_phi_kmeans,
         diseased_stages,
         log_folder_name,
-        uniform_prior
+        uniform_prior,
+        doc_strings,
     )
     save_all_dicts(all_order_dicts, log_folder_name, "all_order")
     save_all_dicts(
@@ -778,7 +783,7 @@ def metropolis_hastings_kmeans(
         final_acceptance_ratio
     )
 
-def obtain_most_likely_order(all_current_accepted_order_dicts, burn_in, thining, ):
+def obtain_most_likely_order(all_current_accepted_order_dicts, burn_in, thining):
     """Obtain the most likely order based on all the accepted orders 
     Inputs:
         - all_current_accepted_order_dicts 
@@ -789,21 +794,23 @@ def obtain_most_likely_order(all_current_accepted_order_dicts, burn_in, thining,
     """
     df = pd.DataFrame(all_current_accepted_order_dicts)
     biomarker_stage_probability_df = get_biomarker_stage_probability(df, burn_in, thining)
-    # the idx thing is to deal with the situation where there are multiple max values
-    idx = 0
     dic = {}
+    assigned_stages = set()
+    
     for i, biomarker in enumerate(biomarker_stage_probability_df.index):
-        arr = np.array(biomarker_stage_probability_df.iloc[i, :])
-        occurances = np.sum(arr == np.max(arr))
-        more_than_one_max_value = occurances > 1 
-        if more_than_one_max_value:
-            indices = np.where(arr == np.max(arr))[0]
-            max_value_idx = indices[idx] + 1
-            dic[biomarker] = max_value_idx
-            idx += 1
+        # probability array for that biomarker 
+        prob_arr = np.array(biomarker_stage_probability_df.iloc[i, :])
+        
+        # Sort indices of probabilities in descending order
+        sorted_indices = np.argsort(prob_arr)[::-1] + 1
+
+        for stage in sorted_indices:
+            if stage not in assigned_stages:
+                dic[biomarker] = stage 
+                assigned_stages.add(stage)
+                break 
         else:
-            max_value_idx = np.argmax(biomarker_stage_probability_df.iloc[i, :]) + 1
-            dic[biomarker] = max_value_idx
+            raise ValueError(f"Could not assign a unique stage for biomarker {biomarker}.")
     return dic 
 
 def output_likelihood_comparison(
@@ -815,7 +822,8 @@ def output_likelihood_comparison(
         theta_phi_kmeans,
         diseased_stages,
         log_folder_name,
-        uniform_prior
+        uniform_prior,
+        doc_strings,
         ):
     """This is to output a text file comparing the likelihood of the most likely ordering
     and the real ordering
@@ -823,33 +831,36 @@ def output_likelihood_comparison(
     real_order_dic = dict(zip(most_likely_order_dic.keys(), real_order))
     output_filename = f"{log_folder_name}/compare_most_likely_and_true_ordering.txt"
     with open(output_filename, 'w') as file:
-            if most_likely_order_dic == real_order_dic:
-                file.write("The most likely ordering is the true ordering")
-            else:
-                file.write("The most likely ordering is different from the true ordering. \n")
-                most_likely_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
-                    "iteration",
-                    data_we_have,
-                    most_likely_order_dic,
-                    n_participants,
-                    non_diseased_participant_ids,
-                    theta_phi_kmeans,
-                    diseased_stages,
-                    uniform_prior
-                )
-                real_order_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
-                    "iteration",
-                    data_we_have,
-                    real_order_dic,
-                    n_participants,
-                    non_diseased_participant_ids,
-                    theta_phi_kmeans,
-                    diseased_stages,
-                    uniform_prior
-                )
-                file.write(f"Likelihood of the most likely ordering ({most_likely_order_dic.values()}): {most_likely_ln_likelihood}. \n")
-                file.write(f"Likelihood of the true ordering ({real_order}): {real_order_ln_likelihood}.")
-
+        if most_likely_order_dic == real_order_dic:
+            file.write("The most likely ordering is the true ordering")
+        else:
+            file.write("The most likely ordering is different from the true ordering. \n")
+            most_likely_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
+                "iteration",
+                data_we_have,
+                most_likely_order_dic,
+                n_participants,
+                non_diseased_participant_ids,
+                theta_phi_kmeans,
+                diseased_stages,
+                uniform_prior
+            )
+            real_order_ln_likelihood, hashmap = calculate_all_participant_ln_likelihood_and_update_hashmap(
+                "iteration",
+                data_we_have,
+                real_order_dic,
+                n_participants,
+                non_diseased_participant_ids,
+                theta_phi_kmeans,
+                diseased_stages,
+                uniform_prior
+            )
+            file.write(f"Likelihood of the most likely ordering ({most_likely_order_dic.values()}): {most_likely_ln_likelihood}. \n")
+            file.write(f"Likelihood of the true ordering ({real_order}): {real_order_ln_likelihood}.")
+        
+        if doc_strings:
+            for string in doc_strings:
+                file.write(string)
 def estimate_params_exact(m0, n0, s0_sq, v0, data):
     '''This is to estimate means and vars based on conjugate priors
     Inputs:
@@ -919,15 +930,13 @@ def get_theta_phi_conjugate_priors(biomarkers, data_we_have, theta_phi_kmeans):
             # For example, if a biomarker indicates stage of (num_biomarkers), but all participants' stages
             # are smaller than that stage; so that for all participants, this biomarker is not affected
             else:
-                # DONT FORGTE RESET_INDEX; this because you are acessing [0]
-                theta_phi_kmeans_biomarker_row = theta_phi_kmeans[
-                    theta_phi_kmeans.biomarker == biomarker].reset_index(drop=True)
+                # print(theta_phi_kmeans)
                 if affected:
-                    dic['theta_mean'] = theta_phi_kmeans_biomarker_row['theta_mean'][0]
-                    dic['theta_std'] = theta_phi_kmeans_biomarker_row['theta_std'][0]
+                    dic['theta_mean'] = theta_phi_kmeans[biomarker]['theta_mean']
+                    dic['theta_std'] = theta_phi_kmeans[biomarker]['theta_std']
                 else:
-                    dic['phi_mean'] = theta_phi_kmeans_biomarker_row['phi_mean'][0]
-                    dic['phi_std'] = theta_phi_kmeans_biomarker_row['phi_std'][0]
+                    dic['phi_mean'] = theta_phi_kmeans[biomarker]['phi_mean']
+                    dic['phi_std'] = theta_phi_kmeans[biomarker]['phi_std']
         # print(f"biomarker {biomarker} done!")
         hashmap_of_means_stds_estimate_dicts[biomarker] = dic
     return hashmap_of_means_stds_estimate_dicts
@@ -1021,7 +1030,7 @@ def compute_all_participant_ln_likelihood_and_update_participant_stages(
         all_participant_ln_likelihood += this_participant_ln_likelihood
     return all_participant_ln_likelihood
 
-"""The versionn without reverting back to the max order
+"""The version without reverting back to the max order
 """
 def metropolis_hastings_with_conjugate_priors(
         data_we_have, iterations, log_folder_name, n_shuffle, uniform_prior):
@@ -1071,7 +1080,13 @@ def metropolis_hastings_with_conjugate_priors(
         # add kj and affected for the whole dataset based on participant_stages
         # also modify diseased col (because it will be useful for the new theta_phi_kmeans)
         data = add_kj_and_affected_and_modify_diseased(data, participant_stages, n_participants)
-        theta_phi_kmeans = get_theta_phi_estimates(data, biomarkers, n_clusters = 2)
+        # obtain the iniial theta and phi estimates
+        theta_phi_kmeans = get_theta_phi_estimates(
+            data_we_have, 
+            biomarkers, 
+            n_clusters = 2,
+            method = "kmeans_only"
+        )
         estimated_theta_phi = get_theta_phi_conjugate_priors(biomarkers, data, theta_phi_kmeans)
         all_participant_ln_likelihood = compute_all_participant_ln_likelihood_and_update_participant_stages(
             n_participants,
