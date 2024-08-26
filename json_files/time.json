@@ -1,0 +1,150 @@
+{
+    "synthetic": {
+        "conjugate_priors": {
+            "5/50": {
+                "iterations": 2000,
+                "duration": 4.0134228626887
+            },
+            "12/50": {
+                "iterations": 2000,
+                "duration": 3.592063248157501
+            },
+            "25/50": {
+                "iterations": 2000,
+                "duration": 2.839097746213277
+            },
+            "20/200": {
+                "iterations": 2000,
+                "duration": 14.86301420132319
+            },
+            "50/200": {
+                "iterations": 2000,
+                "duration": 13.030818021297454
+            },
+            "100/200": {
+                "iterations": 2000,
+                "duration": 10.36976813475291
+            },
+            "50/500": {
+                "iterations": 2000,
+                "duration": 36.615747217337294
+            },
+            "125/500": {
+                "iterations": 2000,
+                "duration": 32.00465448300044
+            },
+            "250/500": {
+                "iterations": 2000,
+                "duration": 25.081964218616484
+            }
+        },
+        "soft_kmeans": {
+            "5/50": {
+                "iterations": 2000,
+                "duration": 3.9759464502334594
+            },
+            "12/50": {
+                "iterations": 2000,
+                "duration": 3.496211218833923
+            },
+            "25/50": {
+                "iterations": 2000,
+                "duration": 2.672982887427012
+            },
+            "20/200": {
+                "iterations": 2000,
+                "duration": 15.910287503401438
+            },
+            "50/200": {
+                "iterations": 2000,
+                "duration": 13.78353601694107
+            },
+            "100/200": {
+                "iterations": 2000,
+                "duration": 10.764711697896322
+            },
+            "50/500": {
+                "iterations": 2000,
+                "duration": 39.135338350137076
+            },
+            "125/500": {
+                "iterations": 2000,
+                "duration": 35.42440786759059
+            },
+            "250/500": {
+                "iterations": 2000,
+                "duration": 26.88345910310745
+            }
+        },
+        "hard_kmeans": {
+            "5/50": {
+                "iterations": 2000,
+                "duration": 3.9335647662480673
+            },
+            "12/50": {
+                "iterations": 2000,
+                "duration": 3.464804697036743
+            },
+            "25/50": {
+                "iterations": 2000,
+                "duration": 2.649644947052002
+            },
+            "20/200": {
+                "iterations": 2000,
+                "duration": 15.796483600139618
+            },
+            "50/200": {
+                "iterations": 2000,
+                "duration": 13.76018793185552
+            },
+            "100/200": {
+                "iterations": 2000,
+                "duration": 10.579920502503713
+            },
+            "50/500": {
+                "iterations": 2000,
+                "duration": 39.20126231908798
+            },
+            "125/500": {
+                "iterations": 2000,
+                "duration": 35.30368725061417
+            },
+            "250/500": {
+                "iterations": 2000,
+                "duration": 26.48017473220825
+            }
+        }
+    },
+    "chen_data": {
+        "conjugate_priors": {
+            "144": {
+                "iterations": 2000,
+                "duration": 9.063083565235138
+            },
+            "500": {
+                "iterations": 2000,
+                "duration": 31.137139185269675
+            }
+        },
+        "soft_kmeans": {
+            "144": {
+                "iterations": 2000,
+                "duration": 9.437927949428559
+            },
+            "500": {
+                "iterations": 2000,
+                "duration": 33.76236015558243
+            }
+        },
+        "hard_kmeans": {
+            "144": {
+                "iterations": 2000,
+                "duration": 9.34743973016739
+            },
+            "500": {
+                "iterations": 2000,
+                "duration": 33.4572127143542
+            }
+        }
+    }
+}

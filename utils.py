@@ -14,7 +14,7 @@ import os
 import scipy.stats as stats
 from scipy.stats import kendalltau
 import re
-
+plt.rcParams['font.family'] = 'DejaVu Sans'
 
 def generate_data_from_ebm(
     n_participants,
@@ -406,7 +406,6 @@ def calculate_soft_kmeans_for_biomarker(
 
     return theta_mean, theta_std, phi_mean, phi_std
 
-
 def soft_kmeans_theta_phi_estimates(
         iteration,
         prior_theta_phi_estimates,
@@ -610,7 +609,7 @@ def metropolis_hastings_soft_kmeans(
             non_diseased_participant_ids,
             hashmap_of_normalized_stage_likelihood_dicts,
             diseased_stages,
-            seed=1234
+            seed=None,
         )
 
         # Log-Sum-Exp Trick
@@ -830,7 +829,7 @@ def obtain_most_likely_order_dic(all_current_accepted_order_dicts, burn_in, thin
 
         for stage in sorted_indices:
             if stage not in assigned_stages:
-                dic[biomarker] = stage
+                dic[biomarker] = int(stage)
                 assigned_stages.add(stage)
                 break
         else:
@@ -1486,6 +1485,7 @@ def run_conjugate_priors(
     thining,
     tau_dic,
     ln_ll_dic,
+    time_dic
 ):
     n_biomarkers = len(data_we_have.biomarker.unique())
     n = len(data_we_have.participant.unique())
@@ -1529,7 +1529,8 @@ def run_conjugate_priors(
     most_likely_order_dic = obtain_most_likely_order_dic(
         all_current_order_dicts, burn_in, thining)
     most_likely_order = list(most_likely_order_dic.values())
-    estimated_theta_phi_dic = obtain_estimated_theta_phi(
+    # the index with the most likely order and also the highest likelihood
+    idx, estimated_theta_phi_dic = obtain_estimated_theta_phi(
         all_current_order_dicts,
         all_current_likelihoods,
         hashmap_of_estimated_theta_phi_dic,
@@ -1544,20 +1545,30 @@ def run_conjugate_priors(
         raise ValueError(
             "This most likely order has repeated stages or different stages than expected.")
     tau, p_value = kendalltau(most_likely_order, range(1, n_biomarkers + 1))
+    end_time = time.time()
+    execution_time = (end_time - start_time)/60
     if data_source == "Synthetic Data":
         tau_dic[f"{int(r*n)}/{n}"] = tau
+        time_dic[f"{int(r*n)}/{n}"] = {}
+        time_dic[f"{int(r*n)}/{n}"]['iterations'] = iterations 
+        time_dic[f"{int(r*n)}/{n}"]['duration'] = execution_time
         ln_ll_dic[f"{int(r*n)}/{n}"] = {}
-        ln_ll_dic[f"{int(r*n)}/{n}"] = {}
+        ln_ll_dic[f"{int(r*n)}/{n}"]['most_likely_order_dic'] = most_likely_order_dic
+        ln_ll_dic[f"{int(r*n)}/{n}"]['index'] = idx 
+        ln_ll_dic[f"{int(r*n)}/{n}"]['estimated_theta_phi_dic'] = estimated_theta_phi_dic
         ln_ll_dic[f"{int(r*n)}/{n}"]['real_order_ln_ll'] = real_order_ln_ll
         ln_ll_dic[f"{int(r*n)}/{n}"]['most_likely_ln_ll'] = most_likely_ln_ll
     else:
         tau_dic[f"{n}"] = tau
+        time_dic[f"{n}"] = {}
+        time_dic[f"{n}"]['iterations'] = iterations 
+        time_dic[f"{n}"]['duration'] = execution_time
         ln_ll_dic[f"{n}"] = {}
-        ln_ll_dic[f"{n}"] = {}
+        ln_ll_dic[f"{n}"]['most_likely_order_dic'] = most_likely_order_dic
+        ln_ll_dic[f"{n}"]['index'] = idx 
+        ln_ll_dic[f"{n}"]['estimated_theta_phi_dic'] = estimated_theta_phi_dic
         ln_ll_dic[f"{n}"]['real_order_ln_ll'] = real_order_ln_ll
         ln_ll_dic[f"{n}"]['most_likely_ln_ll'] = most_likely_ln_ll
-    end_time = time.time()
-    execution_time = (end_time - start_time)/60
     print(
         f"Execution time: {execution_time} min for {data_source} using conjugate priors.")
     print("---------------------------------------------")
@@ -1566,7 +1577,7 @@ def run_conjugate_priors(
 def obtain_estimated_theta_phi(
         all_current_accepted_order_dicts,
         all_current_accepted_likelihoods,
-        estimated_theta_phi_dic,
+        hashmap_of_estimated_theta_phi_dic,
         most_likely_order_dic,
 ):
     """
@@ -1583,8 +1594,7 @@ def obtain_estimated_theta_phi(
     winner = np.argwhere(np.array(all_current_accepted_likelihoods) == max_ll)
     winner = winner.flatten().tolist()
     idx = np.random.choice(winner)
-    return estimated_theta_phi_dic[idx]
-
+    return int(idx), hashmap_of_estimated_theta_phi_dic[idx]
 
 def calculate_all_participant_ll_likelihood_based_on_order_dic(
         data, order_dic, estimated_theta_phi_dic):
@@ -1645,6 +1655,7 @@ def run_soft_kmeans(
     thining,
     tau_dic,
     ln_ll_dic,
+    time_dic,
 ):
     n_biomarkers = len(data_we_have.biomarker.unique())
     n = len(data_we_have.participant.unique())
@@ -1690,7 +1701,7 @@ def run_soft_kmeans(
     most_likely_order_dic = obtain_most_likely_order_dic(
         all_current_accepted_order_dicts,  burn_in, thining)
     most_likely_order = list(most_likely_order_dic.values())
-    estimated_theta_phi_dic = obtain_estimated_theta_phi(
+    idx, estimated_theta_phi_dic = obtain_estimated_theta_phi(
         all_current_accepted_order_dicts,
         all_current_accepted_likelihoods,
         hashmap_of_estimated_theta_phi_dic,
@@ -1705,20 +1716,30 @@ def run_soft_kmeans(
         raise ValueError(
             "This most likely order has repeated stages or different stages than expected.")
     tau, p_value = kendalltau(most_likely_order, range(1, n_biomarkers + 1))
+    end_time = time.time()
+    execution_time = (end_time - start_time)/60
     if data_source == "Synthetic Data":
         tau_dic[f"{int(r*n)}/{n}"] = tau
+        time_dic[f"{int(r*n)}/{n}"] = {}
+        time_dic[f"{int(r*n)}/{n}"]['iterations'] = iterations 
+        time_dic[f"{int(r*n)}/{n}"]['duration'] = execution_time
         ln_ll_dic[f"{int(r*n)}/{n}"] = {}
-        ln_ll_dic[f"{int(r*n)}/{n}"] = {}
+        ln_ll_dic[f"{int(r*n)}/{n}"]['most_likely_order_dic'] = most_likely_order_dic
+        ln_ll_dic[f"{int(r*n)}/{n}"]['index'] = idx 
+        ln_ll_dic[f"{int(r*n)}/{n}"]['estimated_theta_phi_dic'] = estimated_theta_phi_dic
         ln_ll_dic[f"{int(r*n)}/{n}"]['real_order_ln_ll'] = real_order_ln_ll
         ln_ll_dic[f"{int(r*n)}/{n}"]['most_likely_ln_ll'] = most_likely_ln_ll
     else:
         tau_dic[f"{n}"] = tau
+        time_dic[f"{n}"] = {}
+        time_dic[f"{n}"]['iterations'] = iterations 
+        time_dic[f"{n}"]['duration'] = execution_time
         ln_ll_dic[f"{n}"] = {}
-        ln_ll_dic[f"{n}"] = {}
+        ln_ll_dic[f"{n}"]['most_likely_order_dic'] = most_likely_order_dic
+        ln_ll_dic[f"{n}"]['index'] = idx 
+        ln_ll_dic[f"{n}"]['estimated_theta_phi_dic'] = estimated_theta_phi_dic
         ln_ll_dic[f"{n}"]['real_order_ln_ll'] = real_order_ln_ll
         ln_ll_dic[f"{n}"]['most_likely_ln_ll'] = most_likely_ln_ll
-    end_time = time.time()
-    execution_time = (end_time - start_time)/60
     print(
         f"Execution time: {execution_time} mins for {data_source} using soft kmeans.")
     print("---------------------------------------------")
@@ -1735,6 +1756,7 @@ def run_kmeans(
     thining,
     tau_dic,
     ln_ll_dic,
+    time_dic,
 ):
     n_biomarkers = len(data_we_have.biomarker.unique())
     n = len(data_we_have.participant.unique())
@@ -1788,24 +1810,31 @@ def run_kmeans(
         raise ValueError(
             "This most likely order has repeated stages or different stages than expected.")
     tau, p_value = kendalltau(most_likely_order, range(1, n_biomarkers + 1))
+    end_time = time.time()
+    execution_time = (end_time - start_time)/60
     if data_source == "Synthetic Data":
         tau_dic[f"{int(r*n)}/{n}"] = tau
+        time_dic[f"{int(r*n)}/{n}"] = {}
+        time_dic[f"{int(r*n)}/{n}"]['iterations'] = iterations 
+        time_dic[f"{int(r*n)}/{n}"]['duration'] = execution_time
         ln_ll_dic[f"{int(r*n)}/{n}"] = {}
-        ln_ll_dic[f"{int(r*n)}/{n}"] = {}
+        ln_ll_dic[f"{int(r*n)}/{n}"]['most_likely_order_dic'] = most_likely_order_dic
+        ln_ll_dic[f"{int(r*n)}/{n}"]['estimated_theta_phi_dic'] = theta_phi_kmeans
         ln_ll_dic[f"{int(r*n)}/{n}"]['real_order_ln_ll'] = real_order_ln_ll
         ln_ll_dic[f"{int(r*n)}/{n}"]['most_likely_ln_ll'] = most_likely_ln_ll
     else:
         tau_dic[f"{n}"] = tau
+        time_dic[f"{n}"] = {}
+        time_dic[f"{n}"]['iterations'] = iterations 
+        time_dic[f"{n}"]['duration'] = execution_time
         ln_ll_dic[f"{n}"] = {}
-        ln_ll_dic[f"{n}"] = {}
+        ln_ll_dic[f"{n}"]['most_likely_order_dic'] = most_likely_order_dic
+        ln_ll_dic[f"{n}"]['estimated_theta_phi_dic'] = theta_phi_kmeans
         ln_ll_dic[f"{n}"]['real_order_ln_ll'] = real_order_ln_ll
         ln_ll_dic[f"{n}"]['most_likely_ln_ll'] = most_likely_ln_ll
-    end_time = time.time()
-    execution_time = (end_time - start_time)/60
     print(
         f"Execution time: {execution_time} mins for {data_source} using kmeans.")
     print("---------------------------------------------")
-
 
 def plot_tau_synthetic(
         tau_file,
@@ -1816,21 +1845,22 @@ def plot_tau_synthetic(
     with open(tau_file) as f:
         tau = json.load(f)
     data = tau['synthetic'][algorithm]
+    formatted_algorithm = algorithm.replace('_', ' ')
     dict_list = []
     for n in ns:
         for r in rs:
             dic = {}
-            dic["n"] = f"n={n}"
+            dic["J"] = f"$J={n}$"  # Use LaTeX formatting for italic
             dic['r'] = f"{int(r*100)}%"
             key = f"{int(n*r)}/{n}"
-            dic['value'] = data[key]
+            dic['tau'] = data[key]
             dict_list.append(dic)
     df = pd.DataFrame(dict_list)
 
     with sns.axes_style("whitegrid"):  # Temporarily set style
         g = sns.catplot(
             data=df, kind="bar",
-            x="n", y="value", hue="r",
+            x="J", y="tau", hue="r",
             palette="bright", alpha=.8,
             height=6, aspect=1.2
         )
@@ -1838,7 +1868,7 @@ def plot_tau_synthetic(
 
         # Set the overall title using suptitle
         g.fig.suptitle(
-            f"Kendall's Tau values across different combinations ({algorithm})",
+            f"Kendall's tau across different combinations ({formatted_algorithm})",
             fontsize=20,
             y=1.1)
 
@@ -1856,13 +1886,12 @@ def plot_tau_synthetic(
 
         g.savefig(f'img/{"synthetic"}/{algorithm}_tau.png', dpi=200)
 
-
 def plot_tau_chen_data(
         tau_file,
         chen_participant_size,
         algorithms,
 ):
-    with open('tau.json') as f:
+    with open(tau_file) as f:
         tau = json.load(f)
 
     dict_list = []
@@ -1870,8 +1899,9 @@ def plot_tau_chen_data(
         data = tau['chen_data'][algorithm]
         for n in chen_participant_size:
             dic = {}
-            dic["n"] = f"n={n}"
-            dic['algorithm'] = algorithm
+            dic["J"] = f"$J={n}$"  # Use LaTeX formatting for italic
+            formatted_algorithm = algorithm.replace('_', ' ')
+            dic['algorithm'] = formatted_algorithm
             dic['tau'] = data[str(n)]
             dict_list.append(dic)
     df = pd.DataFrame(dict_list)
@@ -1879,7 +1909,7 @@ def plot_tau_chen_data(
     with sns.axes_style("whitegrid"):  # Temporarily set style
         g = sns.catplot(
             data=df, kind="bar",
-            x="n", y="tau", hue="algorithm",
+            x="J", y="tau", hue="algorithm",
             palette="bright", alpha=.8,
             height=6, aspect=1.2
         )
@@ -1887,7 +1917,7 @@ def plot_tau_chen_data(
 
         # Set the overall title using suptitle
         g.fig.suptitle(
-            f"Kendall's Tau values across different algorithms (Chen's data)",
+            f"Kendall's tau across different algorithms (Chen's data)",
             fontsize=20,
             y=1.1)
 
@@ -1905,7 +1935,6 @@ def plot_tau_chen_data(
 
         g.savefig(f'img/{"chen_data"}/tau.png', dpi=200)
 
-
 def plot_ln_ll_synthetic(
     ln_ll_file,
     algorithm,
@@ -1915,11 +1944,12 @@ def plot_ln_ll_synthetic(
     with open(ln_ll_file) as f:
         tau = json.load(f)
     data = tau['synthetic'][algorithm]
+    formatted_algorithm = algorithm.replace('_', ' ')
     dict_list = []
     for n in ns:
         for r in rs:
             dic = {}
-            dic["n"] = f"n={n}"
+            dic["J"] = f"$J={n}$"  # Use LaTeX formatting for italic
             dic['r'] = f"{int(r*100)}%"
             key = f"{int(n*r)}/{n}"
             dic['ln_diff'] = data[key]['most_likely_ln_ll'] - \
@@ -1929,7 +1959,7 @@ def plot_ln_ll_synthetic(
     with sns.axes_style("whitegrid"):  # Temporarily set style
         g = sns.catplot(
             data=df, kind="bar",
-            x="n", y="ln_diff", hue="r",
+            x="J", y="ln_diff", hue="r",
             palette="bright", alpha=.8,
             height=6, aspect=1.2
         )
@@ -1937,7 +1967,7 @@ def plot_ln_ll_synthetic(
 
         # Set the overall title using suptitle
         g.fig.suptitle(
-            f"Comparing log likelihood difference across different combinations (conjugate priors)",
+            f"Log likelihood differences with different combinations ({formatted_algorithm})",
             fontsize=20,
             y=1.1)
 
@@ -1970,8 +2000,9 @@ def plot_ln_ll_chen_data(
         data = tau['chen_data'][algorithm]
         for n in chen_participant_size:
             dic = {}
-            dic["n"] = f"n={n}" 
-            dic['algorithm'] = algorithm
+            dic["J"] = f"$J={n}$"  # Use LaTeX formatting for italic
+            formatted_algorithm = algorithm.replace('_', ' ')
+            dic['algorithm'] = formatted_algorithm
             dic['ln_diff'] = data[str(n)]['most_likely_ln_ll'] - data[str(n)]['real_order_ln_ll']
             dict_list.append(dic)
     df = pd.DataFrame(dict_list)
@@ -1979,7 +2010,7 @@ def plot_ln_ll_chen_data(
     with sns.axes_style("whitegrid"):  # Temporarily set style
         g = sns.catplot(
             data=df, kind="bar",
-            x="n", y="ln_diff", hue="algorithm",
+            x="J", y="ln_diff", hue="algorithm",
             palette="bright", alpha=.8, 
             height=6, aspect=1.2
         )
@@ -1987,7 +2018,7 @@ def plot_ln_ll_chen_data(
         
         # Set the overall title using suptitle
         g.fig.suptitle(
-            f"Comparing log likelihood difference across different algorithms (Chen's data)", 
+            f"Comparing log likelihood differences across different algorithms (Chen's data)", 
             fontsize=20, 
             y=1.1)
         
@@ -2004,3 +2035,103 @@ def plot_ln_ll_chen_data(
         g.set_yticklabels(fontsize=14)
 
         g.savefig(f'img/{"chen_data"}/ln_ll.png', dpi=200)
+
+
+def plot_time_synthetic(
+        time_file,
+        algorithm,
+        ns,
+        rs,
+):
+    with open(time_file) as f:
+        time = json.load(f)
+    data = time['synthetic'][algorithm]
+    formatted_algorithm = algorithm.replace('_', ' ')
+    dict_list = []
+    for n in ns:
+        for r in rs:
+            dic = {}
+            dic["J"] = f"$J={n}$"  # Use LaTeX formatting for italic
+            dic['r'] = f"{int(r*100)}%"
+            key = f"{int(n*r)}/{n}"
+            dic['time'] = data[key]['duration']
+            dict_list.append(dic)
+    df = pd.DataFrame(dict_list)
+
+    with sns.axes_style("whitegrid"):  # Temporarily set style
+        g = sns.catplot(
+            data=df, kind="bar",
+            x="J", y="time", hue="r",
+            palette="bright", alpha=.8,
+            height=6, aspect=1.2
+        )
+        g.despine(left=True)
+
+        # Set the overall title using suptitle
+        g.fig.suptitle(
+            f"Execution time across different combinations ({formatted_algorithm})",
+            fontsize=20,
+            y=1.1)
+
+        g.legend.set_bbox_to_anchor((1.15, 0.5))  # Adjust position as needed
+        # Set the axis labels
+        g.set_axis_labels("", "Execution time (in minutes)", fontsize=18)
+        g.legend.set_title("Healthy Ratio", prop={'size': 16})
+        # Adjust the font size for the legend text
+        for text in g.legend.texts:
+            text.set_fontsize(14)  # Adjust as needed
+
+        # Increase font size for x-axis and y-axis tick labels
+        g.set_xticklabels(fontsize=14)
+        g.set_yticklabels(fontsize=14)
+
+        g.savefig(f'img/{"synthetic"}/{algorithm}_time.png', dpi=200)
+
+def plot_time_chen_data(
+        time_file,
+        chen_participant_size,
+        algorithms,
+):
+    with open(time_file) as f:
+        time = json.load(f)
+
+    dict_list = []
+    for algorithm in algorithms:
+        data = time['chen_data'][algorithm]
+        for n in chen_participant_size:
+            dic = {}
+            dic["J"] = f"$J={n}$"  # Use LaTeX formatting for italic
+            formatted_algorithm = algorithm.replace('_', ' ')
+            dic['algorithm'] = formatted_algorithm
+            dic['time'] = data[str(n)]['duration']
+            dict_list.append(dic)
+    df = pd.DataFrame(dict_list)
+
+    with sns.axes_style("whitegrid"):  # Temporarily set style
+        g = sns.catplot(
+            data=df, kind="bar",
+            x="J", y="time", hue="algorithm",
+            palette="bright", alpha=.8,
+            height=6, aspect=1.2
+        )
+        g.despine(left=True)
+
+        # Set the overall title using suptitle
+        g.fig.suptitle(
+            f"Execution time across different algorithms (Chen's data)",
+            fontsize=20,
+            y=1.1)
+
+        g.legend.set_bbox_to_anchor((1.15, 0.5))  # Adjust position as needed
+        # Set the axis labels
+        g.set_axis_labels("", "Execution time (in minutes)", fontsize=18)
+        g.legend.set_title("Algorithm", prop={'size': 16})
+        # Adjust the font size for the legend text
+        for text in g.legend.texts:
+            text.set_fontsize(14)  # Adjust as needed
+
+        # Increase font size for x-axis and y-axis tick labels
+        g.set_xticklabels(fontsize=14)
+        g.set_yticklabels(fontsize=14)
+        
+        g.savefig(f'img/{"chen_data"}/time.png', dpi=200)
